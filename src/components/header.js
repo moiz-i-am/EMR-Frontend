@@ -6,7 +6,7 @@ export class header extends Component {
     return (
       <header>
         <Link to="/">Home</Link>
-
+        <Link to="/SignupSelector">Signup/Login</Link>
         <hr />
       </header>
     );
