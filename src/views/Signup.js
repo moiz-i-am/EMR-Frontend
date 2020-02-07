@@ -1,155 +1,120 @@
-import React, { Component } from "react";
+import React from "react";
 import "./signstyle.css";
+import { Link, withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import classnames from "classnames";
+import PropTypes from "prop-types";
 
-export default class Signup extends React.Component {
+import { registerUser } from "./../actions/authActions";
+
+class Signup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoginOpen: true,
-      isRegisterOpen: false
+      username: "",
+      email: "",
+      password: "",
+      errors: {}
     };
   }
 
-  showLoginBox() {
-    this.setState({ isLoginOpen: true, isRegisterOpen: false });
+  componentDidUpdate(nextProps) {
+    if (nextProps.errors) {
+      this.setState({
+        errors: nextProps.errors
+      });
+    }
   }
 
-  showRegisterBox() {
-    this.setState({ isRegisterOpen: true, isLoginOpen: false });
-  }
+  onChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
+  onSubmit = e => {
+    e.preventDefault();
+
+    const newUser = {
+      name: this.state.username,
+      email: this.state.email,
+      password: this.state.password
+    };
+    this.props.registerUser(newUser, this.props.history);
+  };
 
   render() {
-    return (
-      <div className="root-container">
-        <div className="box-controller">
-          <div
-            className={
-              "controller " +
-              (this.state.isLoginOpen ? "selected-controller" : "")
-            }
-            onClick={this.showLoginBox.bind(this)}
-          >
-            Login
-          </div>
-          <div
-            className={
-              "controller " +
-              (this.state.isRegisterOpen ? "selected-controller" : "")
-            }
-            onClick={this.showRegisterBox.bind(this)}
-          >
-            Register
-          </div>
-        </div>
-
-        <div className="box-container">
-          {this.state.isLoginOpen && <LoginBox />}
-          {this.state.isRegisterOpen && <RegisterBox />}
-        </div>
-      </div>
-    );
-  }
-}
-
-//Login Box
-class LoginBox extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  submitLogin(e) {}
-
-  render() {
-    return (
-      <div className="inner-container">
-        <div className="header">Login</div>
-        <div className="box">
-          <div className="input-group">
-            <label htmlFor="username">Username</label>
-            <input
-              type="text"
-              name="username"
-              className="login-input"
-              placeholder="Username"
-            />
-          </div>
-
-          <div className="input-group">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              name="password"
-              className="login-input"
-              placeholder="Password"
-            />
-          </div>
-
-          <button
-            type="button"
-            className="login-btn"
-            onClick={this.submitLogin.bind(this)}
-          >
-            Login
-          </button>
-        </div>
-      </div>
-    );
-  }
-}
-
-//Register Box
-class RegisterBox extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  submitRegister(e) {}
-
-  render() {
+    const { errors } = this.state;
     return (
       <div className="inner-container">
         <div className="header">Register</div>
         <div className="box">
-          <div className="input-group">
-            <label htmlFor="username">Username</label>
-            <input
-              type="text"
-              name="username"
-              className="login-input"
-              placeholder="Username"
-            />
-          </div>
+          <form noValidate onSubmit={this.onSubmit}>
+            <div className="input-group">
+              <label htmlFor="username">Username</label>
+              <input
+                type="text"
+                name="username"
+                className={classnames("login-input", {
+                  invalid: errors.username
+                })}
+                placeholder="Username"
+                onChange={this.onChange}
+                value={this.state.username}
+                error={errors.username}
+              />
+              <span className="red-text">{errors.username}</span>
+            </div>
 
-          <div className="input-group">
-            <label htmlFor="email">Email</label>
-            <input
-              type="text"
-              name="email"
-              className="login-input"
-              placeholder="Email"
-            />
-          </div>
+            <div className="input-group">
+              <label htmlFor="email">Email</label>
+              <input
+                type="text"
+                name="email"
+                className={classnames("login-input", {
+                  invalid: errors.email
+                })}
+                placeholder="Email"
+                onChange={this.onChange}
+                value={this.state.email}
+                error={errors.email}
+              />
+            </div>
 
-          <div className="input-group">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              name="password"
-              className="login-input"
-              placeholder="Password"
-            />
-          </div>
-          <button
-            type="button"
-            className="login-btn"
-            onClick={this.submitRegister.bind(this)}
-          >
-            Register
-          </button>
+            <div className="input-group">
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                name="password"
+                className={classnames("login-input", {
+                  invalid: errors.password
+                })}
+                placeholder="Password"
+                onChange={this.onChange}
+                value={this.state.password}
+                error={errors.password}
+              />
+            </div>
+            <button type="submit" className="login-btn">
+              Register
+            </button>
+          </form>
         </div>
+        <p>
+          <Link to="/Login">already registered? Login</Link>
+        </p>
       </div>
     );
   }
 }
+
+Signup.propTypes = {
+  registerUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors
+});
+
+export default connect(mapStateToProps, { registerUser })(withRouter(Signup));

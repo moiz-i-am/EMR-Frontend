@@ -1,9 +1,10 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 
 import Home from "./views/Home";
 import SignupNavigator from "./views/SignupNavigator";
 import Signup from "./views/Signup";
+import Login from "./views/Login";
 
 import NotFound from "./components/NotFound";
 
@@ -17,6 +18,7 @@ const routes = () => {
         <Route exact path="/SignupDoctor" component={Signup} />
         <Route exact path="/SignupHospital" component={Signup} />
         <Route exact path="/SignupLab" component={Signup} />
+        <Route exact path="/Login" component={Login} />
 
         <Route component={NotFound} />
       </Switch>
