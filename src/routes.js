@@ -7,6 +7,7 @@ import Signup from "./views/Signup";
 import Login from "./views/Login";
 
 import NotFound from "./components/NotFound";
+import Dashboard from "./views/Dashboard";
 
 const routes = () => {
   return (
@@ -19,6 +20,7 @@ const routes = () => {
         <Route exact path="/SignupHospital" component={Signup} />
         <Route exact path="/SignupLab" component={Signup} />
         <Route exact path="/Login" component={Login} />
+        <Route exact path="/dashboard" component={Dashboard} />
 
         <Route component={NotFound} />
       </Switch>
