@@ -11,15 +11,15 @@ class LoginBox extends React.Component {
     this.state = {
       email: "",
       password: "",
-      role: "patient",
+      // role: "",
       errors: {}
     };
   }
 
-  com(nextProps) {
-    if (nextProps.auth.isAuthenticated) {
-      this.props.history.push("/dashboard"); // push user to dashboard when they login
-    }
+  componentWillReceiveProps(nextProps) {
+    // if (nextProps.auth.isAuthenticated) {
+    //   this.props.history.push("/dashboard"); // push user to dashboard when they login
+    // }
     if (nextProps.errors) {
       this.setState({
         errors: nextProps.errors
@@ -42,10 +42,10 @@ class LoginBox extends React.Component {
     e.preventDefault();
     const userData = {
       email: this.state.email,
-      password: this.state.password,
-      role: this.state.role
+      password: this.state.password
+      // role: this.state.role
     };
-    this.props.loginUser(userData);
+    this.props.loginUser(userData, this.props.history);
   };
 
   render() {
@@ -56,18 +56,21 @@ class LoginBox extends React.Component {
         <div className="box">
           <form noValidate onSubmit={this.onSubmit}>
             <div className="input-group">
-              <label htmlFor="username">Username</label>
+              <label htmlFor="email">email</label>
               <input
                 type="email"
                 name="email"
                 className={classnames("login-input", {
-                  invalid: errors.email
+                  "email is invalid": errors.email
                 })}
                 placeholder="email"
                 onChange={this.onChange}
                 value={this.state.email}
-                error={errors.email}
+                // error={errors.email}
               />
+              {errors.email && (
+                <div className="invalid-feedback">{errors.email}</div>
+              )}
             </div>
 
             <div className="input-group">
@@ -76,14 +79,17 @@ class LoginBox extends React.Component {
                 type="password"
                 name="password"
                 className={classnames("login-input", {
-                  invalid: errors.password
+                  "password is invalid": errors.password
                 })}
                 placeholder="Password"
                 onChange={this.onChange}
                 value={this.state.password}
-                error={errors.password}
+                // error={errors.password}
               />
             </div>
+            {errors.email && (
+              <div className="invalid-feedback">{errors.email}</div>
+            )}
 
             <button type="submit" className="login-btn">
               Login
