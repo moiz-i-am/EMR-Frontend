@@ -5,7 +5,11 @@ import { connect } from "react-redux";
 import classnames from "classnames";
 import PropTypes from "prop-types";
 
-import { registerUser } from "./../actions/authActions";
+import {
+  registerUser,
+  registerHospital,
+  registerLab
+} from "./../actions/authActions";
 
 class Signup extends React.Component {
   constructor(props) {
@@ -14,6 +18,9 @@ class Signup extends React.Component {
       username: "",
       email: "",
       password: "",
+      OrName: "",
+      OrLocation: "",
+      role: this.props.location.roleProps,
       errors: {}
     };
   }
@@ -28,9 +35,12 @@ class Signup extends React.Component {
 
   componentDidMount() {
     // If logged in and user navigates to Register page, should redirect them to dashboard
-    if (this.props.auth.isAuthenticated) {
-      this.props.history.push("/dashboard");
-    }
+    // if (this.props.auth.isAuthenticated) {
+    //   this.props.history.push("/dashboard");
+    // }
+    // const { handle } = this.props.params;
+    // const { userRole } = this.props.location.state;
+    // console.log(userRole);
   }
 
   onChange = e => {
@@ -41,14 +51,111 @@ class Signup extends React.Component {
     e.preventDefault();
 
     const newUser = {
-      name: this.state.username,
+      userName: this.state.username,
       email: this.state.email,
-      password: this.state.password
+      password: this.state.password,
+      role: this.state.role
     };
-    this.props.registerUser(newUser, this.props.history);
+    const newHospital = {
+      userName: this.state.username,
+      email: this.state.email,
+      password: this.state.password,
+      name: this.state.OrName,
+      location: this.state.OrLocation
+    };
+    const newLab = {
+      userName: this.state.username,
+      email: this.state.email,
+      password: this.state.password,
+      name: this.state.OrName,
+      location: this.state.OrLocation
+    };
+    if (this.state.role === "hospital") {
+      this.props.registerHospital(newHospital, this.props.history);
+      //console.log(newHospital);
+    } else if (this.state.role === "lab") {
+      this.props.registerLab(newLab, this.props.history);
+      //console.log(newUser);
+    } else {
+      this.props.registerUser(newUser, this.props.history);
+      //console.log(newUser);
+    }
+    //console.log(newUser);
   };
 
   render() {
+    /////////////////////////// conditional rendring ///////////////////
+
+    /////////////////////////// for hospital //////////////////////////
+
+    let hospital;
+    if (this.state.role === "hospital") {
+      hospital = (
+        <div>
+          <div className="input-group">
+            <label htmlFor="hospitalName">Hospital Name</label>
+            <input
+              type="text"
+              name="OrName"
+              className="login-input"
+              placeholder="Hospital Name"
+              onChange={this.onChange}
+              value={this.state.OrName}
+            />
+            <span className="red-text"></span>
+          </div>
+          <div className="input-group">
+            <label htmlFor="hospitalLocation">Hospital Location</label>
+            <input
+              type="text"
+              name="OrLocation"
+              className="login-input"
+              placeholder="Hospital Location"
+              onChange={this.onChange}
+              value={this.state.OrLocation}
+            />
+            <span className="red-text"></span>
+          </div>
+        </div>
+      );
+    }
+
+    //////////////////////////// for lab ////////////////////////////
+
+    let lab;
+    if (this.state.role === "lab") {
+      lab = (
+        <div>
+          <div className="input-group">
+            <label htmlFor="labName">Lab Name</label>
+            <input
+              type="text"
+              name="OrName"
+              className="login-input"
+              placeholder="lab Name"
+              onChange={this.onChange}
+              value={this.state.OrName}
+            />
+            <span className="red-text"></span>
+          </div>
+          <div className="input-group">
+            <label htmlFor="labLocation">Lab Location</label>
+            <input
+              type="text"
+              name="OrLocation"
+              className="login-input"
+              placeholder="Lab Location"
+              onChange={this.onChange}
+              value={this.state.OrLocation}
+            />
+            <span className="red-text"></span>
+          </div>
+        </div>
+      );
+    }
+
+    //////////////////////////// normal rendring ///////////////////
+
     const { errors } = this.state;
     return (
       <div className="inner-container">
@@ -100,6 +207,8 @@ class Signup extends React.Component {
                 error={errors.password}
               />
             </div>
+            {hospital}
+            {lab}
             <button type="submit" className="login-btn">
               Register
             </button>
@@ -124,4 +233,8 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(mapStateToProps, { registerUser })(withRouter(Signup));
+export default connect(mapStateToProps, {
+  registerUser,
+  registerHospital,
+  registerLab
+})(withRouter(Signup));

@@ -4,11 +4,39 @@ import jwt_decode from "jwt-decode";
 import setAuthToken from "../utils/setAuthToken";
 import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING } from "./types";
 
-// register user
+// register users / doctors
 
 export const registerUser = (userData, history) => dispatch => {
   axios
-    .post("v1/auth/register", userData)
+    .post("v1/users", userData)
+    .then(res => history.push("/Login"))
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+// register hospitals
+
+export const registerHospital = (hospitalData, history) => dispatch => {
+  axios
+    .post("v1/hospital", hospitalData)
+    .then(res => history.push("/Login"))
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+// register labs
+
+export const registerLab = (labData, history) => dispatch => {
+  axios
+    .post("v1/lab", labData)
     .then(res => history.push("/Login"))
     .catch(err =>
       dispatch({

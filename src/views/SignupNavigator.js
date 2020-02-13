@@ -8,11 +8,32 @@ const SignupNavigator = () => {
       <div className="selectors">
         <Link to="/SignupPatient">I am a patient</Link>
         <br />
-        <Link to="/SignupDoctor">I am a doctor</Link>
+        <Link
+          to={{
+            pathname: "/SignupDoctor",
+            roleProps: "doctor" // for passing role to signup page
+          }}
+        >
+          I am a doctor
+        </Link>
         <br />
-        <Link to="/SignupHospital">I am a Hospital</Link>
+        <Link
+          to={{
+            pathname: "/SignupHospital",
+            roleProps: "hospital" // for passing role to signup page
+          }}
+        >
+          I am a Hospital
+        </Link>
         <br />
-        <Link to="/SignupLab">I am a lab</Link>
+        <Link
+          to={{
+            pathname: "/SignupLab",
+            roleProps: "lab" // for passing role to signup page
+          }}
+        >
+          I am a lab
+        </Link>
         <br />
       </div>
     </div>
