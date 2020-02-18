@@ -1,0 +1,31 @@
+.logo {
+  background-color: rgb(239, 255, 247);
+  width: 50%;
+  float: left;
+  height: 70px;
+  text-align: center;
+  padding-top: 40px;
+}
+.nav-links {
+  background-color: rgb(239, 255, 247);
+  width: 50%;
+  float: left;
+  height: 70px;
+  padding-top: 40px;
+}
+
+.nav-links .findLink {
+  width: 3%;
+}
+
+.nav-links img {
+  margin-left: 40px;
+  width: 3%;
+}
+
+.circle-img {
+  background-color: rgb(239, 255, 247);
+  height: 150px;
+  width: 460px;
+  border-radius: 50%;
+}
