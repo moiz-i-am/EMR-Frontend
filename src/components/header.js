@@ -29,7 +29,7 @@ export class header extends Component {
                 Find Doctors
               </h3>
             </Link>
-            <Link to="/" style={{ marginBottom: "3px" }}>
+            <Link to="/docProfile/:id" style={{ marginBottom: "3px" }}>
               <h3
                 style={{
                   width: "120px",

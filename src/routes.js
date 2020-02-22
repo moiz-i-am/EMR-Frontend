@@ -9,6 +9,7 @@ import Login from "./views/Login";
 import NotFound from "./components/NotFound";
 import Dashboard from "./views/Dashboard";
 import DoctorsList from "./views/DoctorsList";
+import DoctorDetailedProfile from "./views/DoctorDetailedProfile";
 
 const routes = () => {
   return (
@@ -23,6 +24,7 @@ const routes = () => {
         <Route exact path="/Login" component={Login} />
         <Route exact path="/dashboard" component={Dashboard} />
         <Route exact path="/listDoctors" component={DoctorsList} />
+        <Route exact path="/docProfile/:id" component={DoctorDetailedProfile} />
 
         <Route component={NotFound} />
       </Switch>
