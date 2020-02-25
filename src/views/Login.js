@@ -11,15 +11,14 @@ class LoginBox extends React.Component {
     this.state = {
       email: "",
       password: "",
-      // role: "",
       errors: {}
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    // if (nextProps.auth.isAuthenticated) {
-    //   this.props.history.push("/dashboard"); // push user to dashboard when they login
-    // }
+    if (nextProps.auth.isAuthenticated) {
+      this.props.history.push("/dashboard"); // push user to dashboard when they login
+    }
     if (nextProps.errors) {
       this.setState({
         errors: nextProps.errors
@@ -43,9 +42,8 @@ class LoginBox extends React.Component {
     const userData = {
       email: this.state.email,
       password: this.state.password
-      // role: this.state.role
     };
-    this.props.loginUser(userData, this.props.history);
+    this.props.loginUser(userData);
   };
 
   render() {
@@ -66,7 +64,7 @@ class LoginBox extends React.Component {
                 placeholder="email"
                 onChange={this.onChange}
                 value={this.state.email}
-                // error={errors.email}
+                error={errors.email}
               />
               {errors.email && (
                 <div className="invalid-feedback">{errors.email}</div>
@@ -84,11 +82,11 @@ class LoginBox extends React.Component {
                 placeholder="Password"
                 onChange={this.onChange}
                 value={this.state.password}
-                // error={errors.password}
+                error={errors.password}
               />
             </div>
-            {errors.email && (
-              <div className="invalid-feedback">{errors.email}</div>
+            {errors.password && (
+              <div className="invalid-feedback">{errors.password}</div>
             )}
 
             <button type="submit" className="login-btn">

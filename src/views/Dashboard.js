@@ -10,7 +10,7 @@ class Dashboard extends Component {
   };
 
   render() {
-    const { user } = this.props.auth;
+    // const { user } = this.props.auth;
     return (
       <div className="container">
         <div className="row">

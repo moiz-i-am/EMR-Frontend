@@ -2,34 +2,47 @@ import React, { Component } from "react";
 import { Grid } from "semantic-ui-react";
 import DocorsProfileCards from "./DoctorsProfileCards";
 import TabbedSection from "./TabbedSection";
+import { connect } from "react-redux";
 
-const docInfo = {
-  id: "1",
-  pic: "https://randomuser.me/api/portraits/men/84.jpg",
-  name: "doctor....",
-  role: "doctor",
-  status: "Not Verified",
-  description: "placeholder description...",
-  qualification: "placeholder qualification...",
-  rating: 0,
-  currentLocale: "placeholder hospital...",
-  rate: 0
-};
+import {
+  getUserWithProfile,
+  clearUserWithProfile
+} from "./../actions/userDetailsAction";
 
 export class DoctorDetailedProfile extends Component {
-  componentDidMount() {}
+  componentDidMount() {
+    this.props.dispatch(getUserWithProfile(this.props.match.params.id));
+  }
 
-  render() {
-    return (
+  componentWillUnmount() {
+    this.props.dispatch(clearUserWithProfile());
+  }
+
+  renderDocProfile = users =>
+    users.user ? (
       <Grid>
         <Grid.Column width={12}>
-          <DocorsProfileCards {...docInfo} />
-          <TabbedSection {...docInfo} />
+          <DocorsProfileCards
+            docName={users.user.name}
+            docEmail={users.user.email}
+          />
+          <TabbedSection />
         </Grid.Column>
         <Grid.Column width={3}></Grid.Column>
       </Grid>
-    );
+    ) : null;
+
+  render() {
+    let users = this.props.user;
+    console.log(this.props);
+    return <div>{this.renderDocProfile(users)}</div>;
   }
 }
 
-export default DoctorDetailedProfile;
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  };
+};
+
+export default connect(mapStateToProps)(DoctorDetailedProfile);

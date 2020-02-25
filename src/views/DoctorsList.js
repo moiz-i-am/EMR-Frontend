@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import ProfileCards from "./DoctorsProfileCards";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
-const nam = "moiz";
 class DoctorsList extends Component {
   state = {
     persons: []
@@ -21,13 +21,20 @@ class DoctorsList extends Component {
         {this.state.persons.length === 0 ? (
           <h1>No Doctors Found</h1>
         ) : (
-          this.state.persons.map(persons => (
-            <div style={{ width: "70%" }} key={persons.id}>
-              <a href={`/docProfile/${persons.id}`}>
-                <ProfileCards docName={persons.name} docEmail={persons.email} />
-              </a>
-            </div>
-          ))
+          this.state.persons.map(persons => {
+            if (persons.role === "doctor") {
+              return (
+                <div style={{ width: "70%" }} key={persons.id}>
+                  <Link to={`/docProfile/${persons.id}`}>
+                    <ProfileCards
+                      docName={persons.name}
+                      docEmail={persons.email}
+                    />
+                  </Link>
+                </div>
+              );
+            }
+          })
         )}
       </div>
     );

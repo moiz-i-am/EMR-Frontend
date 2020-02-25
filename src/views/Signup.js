@@ -35,12 +35,9 @@ class Signup extends React.Component {
 
   componentDidMount() {
     // If logged in and user navigates to Register page, should redirect them to dashboard
-    // if (this.props.auth.isAuthenticated) {
-    //   this.props.history.push("/dashboard");
-    // }
-    // const { handle } = this.props.params;
-    // const { userRole } = this.props.location.state;
-    // console.log(userRole);
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push("/dashboard");
+    }
   }
 
   onChange = e => {
@@ -72,15 +69,11 @@ class Signup extends React.Component {
     };
     if (this.state.role === "hospital") {
       this.props.registerHospital(newHospital, this.props.history);
-      //console.log(newHospital);
     } else if (this.state.role === "lab") {
       this.props.registerLab(newLab, this.props.history);
-      //console.log(newUser);
     } else {
       this.props.registerUser(newUser, this.props.history);
-      //console.log(newUser);
     }
-    //console.log(newUser);
   };
 
   render() {

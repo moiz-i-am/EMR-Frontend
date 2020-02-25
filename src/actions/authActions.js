@@ -4,21 +4,7 @@ import jwt_decode from "jwt-decode";
 import setAuthToken from "../utils/setAuthToken";
 import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING } from "./types";
 
-// register users / doctors
-
-export const registerUser = (userData, history) => dispatch => {
-  axios
-    .post("v1/users", userData)
-    .then(res => history.push("/Login"))
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
-};
-
-// register hospitals
+// // register hospitals
 
 export const registerHospital = (hospitalData, history) => dispatch => {
   axios
@@ -46,61 +32,47 @@ export const registerLab = (labData, history) => dispatch => {
     );
 };
 
-// login - get user token
-// export const loginUser = userData => dispatch => {
-//   axios
-//     .post("v1/auth/login", userData)
-//     .then(res => {
-//       //save to localStorage
-//       //set token to localStorage
-//       const { token } = res.data;
-//       localStorage.setItem("jwtToken", token);
-//       //set token to auth header
-//       setAuthToken(token);
-//       //Decode token to get user data
-//       const decode = jwt_decode(token);
-//       //set current user
-//       dispatch(setCurrentUser(decode));
-//     })
-//     .catch(err => {
-//       //console.log(err)
-//       dispatch({
-//         type: GET_ERRORS,
-//         payload: err.response.data
-//       });
-//     });
-// };
+// register users / doctors
 
-export const loginUser = (userData, history) => async dispatch => {
-  try {
-    // fetch data from a url endpoint
-    const response = await axios.post("v1/auth/login", userData);
-    // save to localStorage
-    // set token to localStorage
-    const { token } = await response.data;
-    localStorage.setItem("jwtToken", token);
-    // //set token to auth header
-    setAuthToken(token);
-    // //Decode token to get user data
-    // const decode = await jwt_decode(token);
-    // // //set current user
-    // dispatch(setCurrentUser(decode));
-    history.push("/dashboard");
-  } catch (error) {
-    //console.log("error", error);
-
-    dispatch({
-      type: GET_ERRORS,
-      payload: error.response.data
+export const registerUser = (user, history) => dispatch => {
+  axios
+    .post("v1/users", user)
+    .then(res => history.push("/login"))
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
     });
-  }
+};
+
+// login all users and set jwt token and user data in local storage and turn isAuthanticated to true
+
+export const loginUser = user => dispatch => {
+  axios
+    .post("v1/auth/login", user)
+    .then(res => {
+      let token = res.data;
+      token = JSON.stringify(token);
+      console.log(token);
+      localStorage.setItem("jwtToken", token);
+      setAuthToken(token);
+      const decode = jwt_decode(token);
+      dispatch(setCurrentUser(decode));
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
 };
 
 //set logged in user
-export const setCurrentUser = decode => {
+export const setCurrentUser = decoded => {
   return {
     type: SET_CURRENT_USER,
-    payload: decode
+    payload: decoded
   };
 };
 
@@ -110,6 +82,8 @@ export const setUserLoading = () => {
     type: USER_LOADING
   };
 };
+
+// logout all users and set local storage empty and turn isAuthanticated to false
 
 export const logoutUser = history => dispatch => {
   // remove token from local storage
