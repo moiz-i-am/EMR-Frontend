@@ -23,18 +23,6 @@ class InfoTab extends Component {
             </List>
           </Item.Group>
         </Grid.Column>
-        <Grid.Column verticalAlign="middle" textAlign="center" width={5}>
-          <Item.Group>
-            <Icon name="money bill alternate" color="green" />
-            <span id="rate">0 PKR</span>
-            <Button
-              id="bookBtn"
-              primary
-              content="Book Appointment"
-              size="mini"
-            />
-          </Item.Group>
-        </Grid.Column>
       </Grid>
     );
   }

@@ -8,6 +8,7 @@ import {
   getUserWithProfile,
   clearUserWithProfile
 } from "./../actions/userDetailsAction";
+import AppointmentBooking from "../components/AppointmentBooking";
 
 export class DoctorDetailedProfile extends Component {
   componentDidMount() {
@@ -28,7 +29,9 @@ export class DoctorDetailedProfile extends Component {
           />
           <TabbedSection />
         </Grid.Column>
-        <Grid.Column width={3}></Grid.Column>
+        <Grid.Column width={4}>
+          <AppointmentBooking docName={users.user.name} />
+        </Grid.Column>
       </Grid>
     ) : null;
 

@@ -11,6 +11,19 @@ import {
   registerLab
 } from "./../actions/authActions";
 
+// const initialState = props => ({
+//   username: "",
+//   email: "",
+//   password: "",
+//   OrName: "",
+//   OrLocation: "",
+//   usernameError: "",
+//   emailError: "",
+//   passwordError: "",
+//   role: props.location.roleProps,
+//   errors: {}
+// });
+
 class Signup extends React.Component {
   constructor(props) {
     super(props);
@@ -20,9 +33,13 @@ class Signup extends React.Component {
       password: "",
       OrName: "",
       OrLocation: "",
+      usernameError: "",
+      emailError: "",
+      passwordError: "",
       role: this.props.location.roleProps,
       errors: {}
     };
+    //this.state = initialState(props);
   }
 
   componentDidUpdate(nextProps) {
@@ -39,6 +56,36 @@ class Signup extends React.Component {
       this.props.history.push("/dashboard");
     }
   }
+
+  validate = () => {
+    let usernameError = "";
+    let emailError = "";
+    let passwordError = "";
+
+    if (!this.state.username.match(/^[a-zA-Z ]*$/)) {
+      usernameError = "*Please enter alphabet characters only.";
+    }
+
+    var pattern = new RegExp(
+      /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
+    );
+    if (!pattern.test(this.state.email)) {
+      // if (!this.state.email.includes("@")) {
+      emailError = "*Please enter valid email address";
+    }
+    if (
+      !this.state.password.match(
+        /^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/
+      )
+    ) {
+      passwordError = "*Please enter secure and strong password.";
+    }
+    if (usernameError || emailError || passwordError) {
+      this.setState({ usernameError, emailError, passwordError });
+      return false;
+    }
+    return true;
+  };
 
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
@@ -67,12 +114,19 @@ class Signup extends React.Component {
       name: this.state.OrName,
       location: this.state.OrLocation
     };
-    if (this.state.role === "hospital") {
-      this.props.registerHospital(newHospital, this.props.history);
-    } else if (this.state.role === "lab") {
-      this.props.registerLab(newLab, this.props.history);
-    } else {
-      this.props.registerUser(newUser, this.props.history);
+    const isValid = this.validate();
+    if (isValid) {
+      if (this.state.role === "hospital") {
+        //console.log(newHospital);
+        this.props.registerHospital(newHospital, this.props.history);
+      } else if (this.state.role === "lab") {
+        //console.log(newLab);
+        this.props.registerLab(newLab, this.props.history);
+      } else {
+        //console.log(newUser);
+        this.props.registerUser(newUser, this.props.history);
+      }
+      //this.setState(initialState());
     }
   };
 
@@ -160,15 +214,17 @@ class Signup extends React.Component {
               <input
                 type="text"
                 name="username"
-                className={classnames("login-input", {
-                  invalid: errors.username
-                })}
                 placeholder="Username"
                 onChange={this.onChange}
                 value={this.state.username}
                 error={errors.username}
+                className={classnames("login-input", {
+                  invalid: errors.username
+                })}
               />
-              <span className="red-text">{errors.username}</span>
+              <span className="red-text" style={{ fontSize: 12, color: "red" }}>
+                {this.state.usernameError}
+              </span>
             </div>
 
             <div className="input-group">
@@ -184,6 +240,9 @@ class Signup extends React.Component {
                 value={this.state.email}
                 error={errors.email}
               />
+              <span className="red-text" style={{ fontSize: 12, color: "red" }}>
+                {this.state.emailError}
+              </span>
             </div>
 
             <div className="input-group">
@@ -199,6 +258,9 @@ class Signup extends React.Component {
                 value={this.state.password}
                 error={errors.password}
               />
+              <span className="red-text" style={{ fontSize: 12, color: "red" }}>
+                {this.state.passwordError}
+              </span>
             </div>
             {hospital}
             {lab}

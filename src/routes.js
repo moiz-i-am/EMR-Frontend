@@ -7,7 +7,7 @@ import Signup from "./views/Signup";
 import Login from "./views/Login";
 
 import NotFound from "./components/NotFound";
-import Dashboard from "./views/Dashboard";
+import Dashboard from "./views/dashboards/PatientDash";
 import DoctorsList from "./views/DoctorsList";
 import DoctorDetailedProfile from "./views/DoctorDetailedProfile";
 

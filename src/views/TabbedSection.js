@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Tab } from "semantic-ui-react";
-import InfoTab from "./profilecomponents/tabcomponents/InfoTab";
-import FeedbackList from "./list/feedback/FeedbackList";
+import InfoTab from "./../components/profilecomponents/tabcomponents/InfoTab";
+import FeedbackList from "./../components/feedback/FeedbackList";
 
 const feedbacksFromTab = [
   {

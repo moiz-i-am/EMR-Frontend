@@ -5,14 +5,18 @@ import { connect } from "react-redux";
 import { loginUser } from "../actions/authActions";
 import classnames from "classnames";
 
+const initialState = {
+  email: "",
+  password: "",
+  emailError: "",
+  passwordError: "",
+  errors: {}
+};
+
 class LoginBox extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      email: "",
-      password: "",
-      errors: {}
-    };
+    this.state = initialState;
   }
 
   componentWillReceiveProps(nextProps) {
@@ -33,6 +37,30 @@ class LoginBox extends React.Component {
     }
   }
 
+  validate = () => {
+    let emailError = "";
+    let passwordError = "";
+    var pattern = new RegExp(
+      /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
+    );
+    if (!pattern.test(this.state.email)) {
+      // if (!this.state.email.includes("@")) {
+      emailError = "*Please enter valid email address";
+    }
+    if (
+      !this.state.password.match(
+        /^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/
+      )
+    ) {
+      passwordError = "*Please enter secure and strong password.";
+    }
+    if (emailError) {
+      this.setState({ emailError });
+      return false;
+    }
+    return true;
+  };
+
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
@@ -43,7 +71,12 @@ class LoginBox extends React.Component {
       email: this.state.email,
       password: this.state.password
     };
-    this.props.loginUser(userData);
+    const isValid = this.validate();
+    if (isValid) {
+      this.props.loginUser(userData);
+      // clear form for removing error if fields are valid
+      this.setState(initialState);
+    }
   };
 
   render() {
@@ -66,9 +99,11 @@ class LoginBox extends React.Component {
                 value={this.state.email}
                 error={errors.email}
               />
-              {errors.email && (
-                <div className="invalid-feedback">{errors.email}</div>
-              )}
+              <span className="red-text" style={{ fontSize: 12, color: "red" }}>
+                {this.state.emailError}
+                {errors.email}
+                {errors.emailnotfound}
+              </span>
             </div>
 
             <div className="input-group">
