@@ -7,7 +7,9 @@ import { connect } from "react-redux";
 import { logoutUser } from "./../../actions/authActions";
 import DashboardContainer from "../../components/dashboardContainers/DashboardContainer";
 import ShowProfile from "../../components/dashboardContainers/ShowProfile";
+import EditProfile from "../../components/dashboardContainers/EditProfile";
 import userImg from "./../../assets/user-solid.svg";
+import updateUserData from "../../actions/userDetailsAction";
 
 const trigger = state => (
   <span style={{ fontSize: 11 }}>
@@ -27,13 +29,19 @@ class PatientDash extends Component {
     name: "",
     home: true,
     browse: false,
+    editProfile: false,
     horizontalNameShow: "Appointments History"
   };
+
+  componentDidMount() {
+    //this.props.dispatch(updateUserData(this.props.match.params.id));
+  }
 
   addAppointments = () => {
     this.setState({
       home: !this.state.home,
       browse: false,
+      editProfile: false,
       horizontalNameShow: "Appointments History"
     });
   };
@@ -41,7 +49,16 @@ class PatientDash extends Component {
     this.setState({
       browse: !this.state.browse,
       home: false,
+      editProfile: false,
       horizontalNameShow: "Profile"
+    });
+  };
+  editProfile = () => {
+    this.setState({
+      editProfile: !this.state.editProfile,
+      home: false,
+      browse: false,
+      horizontalNameShow: "Edit Profile"
     });
   };
 
@@ -68,6 +85,7 @@ class PatientDash extends Component {
 
   render() {
     const { activeItem } = this.state;
+
     return (
       <Grid className="grid">
         <Grid.Column width={3}>
@@ -88,7 +106,11 @@ class PatientDash extends Component {
                     text="View Profile"
                     onClick={() => this.addProfile()}
                   />
-                  <Dropdown.Item icon="edit" text="Edit Profile" />
+                  <Dropdown.Item
+                    icon="edit"
+                    text="Edit Profile"
+                    onClick={() => this.editProfile()}
+                  />
                 </Dropdown.Menu>
               </Dropdown>
             </Menu.Item>
@@ -156,6 +178,7 @@ class PatientDash extends Component {
             {/* here containers which appears in dashboard i.e edit profile are used to render */}
             {this.state.home && <DashboardContainer />}
             {this.state.browse && <ShowProfile />}
+            {this.state.editProfile && <EditProfile />}
           </Grid.Row>
         </Grid.Column>
       </Grid>

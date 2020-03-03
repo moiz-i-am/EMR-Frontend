@@ -12,6 +12,7 @@ import {
   Container,
   Responsive
 } from "semantic-ui-react";
+
 import { Link } from "react-router-dom";
 
 const MobileNavBar = ({
@@ -24,7 +25,7 @@ const MobileNavBar = ({
   <SidebarPushable>
     <Sidebar
       as={Menu}
-      animation="overlay"
+      animation="push"
       icon="labeled"
       items={rightItems}
       vertical
@@ -51,17 +52,18 @@ const MobileNavBar = ({
           Login
         </Menu.Item>
       </Link>
-      <Link to="/Login">
+      <Link to="/SignupSelector">
         <Menu.Item as="a">
           <Icon name="signup" />
           Signup
         </Menu.Item>
       </Link>
     </Sidebar>
+
     <SidebarPusher
       dimmed={visible}
       onClick={onPusherClick}
-      style={{ minHeight: "100vh" }}
+      style={{ minHeight: "80vh" }}
     >
       <Menu fixed="top" className="navbar" inverted>
         <Menu.Item onClick={onToggle}>
@@ -69,6 +71,7 @@ const MobileNavBar = ({
         </Menu.Item>
         <Menu.Item className="head" header content="HEALTH-E" />
       </Menu>
+
       {children}
     </SidebarPusher>
   </SidebarPushable>
@@ -76,18 +79,30 @@ const MobileNavBar = ({
 
 const NavBarDesktop = ({ rightItems }) => (
   <Menu fixed="top" className="navbar" borderless mini inverted>
-    <Menu.Item className="head" header content="HEALTH-E" />
+    <Link to="/">
+      <Menu.Item className="head" content="HEALTH-E" />
+    </Link>
 
     <Menu.Menu className="right" position="right">
-      {_.map(rightItems, item => (
-        <Menu.Item {...item} />
-      ))}
+      <Link to="/listDoctors">
+        <Menu.Item as="a" content="Find Doctors" />
+      </Link>
+
+      <Link to="">
+        <Menu.Item as="a" content="Find Hospitals" />
+      </Link>
+      <Link to="/Login">
+        <Menu.Item as="a" content="Login" />
+      </Link>
+      <Link to="/SignupSelector">
+        <Menu.Item as="a" content="Signup" />
+      </Link>
     </Menu.Menu>
   </Menu>
 );
 
 const NavBarChildren = ({ children }) => (
-  <Container style={{ marginTop: "5em" }}>{children}</Container>
+  <Container style={{ paddingTop: "5em" }}>{children}</Container>
 );
 
 const trigger = (
@@ -109,12 +124,8 @@ const options = [
 class NavBar extends Component {
   constructor(props) {
     super(props);
-    this.state = { role: null };
+    this.state = { role: null, visiblity: true };
   }
-
-  state = {
-    visible: false
-  };
 
   handlePusher = () => {
     const { visible } = this.state;
@@ -160,15 +171,21 @@ class NavBar extends Component {
               <Button as="a" primary content="Find Doctors" />
             </Menu.Item>
           </Link>
-          <Menu.Item>
-            <Button as="a" primary content="Find Hospitals" />
-          </Menu.Item>
-          <Menu.Item>
-            <Button as="a" primary content="Login" />
-          </Menu.Item>
-          <Menu.Item>
-            <Button as="a" primary content="Signup" />
-          </Menu.Item>
+          <Link to="">
+            <Menu.Item>
+              <Button as="a" primary content="Find Hospitals" />
+            </Menu.Item>
+          </Link>
+          <Link to="/Login">
+            <Menu.Item>
+              <Button as="a" primary content="Login" />
+            </Menu.Item>
+          </Link>
+          <Link to="/SignupSelector">
+            <Menu.Item>
+              <Button as="a" primary content="Signup" />
+            </Menu.Item>
+          </Link>
         </Menu.Menu>
       );
     }

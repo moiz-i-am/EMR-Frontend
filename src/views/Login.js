@@ -21,7 +21,9 @@ class LoginBox extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
-      this.props.history.push("/dashboard"); // push user to dashboard when they login
+      const { user } = nextProps.auth;
+      this.props.history.push(`/dashboard/${user.id}`);
+      // push user to dashboard when they login
     }
     if (nextProps.errors) {
       this.setState({
