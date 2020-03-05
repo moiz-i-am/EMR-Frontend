@@ -32,7 +32,9 @@ export const updateUserData = (upUserData, history, id, token) => dispatch => {
       //   Authorization: `Bearer ${token}`
       // }
     })
-    .then(res => {})
+    .then(res => {
+      history.push(`/dashboard/${id}`);
+    })
     .catch(err =>
       dispatch({
         type: GET_ERRORS,

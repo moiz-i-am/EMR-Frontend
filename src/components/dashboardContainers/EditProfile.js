@@ -1,18 +1,13 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import {
-  Grid,
-  Input,
-  Image,
-  Card,
-  Form,
-  Button,
-  Label,
-  TextArea
-} from "semantic-ui-react";
+import { Grid, Input, Image, Card, Button, Label } from "semantic-ui-react";
 import { connect } from "react-redux";
 
-import { updateUserData } from "./../../actions/userDetailsAction";
+import {
+  updateUserData,
+  getUserWithProfile
+} from "./../../actions/userDetailsAction";
+import { withRouter } from "react-router-dom";
 
 class EditProfile extends Component {
   state = {
@@ -74,6 +69,7 @@ class EditProfile extends Component {
         eveto: "9:00"
       });
     }
+    this.props.dispatch(getUserWithProfile(this.props.match.params.id));
   }
 
   onChange = e => {
@@ -81,19 +77,17 @@ class EditProfile extends Component {
   };
 
   onSubmit = e => {
-    // this.props.dispatch(updateUserData(this.props.match.params.id));
-
     e.preventDefault();
 
     const upUserData = {
       name: this.state.name,
       phone: this.state.phone
     };
-    //console.log(upUserData);
     if (this.props.auth.isAuthenticated) {
       this.props.updateUserData(
         upUserData,
         this.props.history,
+        // change id to (this.props.match.params.id)
         this.state.id,
         this.state.token
       );
@@ -102,9 +96,8 @@ class EditProfile extends Component {
     }
   };
 
-  render() {
-    console.log(this.state.token);
-    return (
+  renderEditProfile = users =>
+    users.user ? (
       <div className="main-view-profile-info">
         <form noValidate onSubmit={this.onSubmit}>
           <Card fluid>
@@ -129,7 +122,7 @@ class EditProfile extends Component {
                   >
                     <Input
                       name="name"
-                      value={this.state.name}
+                      placeholder={users.user.name}
                       onChange={this.onChange}
                     />
                   </div>
@@ -156,7 +149,7 @@ class EditProfile extends Component {
                 <span>Phone No.</span>
                 <Input
                   name="phone"
-                  value={this.state.phone}
+                  placeholder={users.user.phone}
                   onChange={this.onChange}
                 />
               </div>
@@ -234,22 +227,37 @@ class EditProfile extends Component {
           </Card>
         </form>
       </div>
-    );
+    ) : null;
+
+  render() {
+    let users = this.props.user;
+    console.log(this.props);
+    return <div>{this.renderEditProfile(users)}</div>;
   }
 }
-
 EditProfile.propTypes = {
   updateUserData: PropTypes.func.isRequired,
   auth: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired
 };
 
-const mapStateToProps = state => ({
-  auth: state.auth,
-  user: state.user,
-  errors: state.errors
-});
+const mapStateToProps = state => {
+  return {
+    auth: state.auth,
+    user: state.user,
+    errors: state.errors
+  };
+};
 
-export default connect(mapStateToProps, {
-  updateUserData
-})(EditProfile);
+const mapDispatchToProps = dispatch => {
+  return {
+    dispatch,
+    updateUserData: (user, history, id, token) =>
+      dispatch(updateUserData(user, history, id, token))
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(EditProfile));
