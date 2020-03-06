@@ -2,6 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import { useSpring, animated, config } from "react-spring";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { logoutUser } from "../../actions/authActions";
+import { withRouter } from "react-router-dom";
 
 import Brand from "./Brand";
 import BurgerMenu from "./BurgerMenu";
@@ -20,16 +24,38 @@ const Navbar = props => {
     config: config.wobbly
   });
 
+  const { isAuthenticated, user } = props.auth;
+  const authLinks = (
+    <ul className="navbar-nav ml-auto">
+      <a className="nav-link">
+        <img
+          src={user.avatar}
+          alt={user.name}
+          title={user.name}
+          className="rounded-circle"
+          style={{ width: "25px", marginRight: "5px" }}
+        />
+        Logout
+      </a>
+    </ul>
+  );
+
+  const guestLinks = (
+    <div>
+      <Link to="/listDoctors">Find Doctors</Link>
+      <Link to="/">Dashboard</Link>
+      <Link to="/Login">Login</Link>
+      <Link to="/SignupSelector">Signup</Link>
+    </div>
+  );
+
   return (
     <div>
       <NavBar style={barAnimation}>
         <FlexContainer>
           <Brand />
           <NavLinks style={linkAnimation}>
-            <Link to="/listDoctors">Find Doctors</Link>
-            <Link to="/">Dashboard</Link>
-            <Link to="/Login">Login</Link>
-            <Link to="/SignupSelector">Signup</Link>
+            {isAuthenticated ? authLinks : guestLinks}
           </NavLinks>
           <BurgerWrapper>
             <BurgerMenu
@@ -47,7 +73,16 @@ const Navbar = props => {
   );
 };
 
-export default Navbar;
+Navbar.propTypes = {
+  logoutUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps, { logoutUser })(withRouter(Navbar));
 
 const NavBar = styled(animated.nav)`
   position: relative;

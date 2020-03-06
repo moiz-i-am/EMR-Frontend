@@ -2,22 +2,26 @@ import React, { Component } from "react";
 import { Card, Grid, Image, Label } from "semantic-ui-react";
 
 export class ShowProfile extends Component {
-  state = {
-    name: "",
-    email: "",
-    phone: "03214568789",
-    location: "wah cantt",
-    hos1: "shifa",
-    hos2: "city",
-    hos3: "quaid e azam",
-    spec1: "dermotoligist",
-    spec2: "skin specialist",
-    spec3: "pechus system",
-    mornfrom: "8:00",
-    mornto: "10:00",
-    evefrom: "5:00",
-    eveto: "9:00"
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      userData: this.props.userData,
+      name: "",
+      email: "",
+      phone: "03214568789",
+      location: "wah cantt",
+      hos1: "shifa",
+      hos2: "city",
+      hos3: "quaid e azam",
+      spec1: "dermotoligist",
+      spec2: "skin specialist",
+      spec3: "pechus system",
+      mornfrom: "8:00",
+      mornto: "10:00",
+      evefrom: "5:00",
+      eveto: "9:00"
+    };
+  }
 
   componentDidMount() {
     this.documentData = JSON.parse(localStorage.getItem("jwtToken"));
@@ -71,7 +75,7 @@ export class ShowProfile extends Component {
                     marginTop: "30px"
                   }}
                 >
-                  {this.state.name}
+                  {this.state.userData.name}
                 </div>
                 <div
                   style={{
