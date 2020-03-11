@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Feed, Icon, Image } from "semantic-ui-react";
+import { Feed, Image } from "semantic-ui-react";
 
 class FeedbackListItem extends Component {
   render() {

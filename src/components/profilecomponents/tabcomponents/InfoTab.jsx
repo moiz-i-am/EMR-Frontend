@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Item, Icon, Grid, Divider, List, Button } from "semantic-ui-react";
+import { Item, Icon, Grid, Divider, List } from "semantic-ui-react";
 
 class InfoTab extends Component {
   render() {

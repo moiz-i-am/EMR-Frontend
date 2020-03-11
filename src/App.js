@@ -1,11 +1,10 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { Container } from "semantic-ui-react";
 
 import Footer from "./components/footer";
 import { withRouter } from "react-router-dom";
 
 import Navbar from "./components/navbar/Navbar";
-import GlobalStyle from "./styles/Global";
 
 const exclusionArray = ["/dashboard/:id"];
 

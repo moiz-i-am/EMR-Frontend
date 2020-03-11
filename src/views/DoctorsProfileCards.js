@@ -63,7 +63,7 @@ class ProfileCards extends Component {
                     <List.Item
                       icon="mail"
                       content={
-                        <a href="mailto:`${this.props.docEmail}`">
+                        <a href="mailto: ${this.props.docEmail}">
                           {this.props.docEmail}
                         </a>
                       }

@@ -1,10 +1,5 @@
 import axios from "axios";
-import {
-  GET_USER_DATA,
-  CLEAR_USER_DATA,
-  GET_ERRORS,
-  UPDATE_USER_DATA
-} from "./types";
+import { GET_USER_DATA, CLEAR_USER_DATA, GET_ERRORS } from "./types";
 
 export const getUserWithProfile = id => {
   const request = axios.get(`/v1/users/${id}`);
@@ -35,6 +30,22 @@ export const updateUserData = (upUserData, history, id, token) => dispatch => {
     .then(res => {
       history.push(`/dashboard/${id}`);
     })
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+export const deleteUser = (id, token) => dispatch => {
+  axios
+    .delete(`/v1/users/${id}`, {
+      // headers: {
+      //   Authorization: `Bearer ${token}`
+      // }
+    })
+    .then(res => {})
     .catch(err =>
       dispatch({
         type: GET_ERRORS,

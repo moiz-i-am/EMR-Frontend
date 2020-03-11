@@ -11,7 +11,7 @@ import DashboardContainer from "../../components/dashboardContainers/DashboardCo
 import ShowProfile from "../../components/dashboardContainers/ShowProfile";
 import EditProfile from "../../components/dashboardContainers/EditProfile";
 
-const trigger = state => (
+const trigger = (state, name) => (
   <span style={{ fontSize: 11 }}>
     <Header as="h7" color="teal" textAlign="center">
       <Image
@@ -19,7 +19,7 @@ const trigger = state => (
         size="small"
         circular
       />
-      {state.name}
+      {name}
     </Header>
   </span>
 );
@@ -96,7 +96,11 @@ export class MainDashboard extends Component {
               </Link>
             </Menu.Item>
             <Menu.Item>
-              <Dropdown floating item trigger={trigger(this.state)}>
+              <Dropdown
+                floating
+                item
+                trigger={trigger(this.state, users.user.name)}
+              >
                 <Dropdown.Menu>
                   <Dropdown.Item
                     icon="user"
@@ -199,7 +203,11 @@ export class MainDashboard extends Component {
               </Link>
             </Menu.Item>
             <Menu.Item>
-              <Dropdown floating item trigger={trigger(this.state)}>
+              <Dropdown
+                floating
+                item
+                trigger={trigger(this.state, users.user.name)}
+              >
                 <Dropdown.Menu>
                   <Dropdown.Item
                     icon="user"

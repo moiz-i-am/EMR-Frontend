@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { useSpring, animated, config } from "react-spring";
+import { Dropdown, Icon } from "semantic-ui-react";
+
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -10,6 +12,26 @@ import { withRouter } from "react-router-dom";
 import Brand from "./Brand";
 import BurgerMenu from "./BurgerMenu";
 import CollapseMenu from "./CollapseMenu";
+
+const trigger = name => (
+  <span style={{ color: "white" }}>
+    <Icon name="user" /> {name}
+  </span>
+);
+
+const options = name => [
+  {
+    key: "user",
+    text: (
+      <span>
+        Signed in as <strong>{name}</strong>
+      </span>
+    ),
+    disabled: true
+  },
+  { key: "profile", text: "Your Dashboard" },
+  { key: "sign-out", text: "Sign Out" }
+];
 
 const Navbar = props => {
   const barAnimation = useSpring({
@@ -26,24 +48,19 @@ const Navbar = props => {
 
   const { isAuthenticated, user } = props.auth;
   const authLinks = (
-    <ul className="navbar-nav ml-auto">
-      <a className="nav-link">
-        <img
-          src={user.avatar}
-          alt={user.name}
-          title={user.name}
-          className="rounded-circle"
-          style={{ width: "25px", marginRight: "5px" }}
-        />
-        Logout
-      </a>
-    </ul>
+    <div>
+      <Link to="/listDoctors">Find Doctors</Link>
+      <Link to="/Login">Login</Link>
+      <Link to="/SignupSelector">Signup</Link>
+      <Dropdown trigger={trigger(user.name)} options={options(user.name)} />
+    </div>
   );
 
   const guestLinks = (
     <div>
-      <Link to="/listDoctors">Find Doctors</Link>
-      <Link to="/">Dashboard</Link>
+      <Link to="/listDoctors">Doctors</Link>
+      <Link to="/">Hospitals</Link>
+      <Link to="/">Labs</Link>
       <Link to="/Login">Login</Link>
       <Link to="/SignupSelector">Signup</Link>
     </div>
