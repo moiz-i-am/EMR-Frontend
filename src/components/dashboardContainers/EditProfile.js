@@ -11,6 +11,7 @@ import {
   Confirm
 } from "semantic-ui-react";
 import { connect } from "react-redux";
+import moment from "moment";
 
 // import { Calendar, momentLocalizer } from "react-big-calendar";
 // import moment from "moment";
@@ -25,7 +26,11 @@ import { DateRangePicker } from "react-date-range";
 import Select from "react-select";
 import { timeOptions } from "../../data/data";
 
-import { updateUserData, deleteUser } from "./../../actions/userDetailsAction";
+import {
+  updateUserData,
+  deleteUser,
+  createDoctorsSchedule
+} from "./../../actions/userDetailsAction";
 import { withRouter } from "react-router-dom";
 
 // const localizer = momentLocalizer(moment);
@@ -56,16 +61,11 @@ class EditProfile extends Component {
     open2: false,
     userData: this.props.userData,
     val: [],
-    timeRange: ""
-    // events: [
-    //   {
-    //     start: new Date(),
-    //     end: new Date(moment().add(1, "days", "time")),
-    //     title: "Some title"
-    //   }
-    // ],
-    // selectedDate: "",
-    // selectedDay: ""
+    selectionRange: {
+      startDate: new Date(),
+      endDate: new Date(),
+      key: "selection"
+    }
   };
 
   componentDidUpdate(nextProps) {
@@ -142,9 +142,21 @@ class EditProfile extends Component {
       phone: this.state.phone,
       specializations: this.state.selectedSpecializations
     };
+    const addScheduleData = {
+      startDate: this.state.selectionRange.startDate + 1,
+      endDate: this.state.selectionRange.endDate + 1,
+      timeSlots: this.state.val
+    };
     if (this.props.auth.isAuthenticated) {
       this.props.updateUserData(
         upUserData,
+        this.props.history,
+        // change id to (this.props.match.params.id)
+        this.state.id,
+        this.state.token
+      );
+      this.props.createDoctorsSchedule(
+        addScheduleData,
         this.props.history,
         // change id to (this.props.match.params.id)
         this.state.id,
@@ -176,8 +188,7 @@ class EditProfile extends Component {
   handleRevoveSpecialization(index) {
     // remove the field
     this.state.selectedSpecializations.splice(index, 1);
-    console.log(this.state.selectedSpecializations, "8888");
-    //update the state
+
     this.setState({
       selectedSpecializations: this.state.selectedSpecializations
     });
@@ -193,68 +204,21 @@ class EditProfile extends Component {
     });
   }
 
-  // renderEditProfile = users =>
-  //   users.user ? (
-
-  //   ) : null;
-
-  // onEventResize = (type, { event, start, end, allDay }) => {
-  //   debugger;
-  //   this.setState(state => {
-  //     state.events[0].start = start;
-  //     state.events[0].end = end;
-  //     return { events: state.events };
-  //   });
-  // };
-
-  // onEventDrop = ({ event, start, end, allDay }) => {
-  //   console.log(start);
-  // };
-
   onSelected = (value, { action, removedValue }) => {
     this.setState({ val: value });
   };
 
   handleSelect = ranges => {
-    console.log(ranges);
-    this.setState({ timeRange: ranges });
-    //this.setState = { ranges };
-    // {
-    //   selection: {
-    //     startDate: [native Date Object],
-    //     endDate: [native Date Object],
-    //   }
-    // }
+    this.setState({ selectionRange: ranges.selection });
   };
 
   renderSchedule() {
-    const selectionRange = {
-      startDate: new Date(),
-      endDate: new Date(),
-      key: "selection"
-    };
     return (
       <div>
-        {/* <DnDCalendar
-          selectable={true}
-          localizer={localizer}
-          timeslots={1}
-          events={this.state.events}
-          min={new Date(2020, 10, 0, 8, 0, 0)}
-          max={new Date(2020, 10, 0, 20, 0, 0)}
-          localizer={localizer}
-          onEventDrop={this.onEventDrop}
-          onEventResize={this.onEventResize}
-          date={this.state.selectedDay}
-          style={{ height: 500 }}
-          onNavigate={date => {
-            this.setState({ selectedDate: date });
-          }}
-        /> */}
         <div style={{ display: "flex" }}>
           <div style={{ flexGrow: "1" }}>
             <DateRangePicker
-              ranges={[selectionRange]}
+              ranges={[this.state.selectionRange]}
               onChange={this.handleSelect}
             />
           </div>
@@ -274,214 +238,209 @@ class EditProfile extends Component {
   }
 
   render() {
-    console.log(this.state.val);
-    console.log(this.state.timeRange);
     return (
       <div className="main-view-profile-info">
-        <form noValidate onSubmit={this.onSubmit}>
-          <Card fluid>
-            <Card.Content>
+        <Card fluid>
+          <Card.Content>
+            <Grid>
+              <Grid.Column width={5}>
+                <div style={{ textAlign: "center" }}>
+                  <Image
+                    src="https://react.semantic-ui.com/images/wireframe/square-image.png"
+                    size="small"
+                    circular
+                  />
+                </div>
+              </Grid.Column>
+
+              <Grid.Column width={6}>
+                <div
+                  style={{
+                    fontSize: "20px",
+                    marginTop: "30px"
+                  }}
+                >
+                  <Input
+                    name="uname"
+                    value={this.state.userData.name}
+                    onChange={this.onChange}
+                  />
+                </div>
+                <div
+                  style={{
+                    fontSize: "15px",
+                    fontWeight: "normal",
+                    marginTop: "15px"
+                  }}
+                >
+                  {this.state.email}
+                </div>
+              </Grid.Column>
+            </Grid>
+          </Card.Content>
+          <Card.Content>
+            <div
+              style={{
+                fontSize: "20px",
+                fontWeight: "normal",
+                marginTop: "15px"
+              }}
+            >
+              <span>Phone No.</span>
+              <Input
+                name="phone"
+                value={this.state.userData.phone}
+                onChange={this.onChange}
+              />
+            </div>
+            <div
+              style={{
+                fontSize: "15px",
+                fontWeight: "normal",
+                marginTop: "15px"
+              }}
+            >
               <Grid>
                 <Grid.Column width={5}>
-                  <div style={{ textAlign: "center" }}>
-                    <Image
-                      src="https://react.semantic-ui.com/images/wireframe/square-image.png"
-                      size="small"
-                      circular
-                    />
-                  </div>
+                  city:{" "}
+                  <Label basic color="blue">
+                    {this.state.location}
+                  </Label>
                 </Grid.Column>
-
-                <Grid.Column width={6}>
-                  <div
-                    style={{
-                      fontSize: "20px",
-                      marginTop: "30px"
-                    }}
-                  >
-                    <Input
-                      name="uname"
-                      value={this.state.userData.name}
-                      onChange={this.onChange}
-                    />
-                  </div>
-                  <div
-                    style={{
-                      fontSize: "15px",
-                      fontWeight: "normal",
-                      marginTop: "15px"
-                    }}
-                  >
-                    {this.state.email}
-                  </div>
+                <Grid.Column width={5}>
+                  state:{" "}
+                  <Label basic color="blue">
+                    {this.state.location}
+                  </Label>
+                </Grid.Column>
+                <Grid.Column width={5}>
+                  country:{" "}
+                  <Label basic color="blue">
+                    {this.state.location}
+                  </Label>
                 </Grid.Column>
               </Grid>
-            </Card.Content>
-            <Card.Content>
-              <div
-                style={{
-                  fontSize: "20px",
-                  fontWeight: "normal",
-                  marginTop: "15px"
-                }}
+            </div>
+          </Card.Content>
+          <Card.Content>{this.state.discription}</Card.Content>
+          <Card.Content>
+            <div>
+              <p>Serving Hospitals:</p>
+              {this.state.selectedHospitals.map((hospitals, index) => {
+                return (
+                  <div key={index}>
+                    <Input
+                      value={hospitals}
+                      onChange={e => this.handleChange(e, index)}
+                    />
+                    <Button
+                      icon
+                      onClick={() => this.handleRevove(index)}
+                      color="red"
+                    >
+                      <Icon name="delete" />
+                    </Button>
+                  </div>
+                );
+              })}
+              <Button
+                as="div"
+                labelPosition="right"
+                onClick={e => this.addHospital(e)}
               >
-                <span>Phone No.</span>
-                <Input
-                  name="phone"
-                  value={this.state.userData.phone}
-                  onChange={this.onChange}
-                />
-              </div>
-              <div
-                style={{
-                  fontSize: "15px",
-                  fontWeight: "normal",
-                  marginTop: "15px"
-                }}
-              >
-                <Grid>
-                  <Grid.Column width={5}>
-                    city:{" "}
-                    <Label basic color="blue">
-                      {this.state.location}
-                    </Label>
-                  </Grid.Column>
-                  <Grid.Column width={5}>
-                    state:{" "}
-                    <Label basic color="blue">
-                      {this.state.location}
-                    </Label>
-                  </Grid.Column>
-                  <Grid.Column width={5}>
-                    country:{" "}
-                    <Label basic color="blue">
-                      {this.state.location}
-                    </Label>
-                  </Grid.Column>
-                </Grid>
-              </div>
-            </Card.Content>
-            <Card.Content>{this.state.discription}</Card.Content>
-            <Card.Content>
-              <div>
-                <p>Serving Hospitals:</p>
-                {this.state.selectedHospitals.map((hospitals, index) => {
+                <Button icon color="green">
+                  <Icon name="plus" />
+                </Button>
+                <Label as="a" basic pointing="left" color="green">
+                  Add Hospital
+                </Label>
+              </Button>
+            </div>
+            <div>
+              <p>Specialization:</p>
+              {this.state.selectedSpecializations.map(
+                (specialization, index) => {
                   return (
                     <div key={index}>
                       <Input
-                        value={hospitals}
-                        onChange={e => this.handleChange(e, index)}
+                        value={specialization}
+                        onChange={e =>
+                          this.handleChangeSpecialization(e, index)
+                        }
                       />
                       <Button
                         icon
-                        onClick={() => this.handleRevove(index)}
+                        onClick={() => this.handleRevoveSpecialization(index)}
                         color="red"
                       >
                         <Icon name="delete" />
                       </Button>
                     </div>
                   );
-                })}
-                <Button
-                  as="div"
-                  labelPosition="right"
-                  onClick={e => this.addHospital(e)}
-                >
-                  <Button icon color="green">
-                    <Icon name="plus" />
-                  </Button>
-                  <Label as="a" basic pointing="left" color="green">
-                    Add Hospital
-                  </Label>
+                }
+              )}
+              <Button
+                as="div"
+                labelPosition="right"
+                onClick={e => this.addSpecialization(e)}
+              >
+                <Button icon color="green">
+                  <Icon name="plus" />
                 </Button>
-                {/* <Button onClick={e => this.addHospital(e)}>Add Hospital</Button> */}
+                <Label as="a" basic pointing="left" color="green">
+                  Add Specialization
+                </Label>
+              </Button>
+            </div>
+            <div>
+              <p>Time Availability:</p>
+              <div>
+                Morning:
+                <Label basic color="blue">
+                  {this.state.mornfrom}
+                </Label>
+                <Label basic color="red">
+                  {this.state.mornto}
+                </Label>
               </div>
               <div>
-                <p>Specialization:</p>
-                {this.state.selectedSpecializations.map(
-                  (specialization, index) => {
-                    return (
-                      <div key={index}>
-                        <Input
-                          value={specialization}
-                          onChange={e =>
-                            this.handleChangeSpecialization(e, index)
-                          }
-                        />
-                        <Button
-                          icon
-                          onClick={() => this.handleRevoveSpecialization(index)}
-                          color="red"
-                        >
-                          <Icon name="delete" />
-                        </Button>
-                      </div>
-                    );
-                  }
-                )}
-                <Button
-                  as="div"
-                  labelPosition="right"
-                  onClick={e => this.addSpecialization(e)}
-                >
-                  <Button icon color="green">
-                    <Icon name="plus" />
-                  </Button>
-                  <Label as="a" basic pointing="left" color="green">
-                    Add Specialization
-                  </Label>
-                </Button>
+                Evening:
+                <Label basic color="blue">
+                  {this.state.mornfrom}
+                </Label>
+                <Label basic color="red">
+                  {this.state.mornto}
+                </Label>
               </div>
-              <div>
-                <p>Time Availability:</p>
-                <div>
-                  Morning:
-                  <Label basic color="blue">
-                    {this.state.mornfrom}
-                  </Label>
-                  <Label basic color="red">
-                    {this.state.mornto}
-                  </Label>
-                </div>
-                <div>
-                  Evening:
-                  <Label basic color="blue">
-                    {this.state.mornfrom}
-                  </Label>
-                  <Label basic color="red">
-                    {this.state.mornto}
-                  </Label>
-                </div>
-              </div>
-            </Card.Content>
-            <Card.Content textAlign="right">
-              <Button onClick={this.show} color="red">
-                Delete Profile
-              </Button>
-              <Confirm
-                content="Are you sure you want to delete your profile?"
-                open={this.state.open}
-                header="Delete Alert"
-                onCancel={this.handleCancel}
-                onConfirm={this.handleConfirm}
-              />
-              <Button type="submit" color="blue">
-                Update
-              </Button>
-              <Button onClick={this.show2} color="green">
-                schedule time
-              </Button>
-              <Confirm
-                open={this.state.open2}
-                content={this.renderSchedule()}
-                header="Set time of your availability"
-                onCancel={this.handleCancel}
-                onConfirm={this.handleConfirmSchedule}
-                size="large"
-              />
-            </Card.Content>
-          </Card>
-        </form>
+            </div>
+          </Card.Content>
+          <Card.Content textAlign="right">
+            <Button onClick={this.show2} color="green">
+              schedule time
+            </Button>
+            <Confirm
+              open={this.state.open2}
+              content={this.renderSchedule()}
+              header="Set time of your availability"
+              onCancel={this.handleCancel}
+              onConfirm={this.handleConfirmSchedule}
+              size="large"
+            />
+            <Button onClick={this.show} color="red">
+              Delete Profile
+            </Button>
+            <Confirm
+              content="Are you sure you want to delete your profile?"
+              open={this.state.open}
+              header="Delete Alert"
+              onCancel={this.handleCancel}
+              onConfirm={this.handleConfirm}
+            />
+            <Button type="submit" color="blue" onClick={this.onSubmit}>
+              Update
+            </Button>
+          </Card.Content>
+        </Card>
       </div>
     );
   }
@@ -505,7 +464,9 @@ const mapDispatchToProps = dispatch => {
     dispatch,
     updateUserData: (user, history, id, token) =>
       dispatch(updateUserData(user, history, id, token)),
-    deleteUser: (id, token) => dispatch(deleteUser(id, token))
+    deleteUser: (id, token) => dispatch(deleteUser(id, token)),
+    createDoctorsSchedule: (user, history, id, token) =>
+      dispatch(createDoctorsSchedule(user, history, id, token))
   };
 };
 
