@@ -8,16 +8,11 @@ import {
   Button,
   Label,
   Icon,
-  Confirm
+  Confirm,
+  Message
 } from "semantic-ui-react";
 import { connect } from "react-redux";
 import moment from "moment";
-
-// import { Calendar, momentLocalizer } from "react-big-calendar";
-// import moment from "moment";
-// import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
-// import "react-big-calendar/lib/css/react-big-calendar.css";
-// import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
@@ -65,7 +60,8 @@ class EditProfile extends Component {
       startDate: new Date(),
       endDate: new Date(),
       key: "selection"
-    }
+    },
+    todayDate: new Date()
   };
 
   componentDidUpdate(nextProps) {
@@ -131,6 +127,7 @@ class EditProfile extends Component {
     }
   };
   handleCancel = () => this.setState({ open: false });
+  handleCancelSchedule = () => this.setState({ open2: false });
 
   handleConfirmSchedule = () => this.setState({ open2: false });
 
@@ -143,11 +140,13 @@ class EditProfile extends Component {
       specializations: this.state.selectedSpecializations
     };
     const addScheduleData = {
-      startDate: this.state.selectionRange.startDate + 1,
-      endDate: this.state.selectionRange.endDate + 1,
+      startDate: this.state.selectionRange.startDate,
+      endDate: this.state.selectionRange.endDate,
       timeSlots: this.state.val
     };
-    if (this.props.auth.isAuthenticated) {
+    if (this.state.todayDate >= this.state.selectionRange.startDate) {
+      alert("please select the date correctly");
+    } else if (this.props.auth.isAuthenticated) {
       this.props.updateUserData(
         upUserData,
         this.props.history,
@@ -233,6 +232,14 @@ class EditProfile extends Component {
             />
           </div>
         </div>
+      </div>
+    );
+  }
+
+  renderAlert() {
+    return (
+      <div>
+        <Message color="red">Red</Message>;
       </div>
     );
   }
@@ -422,7 +429,7 @@ class EditProfile extends Component {
               open={this.state.open2}
               content={this.renderSchedule()}
               header="Set time of your availability"
-              onCancel={this.handleCancel}
+              onCancel={this.handleCancelSchedule}
               onConfirm={this.handleConfirmSchedule}
               size="large"
             />

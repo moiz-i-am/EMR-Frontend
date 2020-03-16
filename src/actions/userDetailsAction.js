@@ -66,9 +66,7 @@ export const createDoctorsSchedule = (
         Authorization: `Bearer ${token}`
       }
     })
-    .then(res => {
-      history.push(`/dashboard/${id}`);
-    })
+    .then(res => {})
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
