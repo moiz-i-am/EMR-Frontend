@@ -26,6 +26,7 @@ export class DoctorDetailedProfile extends Component {
           <DocorsProfileCards
             docName={users.user.name}
             docEmail={users.user.email}
+            docSpec={users.user.specializations}
           />
           <TabbedSection />
         </Grid.Column>

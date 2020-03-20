@@ -46,14 +46,12 @@ class ProfileCards extends Component {
                       <br />
                     </Card.Meta>
                     <div>
-                      {this.props.docSpec.map(function(schedule) {
+                      {this.props.docSpec.map(function(specializations) {
                         return (
                           <div
-                            id="lab"
-                            key={schedule.value}
                             style={{ display: "inline-block", padding: "5px" }}
                           >
-                            <Label>{schedule}</Label>
+                            <Label>{specializations}</Label>
                           </div>
                         );
                       })}
