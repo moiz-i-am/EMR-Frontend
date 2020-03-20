@@ -105,6 +105,7 @@ class Signup extends React.Component {
       email: this.state.email,
       password: this.state.password,
       name: this.state.OrName,
+      role: this.state.role,
       location: this.state.OrLocation
     };
     const newLab = {
@@ -112,6 +113,7 @@ class Signup extends React.Component {
       email: this.state.email,
       password: this.state.password,
       name: this.state.OrName,
+      role: this.state.role,
       location: this.state.OrLocation
     };
     const isValid = this.validate();

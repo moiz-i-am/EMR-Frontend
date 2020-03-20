@@ -1,4 +1,4 @@
-html,
+/* html,
 body,
 #root {
     width: 100%;
@@ -38,12 +38,12 @@ body,
     cursor: pointer;
 }
 
-.selected-controller {
+ .selected-controller {
     transition: border 0.5s ease-out;
     border-bottom: 2px solid blue;
 }
 
-.box-container {
+ .box-container {
     display: flex;
     flex-direction: column;
     max-width: 24em;
@@ -66,8 +66,8 @@ body,
     text-align: center;
     padding: 5px;
     margin-bottom: 17px;
-    /* margin-left: 35px; */
-    /* margin-right: 35px; */
+    margin-left: 35px;
+    margin-right: 35px;
     font-family: Ozxgen, sans-serif;
     font-size: 22px;
     border-bottom: 2px solid blue;
@@ -126,7 +126,7 @@ body,
 
 .login-btn {
     padding: 2px 30px;
-    /* background-color: #417cef; */
+    /* background-color: #417cef;
     border: 0;
     font-size: 18px;
     border-radius: 3px;
@@ -176,4 +176,8 @@ body,
 
 .show {
     visibility: visible;
+} */
+
+.navigator{
+    
 }
