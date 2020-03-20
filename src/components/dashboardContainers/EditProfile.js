@@ -12,7 +12,6 @@ import {
   Message
 } from "semantic-ui-react";
 import { connect } from "react-redux";
-import moment from "moment";
 
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
@@ -31,6 +30,14 @@ import { withRouter } from "react-router-dom";
 // const localizer = momentLocalizer(moment);
 // const DnDCalendar = withDragAndDrop(Calendar);
 
+let current_datetime = new Date();
+let formatted_date =
+  current_datetime.getDate() +
+  "-" +
+  (current_datetime.getMonth() + 1) +
+  "-" +
+  current_datetime.getFullYear();
+
 class EditProfile extends Component {
   state = {
     token: "",
@@ -38,7 +45,9 @@ class EditProfile extends Component {
     name: "",
     email: "",
     phone: "",
-    location: "wah cantt",
+    city: "",
+    state: "",
+    country: "",
     discription: "",
     hos1: "shifa",
     hos2: "city",
@@ -52,10 +61,11 @@ class EditProfile extends Component {
     eveto: "9:00",
     selectedHospitals: [],
     selectedSpecializations: [],
+    selectedPrevSpecializations: this.props.userData.specializations,
     open: false,
     open2: false,
     userData: this.props.userData,
-    val: [],
+    val: "",
     selectionRange: {
       startDate: new Date(),
       endDate: new Date(),
@@ -74,7 +84,6 @@ class EditProfile extends Component {
 
   componentDidMount() {
     this.documentData = JSON.parse(localStorage.getItem("jwtToken"));
-    console.log(this.documentData);
     if (localStorage.getItem("jwtToken")) {
       this.setState({
         token: this.documentData.token.accessToken,
@@ -137,7 +146,11 @@ class EditProfile extends Component {
     const upUserData = {
       name: this.state.name,
       phone: this.state.phone,
-      specializations: this.state.selectedSpecializations
+      /// join both prev and new specs
+      specializations: [
+        this.state.selectedPrevSpecializations +
+          this.state.selectedSpecializations
+      ]
     };
     const addScheduleData = {
       startDate: this.state.selectionRange.startDate,
@@ -145,7 +158,7 @@ class EditProfile extends Component {
       timeSlots: this.state.val
     };
     if (this.state.todayDate >= this.state.selectionRange.startDate) {
-      alert("please select the date correctly");
+      alert(`please select the date onward ${formatted_date}`);
     } else if (this.props.auth.isAuthenticated) {
       this.props.updateUserData(
         upUserData,
@@ -193,6 +206,22 @@ class EditProfile extends Component {
     });
   }
 
+  handleChangePrevSpecialization(e, index) {
+    this.state.selectedPrevSpecializations[index] = e.target.value;
+    this.setState({
+      selectedPrevSpecializations: this.state.selectedPrevSpecializations
+    });
+  }
+
+  handleRevovePreviousSpecialization(index) {
+    // remove the field
+    this.state.selectedPrevSpecializations.splice(index, 1);
+
+    this.setState({
+      selectedPrevSpecializations: this.state.selectedPrevSpecializations
+    });
+  }
+
   addHospital() {
     this.setState({ selectedHospitals: [...this.state.selectedHospitals, ""] });
   }
@@ -203,7 +232,7 @@ class EditProfile extends Component {
     });
   }
 
-  onSelected = (value, { action, removedValue }) => {
+  onSelected = value => {
     this.setState({ val: value });
   };
 
@@ -245,6 +274,13 @@ class EditProfile extends Component {
   }
 
   render() {
+    console.log(
+      "prev asdj: " +
+        this.state.selectedPrevSpecializations +
+        "," +
+        this.state.selectedSpecializations
+    );
+    console.log("new asdj: ");
     return (
       <div className="main-view-profile-info">
         <Card fluid>
@@ -311,19 +347,31 @@ class EditProfile extends Component {
                 <Grid.Column width={5}>
                   city:{" "}
                   <Label basic color="blue">
-                    {this.state.location}
+                    <Input
+                      name="city"
+                      value={this.state.userData.location_city}
+                      onChange={this.onChange}
+                    />
                   </Label>
                 </Grid.Column>
                 <Grid.Column width={5}>
                   state:{" "}
                   <Label basic color="blue">
-                    {this.state.location}
+                    <Input
+                      name="state"
+                      value={this.state.userData.location_state}
+                      onChange={this.onChange}
+                    />
                   </Label>
                 </Grid.Column>
                 <Grid.Column width={5}>
                   country:{" "}
                   <Label basic color="blue">
-                    {this.state.location}
+                    <Input
+                      name="country"
+                      value={this.state.userData.location_country}
+                      onChange={this.onChange}
+                    />
                   </Label>
                 </Grid.Column>
               </Grid>
@@ -365,6 +413,31 @@ class EditProfile extends Component {
             </div>
             <div>
               <p>Specialization:</p>
+              {/* /////////////////////////////////////////////////////////////// */}
+              {this.state.selectedPrevSpecializations.map(
+                (prevSpecialization, index) => {
+                  return (
+                    <div key={index}>
+                      <Input
+                        value={prevSpecialization}
+                        onChange={e =>
+                          this.handleChangePrevSpecialization(e, index)
+                        }
+                      />
+                      <Button
+                        icon
+                        onClick={() =>
+                          this.handleRevovePreviousSpecialization(index)
+                        }
+                        color="red"
+                      >
+                        <Icon name="delete" />
+                      </Button>
+                    </div>
+                  );
+                }
+              )}
+              {/* ////////////////////////////////////////////////////////////// */}
               {this.state.selectedSpecializations.map(
                 (specialization, index) => {
                   return (
@@ -454,8 +527,7 @@ class EditProfile extends Component {
 }
 EditProfile.propTypes = {
   updateUserData: PropTypes.func.isRequired,
-  auth: PropTypes.func.isRequired,
-  errors: PropTypes.object.isRequired
+  auth: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => {

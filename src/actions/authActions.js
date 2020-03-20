@@ -37,7 +37,10 @@ export const registerLab = (labData, history) => dispatch => {
 export const registerUser = (user, history) => dispatch => {
   axios
     .post("v1/users", user)
-    .then(res => history.push("/login"))
+    .then(res => {
+      history.push("/login");
+      console.log(res.data);
+    })
     .catch(err => {
       dispatch({
         type: GET_ERRORS,

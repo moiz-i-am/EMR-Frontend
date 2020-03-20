@@ -45,8 +45,18 @@ class ProfileCards extends Component {
                       ahsgdjahgsdjhgsad
                       <br />
                     </Card.Meta>
-                    <div style={{ marginTop: "20px" }}>
-                      <Label>23</Label>
+                    <div>
+                      {this.props.docSpec.map(function(schedule) {
+                        return (
+                          <div
+                            id="lab"
+                            key={schedule.value}
+                            style={{ display: "inline-block", padding: "5px" }}
+                          >
+                            <Label>{schedule}</Label>
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
                 </Grid.Column>

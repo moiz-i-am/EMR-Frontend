@@ -68,7 +68,6 @@ export class MainDashboard extends Component {
 
   componentDidMount() {
     this.documentData = JSON.parse(localStorage.getItem("jwtToken"));
-    console.log(this.documentData);
     if (localStorage.getItem("jwtToken")) {
       this.setState({
         role: this.documentData.user.role
@@ -298,7 +297,6 @@ export class MainDashboard extends Component {
   render() {
     const { activeItem } = this.state;
     let users = this.props.user;
-    console.log(this.props);
     if (this.state.role === "patient") {
       return <div>{this.renderDashboardPatient(users, activeItem)}</div>;
     } else if (this.state.role === "doctor") {

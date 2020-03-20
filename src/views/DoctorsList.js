@@ -10,7 +10,6 @@ class DoctorsList extends Component {
 
   componentDidMount() {
     axios.get(`v1/users`).then(res => {
-      console.log(res);
       this.setState({ persons: res.data });
     });
   }
@@ -29,6 +28,7 @@ class DoctorsList extends Component {
                     <ProfileCards
                       docName={persons.name}
                       docEmail={persons.email}
+                      docSpec={persons.specializations}
                     />
                   </Link>
                 </div>

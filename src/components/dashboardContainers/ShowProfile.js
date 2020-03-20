@@ -25,7 +25,6 @@ export class ShowProfile extends Component {
 
   componentDidMount() {
     this.documentData = JSON.parse(localStorage.getItem("jwtToken"));
-    console.log(this.documentData);
     if (localStorage.getItem("jwtToken")) {
       this.setState({
         name: this.documentData.user.name,
@@ -84,7 +83,7 @@ export class ShowProfile extends Component {
                     marginTop: "15px"
                   }}
                 >
-                  {this.state.email}
+                  {this.state.userData.email}
                 </div>
               </Grid.Column>
             </Grid>
@@ -97,7 +96,7 @@ export class ShowProfile extends Component {
                 marginTop: "15px"
               }}
             >
-              Phone no : {this.state.phone}
+              Phone no : {this.state.userData.phone}
             </div>
             <div
               style={{
@@ -149,9 +148,15 @@ export class ShowProfile extends Component {
             </div>
             <div>
               <p>Specialization:</p>
-              <Label size="huge">{this.state.spec1}</Label>
-              <Label size="huge">{this.state.spec2}</Label>
-              <Label size="huge">{this.state.spec3}</Label>
+              {this.state.userData.specializations.map(function(
+                specializations
+              ) {
+                return (
+                  <div style={{ display: "inline-block", padding: "5px" }}>
+                    <Label size="huge">{specializations}</Label>
+                  </div>
+                );
+              })}
             </div>
             <div>
               <p>Time Availability:</p>
