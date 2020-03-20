@@ -54,6 +54,27 @@ export const deleteUser = (id, token) => dispatch => {
     );
 };
 
+export const createDoctorsSchedule = (
+  addScheduleData,
+  history,
+  id,
+  token
+) => dispatch => {
+  axios
+    .post(`/v1/scheduling`, addScheduleData, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .then(res => {})
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
 export const clearUserWithProfile = () => {
   return {
     type: CLEAR_USER_DATA,

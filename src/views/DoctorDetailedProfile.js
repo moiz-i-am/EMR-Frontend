@@ -22,22 +22,24 @@ export class DoctorDetailedProfile extends Component {
   renderDocProfile = users =>
     users.user ? (
       <Grid>
-        <Grid.Column width={12}>
+        <Grid.Column width={10}>
           <DocorsProfileCards
             docName={users.user.name}
             docEmail={users.user.email}
           />
           <TabbedSection />
         </Grid.Column>
-        <Grid.Column width={4}>
-          <AppointmentBooking docName={users.user.name} />
+        <Grid.Column width={6}>
+          <AppointmentBooking
+            docName={users.user.name}
+            docId={this.props.match.params.id}
+          />
         </Grid.Column>
       </Grid>
     ) : null;
 
   render() {
     let users = this.props.user;
-    console.log(this.props);
     return <div>{this.renderDocProfile(users)}</div>;
   }
 }
