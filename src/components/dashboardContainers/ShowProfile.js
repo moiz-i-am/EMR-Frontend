@@ -5,49 +5,8 @@ export class ShowProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userData: this.props.userData,
-      name: "",
-      email: "",
-      phone: "03214568789",
-      location: "wah cantt",
-      hos1: "shifa",
-      hos2: "city",
-      hos3: "quaid e azam",
-      spec1: "dermotoligist",
-      spec2: "skin specialist",
-      spec3: "pechus system",
-      mornfrom: "8:00",
-      mornto: "10:00",
-      evefrom: "5:00",
-      eveto: "9:00"
+      userData: this.props.userData
     };
-  }
-
-  componentDidMount() {
-    this.documentData = JSON.parse(localStorage.getItem("jwtToken"));
-    if (localStorage.getItem("jwtToken")) {
-      this.setState({
-        name: this.documentData.user.name,
-        email: this.documentData.user.email
-      });
-    } else {
-      this.setState({
-        name: "",
-        email: "",
-        phone: "03214568789",
-        location: "wah cantt",
-        hos1: "shifa",
-        hos2: "city",
-        hos3: "quaid e azam",
-        spec1: "dermotoligist",
-        spec2: "skin specialist",
-        spec3: "pechus system",
-        mornfrom: "8:00",
-        mornto: "10:00",
-        evefrom: "5:00",
-        eveto: "9:00"
-      });
-    }
   }
 
   render() {
@@ -78,9 +37,10 @@ export class ShowProfile extends Component {
                 </div>
                 <div
                   style={{
-                    fontSize: "15px",
+                    fontSize: "20px",
                     fontWeight: "normal",
-                    marginTop: "15px"
+                    marginTop: "15px",
+                    color: "#37B6AD"
                   }}
                 >
                   {this.state.userData.email}
@@ -91,7 +51,7 @@ export class ShowProfile extends Component {
           <Card.Content>
             <div
               style={{
-                fontSize: "15px",
+                fontSize: "20px",
                 fontWeight: "normal",
                 marginTop: "15px"
               }}
@@ -109,19 +69,19 @@ export class ShowProfile extends Component {
                 <Grid.Column width={5}>
                   city:{" "}
                   <Label basic color="blue">
-                    {this.state.location}
+                    {this.state.userData.location_city}
                   </Label>
                 </Grid.Column>
                 <Grid.Column width={5}>
                   state:{" "}
                   <Label basic color="blue">
-                    {this.state.location}
+                    {this.state.userData.location_state}
                   </Label>
                 </Grid.Column>
                 <Grid.Column width={5}>
                   country:{" "}
                   <Label basic color="blue">
-                    {this.state.location}
+                    {this.state.userData.location_country}
                   </Label>
                 </Grid.Column>
               </Grid>
@@ -157,27 +117,6 @@ export class ShowProfile extends Component {
                   </div>
                 );
               })}
-            </div>
-            <div>
-              <p>Time Availability:</p>
-              <div>
-                Morning:
-                <Label basic color="blue">
-                  {this.state.mornfrom}
-                </Label>
-                <Label basic color="red">
-                  {this.state.mornto}
-                </Label>
-              </div>
-              <div>
-                Evening:
-                <Label basic color="blue">
-                  {this.state.mornfrom}
-                </Label>
-                <Label basic color="red">
-                  {this.state.mornto}
-                </Label>
-              </div>
             </div>
           </Card.Content>
         </Card>

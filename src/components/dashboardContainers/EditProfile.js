@@ -9,13 +9,15 @@ import {
   Label,
   Icon,
   Confirm,
-  Message
+  Message,
+  Divider
 } from "semantic-ui-react";
 import { connect } from "react-redux";
+import moment from "moment";
 
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
-import { DateRangePicker } from "react-date-range";
+import { DateRangePicker, Calendar } from "react-date-range";
 
 import Select from "react-select";
 import { timeOptions } from "../../data/data";
@@ -25,6 +27,7 @@ import {
   deleteUser,
   createDoctorsSchedule
 } from "./../../actions/userDetailsAction";
+import { deleteDoctorsSchedule } from "../../actions/schedulingActions";
 import { withRouter } from "react-router-dom";
 
 // const localizer = momentLocalizer(moment);
@@ -39,40 +42,36 @@ let formatted_date =
   current_datetime.getFullYear();
 
 class EditProfile extends Component {
-  state = {
-    token: "",
-    id: "",
-    name: "",
-    email: "",
-    phone: "",
-    city: "",
-    state: "",
-    country: "",
-    discription: "",
-    hos1: "shifa",
-    hos2: "city",
-    hos3: "quaid e azam",
-    spec1: "dermotoligist",
-    spec2: "skin specialist",
-    spec3: "pechus system",
-    mornfrom: "8:00",
-    mornto: "10:00",
-    evefrom: "5:00",
-    eveto: "9:00",
-    selectedHospitals: [],
-    selectedSpecializations: [],
-    selectedPrevSpecializations: this.props.userData.specializations,
-    open: false,
-    open2: false,
-    userData: this.props.userData,
-    val: "",
-    selectionRange: {
-      startDate: new Date(),
-      endDate: new Date(),
-      key: "selection"
-    },
-    todayDate: new Date()
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      token: "",
+      id: "",
+      name: "",
+      email: "",
+      phone: this.props.userData.phone,
+      location_city: this.props.userData.location_city,
+      location_state: this.props.userData.location_state,
+      location_country: this.props.userData.location_country,
+      discription: "",
+      selectedHospitals: [],
+      selectedSpecializations: [],
+      selectedPrevSpecializations: this.props.userData.specializations,
+      open: false,
+      open2: false,
+      open3: false,
+      open4: false,
+      userData: this.props.userData,
+      val: "",
+      selectionRange: {
+        startDate: new Date(),
+        endDate: new Date(),
+        key: "selection"
+      },
+      todayDate: new Date(),
+      selectedDateForDelete: ""
+    };
+  }
 
   componentDidUpdate(nextProps) {
     if (nextProps.errors) {
@@ -88,28 +87,12 @@ class EditProfile extends Component {
       this.setState({
         token: this.documentData.token.accessToken,
         id: this.documentData.user.id,
-        name: this.documentData.user.name,
-        email: this.documentData.user.email
+        name: this.documentData.user.name
       });
     } else {
       this.setState({
         token: "",
-        id: "",
-        name: "",
-        email: "",
-        phone: "03214568789",
-        location: "wah cantt",
-        discription: "",
-        hos1: "shifa",
-        hos2: "city",
-        hos3: "quaid e azam",
-        spec1: "dermotoligist",
-        spec2: "skin specialist",
-        spec3: "pechus system",
-        mornfrom: "8:00",
-        mornto: "10:00",
-        evefrom: "5:00",
-        eveto: "9:00"
+        id: ""
       });
     }
   }
@@ -120,6 +103,9 @@ class EditProfile extends Component {
 
   show = () => this.setState({ open: true });
   show2 = () => this.setState({ open2: true });
+  show3 = () => this.setState({ open3: true });
+  show4 = () => this.setState({ open4: true });
+
   handleConfirm = () => {
     this.setState({ open: false });
     if (this.props.auth.isAuthenticated) {
@@ -135,10 +121,24 @@ class EditProfile extends Component {
       console.log("asdasdasd");
     }
   };
-  handleCancel = () => this.setState({ open: false });
-  handleCancelSchedule = () => this.setState({ open2: false });
 
   handleConfirmSchedule = () => this.setState({ open2: false });
+
+  handleConfirmDeleteSchedule = () => {
+    this.setState({ open3: false });
+    const docData = {
+      user: this.state.id,
+      date: this.state.selectedDateForDelete
+    };
+    this.props.deleteDoctorsSchedule(docData);
+  };
+
+  handleConfirmUpdateSchedule = () => this.setState({ open4: false });
+
+  handleCancel = () => this.setState({ open: false });
+  handleCancelSchedule = () => this.setState({ open2: false });
+  handleCancelDeleteSchedule = () => this.setState({ open3: false });
+  handleCancelUpdateSchedule = () => this.setState({ open4: false });
 
   onSubmit = e => {
     e.preventDefault();
@@ -146,11 +146,15 @@ class EditProfile extends Component {
     const upUserData = {
       name: this.state.name,
       phone: this.state.phone,
+      location_city: this.state.location_city,
+      location_state: this.state.location_state,
+      location_country: this.state.location_country,
       /// join both prev and new specs
-      specializations: [
-        this.state.selectedPrevSpecializations +
-          this.state.selectedSpecializations
-      ]
+      // specializations: [
+      //   this.state.selectedPrevSpecializations +
+      //     this.state.selectedSpecializations
+      // ]
+      specializations: this.state.selectedSpecializations
     };
     const addScheduleData = {
       startDate: this.state.selectionRange.startDate,
@@ -186,7 +190,6 @@ class EditProfile extends Component {
   handleRevove(index) {
     // remove the field
     this.state.selectedHospitals.splice(index, 1);
-    console.log(this.state.selectedHospitals, "8888");
     //update the state
     this.setState({ selectedHospitals: this.state.selectedHospitals });
   }
@@ -240,6 +243,12 @@ class EditProfile extends Component {
     this.setState({ selectionRange: ranges.selection });
   };
 
+  handleSelectSingle = date => {
+    const localTime = moment(date).format("YYYY-MM-DD"); // store localTime
+    const proposedDate = localTime + "T19:00:00.000Z";
+    this.setState({ selectedDateForDelete: proposedDate });
+  };
+
   renderSchedule() {
     return (
       <div>
@@ -265,6 +274,14 @@ class EditProfile extends Component {
     );
   }
 
+  renderDeleteSchedule() {
+    return (
+      <div style={{ textAlign: "center" }}>
+        <Calendar date={new Date()} onChange={this.handleSelectSingle} />
+      </div>
+    );
+  }
+
   renderAlert() {
     return (
       <div>
@@ -274,13 +291,14 @@ class EditProfile extends Component {
   }
 
   render() {
-    console.log(
-      "prev asdj: " +
-        this.state.selectedPrevSpecializations +
-        "," +
-        this.state.selectedSpecializations
-    );
-    console.log("new asdj: ");
+    // console.log(
+    //   "prev asdj: " +
+    //     this.state.selectedPrevSpecializations +
+    //     "," +
+    //     this.state.selectedSpecializations
+    // );
+
+    console.log("user data: " + JSON.stringify(this.state.userData));
     return (
       <div className="main-view-profile-info">
         <Card fluid>
@@ -311,12 +329,13 @@ class EditProfile extends Component {
                 </div>
                 <div
                   style={{
-                    fontSize: "15px",
+                    fontSize: "20px",
                     fontWeight: "normal",
-                    marginTop: "15px"
+                    marginTop: "15px",
+                    color: "#37B6AD"
                   }}
                 >
-                  {this.state.email}
+                  {this.state.userData.email}
                 </div>
               </Grid.Column>
             </Grid>
@@ -332,7 +351,7 @@ class EditProfile extends Component {
               <span>Phone No.</span>
               <Input
                 name="phone"
-                value={this.state.userData.phone}
+                value={this.state.phone}
                 onChange={this.onChange}
               />
             </div>
@@ -346,33 +365,27 @@ class EditProfile extends Component {
               <Grid>
                 <Grid.Column width={5}>
                   city:{" "}
-                  <Label basic color="blue">
-                    <Input
-                      name="city"
-                      value={this.state.userData.location_city}
-                      onChange={this.onChange}
-                    />
-                  </Label>
+                  <Input
+                    name="location_city"
+                    value={this.state.location_city}
+                    onChange={this.onChange}
+                  />
                 </Grid.Column>
                 <Grid.Column width={5}>
                   state:{" "}
-                  <Label basic color="blue">
-                    <Input
-                      name="state"
-                      value={this.state.userData.location_state}
-                      onChange={this.onChange}
-                    />
-                  </Label>
+                  <Input
+                    name="location_state"
+                    value={this.state.location_state}
+                    onChange={this.onChange}
+                  />
                 </Grid.Column>
                 <Grid.Column width={5}>
                   country:{" "}
-                  <Label basic color="blue">
-                    <Input
-                      name="country"
-                      value={this.state.userData.location_country}
-                      onChange={this.onChange}
-                    />
-                  </Label>
+                  <Input
+                    name="location_country"
+                    value={this.state.location_country}
+                    onChange={this.onChange}
+                  />
                 </Grid.Column>
               </Grid>
             </div>
@@ -472,31 +485,10 @@ class EditProfile extends Component {
                 </Label>
               </Button>
             </div>
-            <div>
-              <p>Time Availability:</p>
-              <div>
-                Morning:
-                <Label basic color="blue">
-                  {this.state.mornfrom}
-                </Label>
-                <Label basic color="red">
-                  {this.state.mornto}
-                </Label>
-              </div>
-              <div>
-                Evening:
-                <Label basic color="blue">
-                  {this.state.mornfrom}
-                </Label>
-                <Label basic color="red">
-                  {this.state.mornto}
-                </Label>
-              </div>
-            </div>
           </Card.Content>
           <Card.Content textAlign="right">
             <Button onClick={this.show2} color="green">
-              schedule time
+              new schedule
             </Button>
             <Confirm
               open={this.state.open2}
@@ -506,8 +498,32 @@ class EditProfile extends Component {
               onConfirm={this.handleConfirmSchedule}
               size="large"
             />
+            <Button onClick={this.show4} color="blue">
+              Update schedule
+            </Button>
+            <Confirm
+              open={this.state.open4}
+              // content={this.renderUpdateSchedule()}
+              header="select a date to update it's schedule"
+              onCancel={this.handleCancelUpdateSchedule}
+              onConfirm={this.handleConfirmUpdateSchedule}
+              size="large"
+            />
+            <Button onClick={this.show3} color="red">
+              delete schedule
+            </Button>
+            <Confirm
+              open={this.state.open3}
+              content={this.renderDeleteSchedule()}
+              header="select a date to delete"
+              onCancel={this.handleCancelDeleteSchedule}
+              onConfirm={this.handleConfirmDeleteSchedule}
+              size="small"
+            />
+
+            <Divider horizontal />
             <Button onClick={this.show} color="red">
-              Delete Profile
+              Delete Account
             </Button>
             <Confirm
               content="Are you sure you want to delete your profile?"
@@ -545,7 +561,8 @@ const mapDispatchToProps = dispatch => {
       dispatch(updateUserData(user, history, id, token)),
     deleteUser: (id, token) => dispatch(deleteUser(id, token)),
     createDoctorsSchedule: (user, history, id, token) =>
-      dispatch(createDoctorsSchedule(user, history, id, token))
+      dispatch(createDoctorsSchedule(user, history, id, token)),
+    deleteDoctorsSchedule: docData => dispatch(deleteDoctorsSchedule(docData))
   };
 };
 

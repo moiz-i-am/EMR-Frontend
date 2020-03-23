@@ -6,7 +6,14 @@ import { withRouter } from "react-router-dom";
 
 import Navbar from "./components/navbar/Navbar";
 
-const exclusionArray = ["/dashboard/:id"];
+let id = "";
+const documentData = JSON.parse(localStorage.getItem("jwtToken"));
+if (localStorage.getItem("jwtToken")) {
+  id = documentData.user.id;
+} else {
+  id = "";
+}
+const exclusionArray = [`/dashboard/${id}`];
 
 class App extends Component {
   state = {

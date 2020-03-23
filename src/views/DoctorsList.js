@@ -16,14 +16,17 @@ class DoctorsList extends Component {
 
   render() {
     return (
-      <div className="main_DocList-div">
+      <div className="main_DocList-div" style={{ backgroundColor: "#F7F7F7" }}>
         {this.state.persons.length === 0 ? (
           <h1>No Doctors Found</h1>
         ) : (
           this.state.persons.map(persons => {
             if (persons.role === "doctor") {
               return (
-                <div style={{ width: "70%" }} key={persons.id}>
+                <div
+                  style={{ width: "60%", marginTop: "15px" }}
+                  key={persons.id}
+                >
                   <Link to={`/docProfile/${persons.id}`}>
                     <ProfileCards
                       docName={persons.name}

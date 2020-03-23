@@ -50,8 +50,8 @@ const Navbar = props => {
   const authLinks = (
     <div>
       <Link to="/listDoctors">Find Doctors</Link>
-      <Link to="/Login">Login</Link>
-      <Link to="/SignupSelector">Signup</Link>
+      <Link to="/">Hospitals</Link>
+      <Link to="/">Labs</Link>
       <Dropdown trigger={trigger(user.name)} options={options(user.name)} />
     </div>
   );

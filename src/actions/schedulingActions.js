@@ -7,11 +7,6 @@ export const getDoctorTimeSlots = docData => {
     request.then(({ data }) => {
       let schedule = data;
 
-      //schedule = JSON.stringify(schedule);
-      //schedule = JSON.stringify(schedule, null, 4);
-
-      //console.log("time data (axios): " + schedule);
-
       let response = {
         schedule
       };
@@ -22,4 +17,8 @@ export const getDoctorTimeSlots = docData => {
       });
     });
   };
+};
+
+export const deleteDoctorsSchedule = docData => dispatch => {
+  axios.post(`/v1/scheduling/deleteschedule`, docData).then(res => {});
 };

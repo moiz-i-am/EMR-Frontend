@@ -6,7 +6,8 @@ import {
   Card,
   Button,
   List,
-  Rating
+  Rating,
+  Divider
 } from "semantic-ui-react";
 import "./../styles/profileCards.css";
 import logo from "./../assets/user-solid.svg";
@@ -16,24 +17,33 @@ class ProfileCards extends Component {
     return (
       <div className="search">
         <div className="userCard">
-          <Card style={{ width: "80%" }}>
+          <Card style={{ width: "100%" }}>
             <Card.Content className="left aligned">
               <div className="two column headers">
                 <Card.Header>
                   <Grid>
                     <Grid.Column width={4}>
-                      <div style={{ borderRadius: "50%" }}>
+                      <div style={{ borderRadius: "50%", textAlign: "center" }}>
                         <Image src={logo} size="tiny" />
                       </div>
                     </Grid.Column>
                     <Grid.Column width={12}>
-                      <div style={{ textAlign: "left", paddingTop: "27px" }}>
+                      <div
+                        style={{
+                          textAlign: "left",
+                          paddingTop: "27px",
+                          color: "black",
+                          fontWeight: "bolder",
+                          fontSize: "25px"
+                        }}
+                      >
                         {this.props.docName}
                       </div>
                     </Grid.Column>
                   </Grid>
                 </Card.Header>
               </div>
+              <Divider />
             </Card.Content>
             <div className="short-info">
               <Grid>
@@ -45,6 +55,7 @@ class ProfileCards extends Component {
                       ahsgdjahgsdjhgsad
                       <br />
                     </Card.Meta>
+                    <Divider />
                     <div>
                       {this.props.docSpec.map(function(specializations) {
                         return (
@@ -58,10 +69,12 @@ class ProfileCards extends Component {
                     </div>
                   </div>
                 </Grid.Column>
+
                 <Grid.Column width={6}>
                   <Rating
                     maxRating={5}
                     defaultRating={3}
+                    disabled
                     icon="star"
                     size="huge"
                   />

@@ -1,5 +1,14 @@
 import React, { Component } from "react";
-import { Grid, Dropdown, Icon, Menu, Header, Image } from "semantic-ui-react";
+import {
+  Grid,
+  Dropdown,
+  Icon,
+  Menu,
+  Header,
+  Image,
+  GridColumn,
+  Divider
+} from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import propTypes from "prop-types";
 import { connect } from "react-redux";
@@ -14,12 +23,16 @@ import EditProfile from "../../components/dashboardContainers/EditProfile";
 const trigger = (state, name) => (
   <span style={{ fontSize: 11 }}>
     <Header as="h7" color="teal" textAlign="center">
-      <Image
-        src="https://react.semantic-ui.com/images/wireframe/square-image.png"
-        size="small"
-        circular
-      />
-      {name}
+      <Grid>
+        <Grid.Column width={6}>
+          <Image
+            src="https://react.semantic-ui.com/images/wireframe/square-image.png"
+            size="small"
+            circular
+          />
+        </Grid.Column>
+        <Grid.Column width={8}>{name}</Grid.Column>
+      </Grid>
     </Header>
   </span>
 );
@@ -187,7 +200,7 @@ export class MainDashboard extends Component {
     );
   /////////////////////////////////////////////// for Patients dashboard end ////////////////////////////////////////////
 
-  /////////////////////////////////////////////// for Patients dashboard start ////////////////////////////////////////////
+  /////////////////////////////////////////////// for Doctors dashboard start ////////////////////////////////////////////
   renderDashboardDoctor = (users, activeItem) =>
     users.user ? (
       <Grid className="grid">
@@ -195,10 +208,12 @@ export class MainDashboard extends Component {
           {/* <SideBar username={this.state.name} /> */}
           {/* /////////////////////////////////////////////////////////////////////////////////////// */}
 
-          <Menu vertical>
+          <Menu vertical inverted style={{ backgroundColor: "#2C3436" }}>
             <Menu.Item>
               <Link to="/">
-                <h1 style={{ textAlign: "center" }}>HEALTH-E</h1>
+                <h1 style={{ textAlign: "center", color: "white" }}>
+                  HEALTH-<span style={{ color: "red" }}>E</span>
+                </h1>
               </Link>
             </Menu.Item>
             <Menu.Item>
