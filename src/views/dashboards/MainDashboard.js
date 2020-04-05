@@ -20,6 +20,8 @@ import DashboardContainer from "../../components/dashboardContainers/DashboardCo
 import ShowProfile from "../../components/dashboardContainers/ShowProfile";
 import EditProfile from "../../components/dashboardContainers/EditProfile";
 
+import EditProfilePatient from "../../components/dashboardContainers/editProfiles/EditProfilePatients";
+
 const trigger = (state, name) => (
   <span style={{ fontSize: 11 }}>
     <Header as="h7" color="teal" textAlign="center">
@@ -72,6 +74,23 @@ export class MainDashboard extends Component {
     });
   };
 
+  addProfilePatient = () => {
+    this.setState({
+      browse: !this.state.browse,
+      home: false,
+      editProfile: false,
+      horizontalNameShow: "Profile"
+    });
+  };
+  editProfilePatient = () => {
+    this.setState({
+      editProfile: !this.state.editProfile,
+      home: false,
+      browse: false,
+      horizontalNameShow: "Edit Profile"
+    });
+  };
+
   onLogoutClick = e => {
     e.preventDefault();
     this.props.logoutUser(this.props.history);
@@ -101,7 +120,11 @@ export class MainDashboard extends Component {
           {/* <SideBar username={this.state.name} /> */}
           {/* /////////////////////////////////////////////////////////////////////////////////////// */}
 
-          <Menu vertical>
+          <Menu
+            vertical
+            inverted
+            style={{ backgroundColor: "#2C3436", width: "105%" }}
+          >
             <Menu.Item>
               <Link to="/">
                 <h1 style={{ textAlign: "center" }}>HEALTH-E</h1>
@@ -117,12 +140,12 @@ export class MainDashboard extends Component {
                   <Dropdown.Item
                     icon="user"
                     text="View Profile"
-                    onClick={() => this.addProfile()}
+                    onClick={() => this.addProfilePatient()}
                   />
                   <Dropdown.Item
                     icon="edit"
                     text="Edit Profile"
-                    onClick={() => this.editProfile()}
+                    onClick={() => this.editProfilePatient()}
                   />
                 </Dropdown.Menu>
               </Dropdown>
@@ -191,7 +214,9 @@ export class MainDashboard extends Component {
             {/* here containers which appears in dashboard i.e edit profile are used to render */}
             {this.state.home && <DashboardContainer />}
             {this.state.browse && <ShowProfile userData={users.user} />}
-            {this.state.editProfile && <EditProfile userData={users.user} />}
+            {this.state.editProfile && (
+              <EditProfilePatient userData={users.user} />
+            )}
           </Grid.Row>
         </Grid.Column>
       </Grid>
@@ -208,7 +233,11 @@ export class MainDashboard extends Component {
           {/* <SideBar username={this.state.name} /> */}
           {/* /////////////////////////////////////////////////////////////////////////////////////// */}
 
-          <Menu vertical inverted style={{ backgroundColor: "#2C3436" }}>
+          <Menu
+            vertical
+            inverted
+            style={{ backgroundColor: "#2C3436", width: "105%" }}
+          >
             <Menu.Item>
               <Link to="/">
                 <h1 style={{ textAlign: "center", color: "white" }}>

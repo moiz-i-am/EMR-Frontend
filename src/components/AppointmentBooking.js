@@ -1,37 +1,97 @@
 import React, { Component } from "react";
-import { Card, Button, Label, Icon } from "semantic-ui-react";
+import { Card, Button, Label, Icon, Confirm } from "semantic-ui-react";
 import DatePicker from "react-horizontal-datepicker";
 import { connect } from "react-redux";
 import moment from "moment";
+import { withRouter } from "react-router-dom";
+
 import { getDoctorTimeSlots } from "./../actions/schedulingActions";
+import { createAppointmentBooking } from "./../actions/bookingActions";
 
 export class AppointmentBooking extends Component {
   state = {
+    token: "",
+    patientId: "",
     docId: this.props.docId,
     choosenSlot: "",
-    post: ""
+    date: "",
+    open: false
   };
 
-  handleClick(index) {
-    this.setState({ post: index });
+  componentDidMount() {
+    this.documentData = JSON.parse(localStorage.getItem("jwtToken"));
+    if (localStorage.getItem("jwtToken")) {
+      this.setState({
+        token: this.documentData.token.accessToken,
+        patientId: this.documentData.user.id,
+        name: this.documentData.user.name
+      });
+    } else {
+      this.setState({
+        token: "",
+        patientId: ""
+      });
+    }
   }
+
+  show = () => this.setState({ open: true });
+
+  handleConfirm = () => {
+    if (this.props.auth.isAuthenticated) {
+      const bookingData = {
+        date: this.state.date,
+        doctor: this.state.docId,
+        patient: this.state.patientId,
+        timeSlot: this.state.choosenSlot
+      };
+      this.props.createAppointmentBooking(bookingData, this.state.token);
+      ///////////////////////// update time slot for disappearing
+
+      //////////////////////////////////////////
+      this.setState({ open: false });
+    } else {
+      console.log("ERROR: not authanticated");
+    }
+  };
+
+  handleCancel = () => this.setState({ open: false });
+
+  renderConfirmation() {
+    if (this.props.auth.isAuthenticated) {
+      return <div style={{ textAlign: "center" }}>hello bc</div>;
+    } else {
+      return <div style={{ textAlign: "center" }}>login kr bc</div>;
+    }
+  }
+
+  addTimeSlot = schedule => {
+    this.setState({
+      choosenSlot: schedule
+    });
+  };
 
   renderDocTimeSlots = schedules =>
     schedules.schedule ? (
       <div>
-        {schedules.schedule[0].timeSlots.map(function(schedule, index) {
+        {schedules.schedule[0].timeSlots.map((schedule, index) => {
           if (schedules) {
-            return (
-              <div
-                id="lab"
-                key={schedule.value}
-                style={{ display: "inline-block", padding: "5px" }}
-              >
-                <Label>
-                  <Icon name="clock" /> {schedule.label}
-                </Label>
-              </div>
-            );
+            if (schedule.reserved != "true") {
+              return (
+                <div
+                  id="lab"
+                  key={schedule.value}
+                  style={{ display: "inline-block", padding: "5px" }}
+                >
+                  <Button
+                    inverted
+                    color="blue"
+                    onClick={() => this.addTimeSlot(schedule.label)}
+                  >
+                    <Icon name="clock" /> {schedule.label}
+                  </Button>
+                </div>
+              );
+            }
           } else {
             return <div>sorry janu</div>;
           }
@@ -44,7 +104,10 @@ export class AppointmentBooking extends Component {
   render() {
     let schedules = this.props.schedule;
 
-    console.log("psotays: " + this.state.post);
+    console.log("psotays :" + this.state.choosenSlot);
+    console.log("doc id :" + this.state.docId);
+    console.log("date :" + this.state.date);
+    console.log("pat id :" + this.state.patientId);
 
     const selectedDay = val => {
       const localTime = moment(val).format("YYYY-MM-DD"); // store localTime
@@ -55,6 +118,7 @@ export class AppointmentBooking extends Component {
       };
       // redux function for rendering time slots
       this.props.getDoctorTimeSlots(docData);
+      this.setState({ date: proposedDate, choosenSlot: "" });
     };
 
     return (
@@ -74,9 +138,17 @@ export class AppointmentBooking extends Component {
         </Card.Content>
         <Card.Content>{this.renderDocTimeSlots(schedules)}</Card.Content>
         <Card.Content extra>
-          <Button color="blue" style={{ width: "100%" }}>
+          <Button onClick={this.show} color="blue" style={{ width: "100%" }}>
             Book Now
           </Button>
+          <Confirm
+            open={this.state.open}
+            content={this.renderConfirmation()}
+            header="Are you sure you want to Book according to these"
+            onCancel={this.handleCancel}
+            onConfirm={this.handleConfirm}
+            size="medium"
+          />
         </Card.Content>
       </Card>
     );
@@ -85,10 +157,25 @@ export class AppointmentBooking extends Component {
 
 const mapStateToProps = state => {
   return {
+    auth: state.auth,
     schedule: state.schedule
   };
 };
 
-export default connect(mapStateToProps, {
-  getDoctorTimeSlots
-})(AppointmentBooking);
+const mapDispatchToProps = dispatch => {
+  return {
+    dispatch,
+    createAppointmentBooking: (bookingData, token) =>
+      dispatch(createAppointmentBooking(bookingData, token)),
+    getDoctorTimeSlots: data => dispatch(getDoctorTimeSlots(data))
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(AppointmentBooking));
+
+// export default connect(mapStateToProps, {
+//   getDoctorTimeSlots
+// })(AppointmentBooking);

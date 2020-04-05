@@ -27,7 +27,10 @@ import {
   deleteUser,
   createDoctorsSchedule
 } from "./../../actions/userDetailsAction";
-import { deleteDoctorsSchedule } from "../../actions/schedulingActions";
+import {
+  updateDoctorsSchedule,
+  deleteDoctorsSchedule
+} from "../../actions/schedulingActions";
 import { withRouter } from "react-router-dom";
 
 // const localizer = momentLocalizer(moment);
@@ -63,13 +66,15 @@ class EditProfile extends Component {
       open4: false,
       userData: this.props.userData,
       val: "",
+      valUpdate: "",
       selectionRange: {
         startDate: new Date(),
         endDate: new Date(),
         key: "selection"
       },
       todayDate: new Date(),
-      selectedDateForDelete: ""
+      selectedDateForDelete: "",
+      selectedDateForUpdate: ""
     };
   }
 
@@ -133,7 +138,16 @@ class EditProfile extends Component {
     this.props.deleteDoctorsSchedule(docData);
   };
 
-  handleConfirmUpdateSchedule = () => this.setState({ open4: false });
+  handleConfirmUpdateSchedule = () => {
+    this.setState({ open4: false });
+    const docDataUpdate = {
+      user: this.state.id,
+      date: this.state.selectedDateForUpdate,
+      timeSlots: this.state.valUpdate
+    };
+    this.props.updateDoctorsSchedule(docDataUpdate);
+    // console.log("data for update: " + JSON.stringify(docDataUpdate));
+  };
 
   handleCancel = () => this.setState({ open: false });
   handleCancelSchedule = () => this.setState({ open2: false });
@@ -239,8 +253,18 @@ class EditProfile extends Component {
     this.setState({ val: value });
   };
 
+  onSelectedUpdate = value => {
+    this.setState({ valUpdate: value });
+  };
+
   handleSelect = ranges => {
     this.setState({ selectionRange: ranges.selection });
+  };
+
+  handleSelectSingleUpdate = date => {
+    const localTime = moment(date).format("YYYY-MM-DD"); // store localTime
+    const proposedDate = localTime + "T19:00:00.000Z";
+    this.setState({ selectedDateForUpdate: proposedDate });
   };
 
   handleSelectSingle = date => {
@@ -274,6 +298,31 @@ class EditProfile extends Component {
     );
   }
 
+  renderUpdateSchedule() {
+    return (
+      <div style={{ textAlign: "center" }}>
+        <div style={{ display: "flex" }}>
+          <div style={{ flexGrow: "1" }}>
+            <Calendar
+              date={new Date()}
+              onChange={this.handleSelectSingleUpdate}
+            />
+          </div>
+          <div style={{ flexGrow: "1" }}>
+            <Select
+              isMulti
+              name="colors"
+              options={timeOptions}
+              className="basic-multi-select"
+              classNamePrefix="select"
+              onChange={this.onSelectedUpdate}
+            />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   renderDeleteSchedule() {
     return (
       <div style={{ textAlign: "center" }}>
@@ -298,7 +347,7 @@ class EditProfile extends Component {
     //     this.state.selectedSpecializations
     // );
 
-    console.log("user data: " + JSON.stringify(this.state.userData));
+    //console.log("user data: " + JSON.stringify(this.state.userData));
     return (
       <div className="main-view-profile-info">
         <Card fluid>
@@ -503,7 +552,7 @@ class EditProfile extends Component {
             </Button>
             <Confirm
               open={this.state.open4}
-              // content={this.renderUpdateSchedule()}
+              content={this.renderUpdateSchedule()}
               header="select a date to update it's schedule"
               onCancel={this.handleCancelUpdateSchedule}
               onConfirm={this.handleConfirmUpdateSchedule}
@@ -562,7 +611,9 @@ const mapDispatchToProps = dispatch => {
     deleteUser: (id, token) => dispatch(deleteUser(id, token)),
     createDoctorsSchedule: (user, history, id, token) =>
       dispatch(createDoctorsSchedule(user, history, id, token)),
-    deleteDoctorsSchedule: docData => dispatch(deleteDoctorsSchedule(docData))
+    deleteDoctorsSchedule: docData => dispatch(deleteDoctorsSchedule(docData)),
+    updateDoctorsSchedule: docDataUpdate =>
+      dispatch(updateDoctorsSchedule(docDataUpdate))
   };
 };
 

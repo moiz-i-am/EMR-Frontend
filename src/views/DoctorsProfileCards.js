@@ -57,7 +57,7 @@ class ProfileCards extends Component {
                     </Card.Meta>
                     <Divider />
                     <div>
-                      {this.props.docSpec.map(function(specializations) {
+                      {this.props.docSpec.map(specializations => {
                         return (
                           <div
                             style={{ display: "inline-block", padding: "5px" }}
@@ -78,21 +78,18 @@ class ProfileCards extends Component {
                     icon="star"
                     size="huge"
                   />
-                  <List>
+                  <List style={{ color: "black" }}>
                     <List.Item icon="money" content="3000 -/Rs" />
-                    <List.Item icon="marker" content="New York, NY" />
+                    <List.Item
+                      icon="marker"
+                      content={<p>{this.props.docLocation}</p>}
+                    />
                     <List.Item
                       icon="mail"
                       content={
                         <a href="mailto: ${this.props.docEmail}">
                           {this.props.docEmail}
                         </a>
-                      }
-                    />
-                    <List.Item
-                      icon="linkify"
-                      content={
-                        <a href="http://www.semantic-ui.com">semantic-ui.com</a>
                       }
                     />
                   </List>

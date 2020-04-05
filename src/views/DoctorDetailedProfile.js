@@ -3,6 +3,7 @@ import { Grid } from "semantic-ui-react";
 import DocorsProfileCards from "./DoctorsProfileCards";
 import TabbedSection from "./TabbedSection";
 import { connect } from "react-redux";
+import { Container } from "semantic-ui-react";
 
 import {
   getUserWithProfile,
@@ -28,6 +29,13 @@ export class DoctorDetailedProfile extends Component {
               docName={users.user.name}
               docEmail={users.user.email}
               docSpec={users.user.specializations}
+              docLocation={
+                users.user.location_city +
+                ", " +
+                users.user.location_state +
+                ", " +
+                users.user.location_country
+              }
             />
             <TabbedSection />
           </Grid.Column>
@@ -43,7 +51,13 @@ export class DoctorDetailedProfile extends Component {
 
   render() {
     let users = this.props.user;
-    return <div>{this.renderDocProfile(users)}</div>;
+    return (
+      <div>
+        <Container style={{ width: "90%" }}>
+          {this.renderDocProfile(users)}
+        </Container>
+      </div>
+    );
   }
 }
 

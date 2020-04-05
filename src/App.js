@@ -34,9 +34,8 @@ class App extends Component {
           />
         )}
 
-        <Container style={{ width: "90%" }}>
-          <main>{this.props.children}</main>
-        </Container>
+        <main>{this.props.children}</main>
+
         {exclusionArray.indexOf(this.props.location.pathname) < 0 && <Footer />}
       </div>
     );
