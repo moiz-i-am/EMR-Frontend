@@ -47,7 +47,7 @@ export class Home extends Component {
           <Input fluid size='small' name="name" type='text' placeholder='Enter Name...' onChange={this.onChange} action value={this.state.name}>
           <input />
           <Select name="category" compact options={options} placeholder='Category...' onChange={this.onChangeSelect} value={this.state.category}/>
-          <Button size='small' as={Link} to={{ pathname:'/listDoctors',
+          <Button size='small' as={Link} to={{ pathname:'/search',
                                   state:{ name: this.state.name, 
                                           category: this.state.category}
                                 }}>Search</Button>

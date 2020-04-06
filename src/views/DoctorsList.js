@@ -5,62 +5,36 @@ import { Link } from "react-router-dom";
 
 class DoctorsList extends Component {
   state = {
-    filteredData:[]
+    persons: []
   };
 
   componentDidMount() {
-    switch(this.props.location.state.category){
-      case "Doctor": axios.get(`v1/users`).then(res => {
-                    console.log(this.props);
-                    this.setState({ filteredData: res.data });
-                    });
-      case "Hospital": axios.get(`v1/hospital`).then(res => {
-                    console.log(res.data);
-                    this.setState({ filteredData: res.data });
-                    });
-      case "Labs": axios.get(`v1/lab`).then(res => {
-                console.log(this.props);
-                this.setState({ filteredData: res.data });
-              });
-      default: axios.get(`v1/users`).then(res => {
-            console.log(this.props);
-            this.setState({ filteredData: res.data });
-            });
-    }
+    axios.get(`v1/users`).then(res => {
+      this.setState({ persons: res.data });
+      //console.log(this.state.persons[0].specializations)
+    });
   }
 
   render() {
     return (
       <div className="main_DocList-div">
-        {this.state.filteredData.length === 0 ? (
-          <h1>No Data Found</h1>
+        {this.state.persons.length === 0 ? (
+          <h1>No Doctors Found</h1>
         ) : (
-          this.state.filteredData.map(filteredData => {
-            if (filteredData.role === "doctor" && this.props.location.state.name === filteredData.name) {
+          this.state.persons.map(persons => {
+            if (persons.role === "doctor") {
               return (
-                <div style={{ width: "70%" }} key={filteredData.id}>
-                  <Link to={`/docProfile/${filteredData.id}`}>
+                <div style={{ width: "70%" }} key={persons.id}>
+                  <Link to={`/docProfile/${persons.id}`}>
                     <ProfileCards
-                      docName={filteredData.name}
-                      docEmail={filteredData.email}
+                      docName={persons.name}
+                      docEmail={persons.email}
+                      docSpec={persons.specializations}
                     />
                   </Link>
                 </div>
               );
-            } else if(filteredData.role === "hospital" && this.props.location.state.name === filteredData.name) {
-              return (
-                <div style={{ width: "70%" }} key={filteredData.id}>
-                  <Link to={`/docProfile/${filteredData.id}`}>
-                    <ProfileCards
-                      docName={filteredData.name}
-                      docEmail={filteredData.email}
-                    />
-                  </Link>
-                </div>
-              );
-            } else if(filteredData.role === "labs" && this.props.location.state.name === filteredData.name) {
-
-            } 
+            }
           })
         )}
       </div>

@@ -13,6 +13,7 @@ import DoctorsList from "./views/DoctorsList";
 import DoctorDetailedProfile from "./views/DoctorDetailedProfile";
 import SignupNavigator2 from "./views/SignupNavigator2";
 import Login2 from "./views/Login2";
+import Search from "./views/Search";
 
 const routes = () => {
   return (
@@ -27,6 +28,7 @@ const routes = () => {
         <Route exact path="/Login" component={Login2} />
         <Route exact path="/dashboard/:id" component={Dashboard} />
         <Route exact path="/listDoctors" component={DoctorsList} />
+        <Route exact path="/search" component={Search}/>
         <Route exact path="/docProfile/:id" component={DoctorDetailedProfile} />
 
         <Route component={NotFound} />
