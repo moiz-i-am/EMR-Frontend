@@ -22,7 +22,7 @@ export class DoctorDetailedProfile extends Component {
 
   renderDocProfile = users =>
     users.user ? (
-      <div style={{ marginTop: "20px" }}>
+      <div style={{ marginTop: "20px", marginBottom: "20px" }}>
         <Grid>
           <Grid.Column width={10}>
             <DocorsProfileCards
