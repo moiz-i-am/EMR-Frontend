@@ -13,7 +13,7 @@ class HospCardSegment extends Component {
     };
 
     componentDidMount () {
-        Axios.get(`v1/lab`).then(res => {
+        Axios.get(`v1/hospital`).then(res => {
             console.log(this.props);
             this.setState({ hospitals: res.data });
         });
