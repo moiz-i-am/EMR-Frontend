@@ -1,59 +1,67 @@
-import React, { Component } from 'react';
-import Axios from 'axios';
-import { Grid } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
-import DocCard from '../displayCards/DocCard';
+import React, { Component } from "react";
+import Axios from "axios";
+import { Grid } from "semantic-ui-react";
+import { Link } from "react-router-dom";
+import DocCard from "../displayCards/DocCard";
 
-const doctorsToShow=[];
+const doctorsToShow = [];
 
 class DocCardSegment extends Component {
-    state = {
-        doctors: [],
-        doctorsList: []
-    };
+  state = {
+    doctors: [],
+    doctorsList: []
+  };
 
-    componentDidMount () {
-        Axios.get(`v1/users`).then(res => {
-            console.log(this.props);
-            this.setState({ doctors: res.data });
-        });
-        
-        for(var i = 0; i <= 3; i++){
-            const rand = this.state.doctors[Math.floor(Math.random() * this.state.doctors.length)];
+  componentDidMount() {
+    Axios.get(`v1/users`).then(res => {
+      console.log(this.props);
+      this.setState({ doctors: res.data });
+    });
 
-            doctorsToShow.push(rand);
-        }
+    for (var i = 0; i <= 3; i++) {
+      const rand = this.state.doctors[
+        Math.floor(Math.random() * this.state.doctors.length)
+      ];
 
-        this.setState({ doctorsList: doctorsToShow });
+      doctorsToShow.push(rand);
     }
 
-    render() {
-        return (
-            <Grid className="main_DocList-div">
-              <Grid.Row columns={4}>
-              {this.state.doctors.length === 0 ? (
-                <h1>No Doctors Found</h1>
-              ) : (
-                this.state.doctors.map(doctors => {
-                  if (doctors.role === "doctor") {
-                    return (
-                        <Grid.Column width='4' key={doctors.id}>
-                            <Link to={`/docProfile/${doctors.id}`}>
-                                <DocCard
-                                    docName={doctors.name}
-                                    docPic={doctors.picture}
-                                    docLoc={doctors.location}
-                                />
-                            </Link>
-                      </Grid.Column>
-                    );
-                  }
-                })
-              )}
-              </Grid.Row>
-            </Grid>
-          );
-    }
+    this.setState({ doctorsList: doctorsToShow });
+  }
+
+  render() {
+    return (
+      <Grid className="main_DocList-div">
+        <Grid.Row columns={4}>
+          {this.state.doctors.length === 0 ? (
+            <h1>No Doctors Found</h1>
+          ) : (
+            this.state.doctors.map(doctors => {
+              if (doctors.role === "doctor") {
+                return (
+                  <Grid.Column width="4" key={doctors.id}>
+                    <Link to={`/docProfile/${doctors.id}`}>
+                      <DocCard
+                        docName={doctors.name}
+                        docPic={doctors.picture}
+                        docLoc={
+                          doctors.location_city +
+                          ", " +
+                          doctors.location_state +
+                          ", " +
+                          doctors.location_country
+                        }
+                      />
+                    </Link>
+                  </Grid.Column>
+                );
+              }
+            })
+          )}
+        </Grid.Row>
+      </Grid>
+    );
+  }
 }
 
 export default DocCardSegment;

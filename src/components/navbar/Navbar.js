@@ -106,7 +106,13 @@ const NavBar = styled(animated.nav)`
   width: 100%;
   top: 0;
   left: 0;
-  background: #2d3436;
+  background: transparent;
+  // background: rgb(218, 218, 218);
+  // background: linear-gradient(
+  //   90deg,
+  //   rgba(218, 218, 218, 1) 0%,
+  //   rgba(139, 0, 175, 1) 100%
+  // );
   z-index: 2;
   font-size: 1.4rem;
 `;
@@ -126,7 +132,7 @@ const NavLinks = styled(animated.ul)`
   margin: auto 0;
 
   & a {
-    color: #dfe6e9;
+    color: #123562;
     text-transform: uppercase;
     font-weight: 600;
     border-bottom: 1px solid transparent;
@@ -136,8 +142,8 @@ const NavLinks = styled(animated.ul)`
     cursor: pointer;
 
     &:hover {
-      color: #fdcb6e;
-      border-bottom: 1px solid #fdcb6e;
+      color: #f55a96;
+      border-bottom: 1px solid #f55a96;
     }
 
     @media (max-width: 768px) {
