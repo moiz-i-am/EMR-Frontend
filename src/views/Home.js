@@ -111,7 +111,7 @@ class Home extends Component {
               data-background="assets/img/hero/h1_hero.png"
             >
               <div class="container">
-                <div class="row d-flex align-items-center">
+                <div class="rows d-flex align-items-center">
                   <div class="col-lg-7 col-md-9 ">
                     <div class="hero__caption">
                       <h1 data-animation="fadeInLeft" data-delay=".4s">
@@ -150,14 +150,14 @@ class Home extends Component {
 
             <div class="generating-area ">
               <div class="container">
-                <div class="row d-flex justify-content-center">
+                <div class="rows d-flex justify-content-center">
                   <div class="col-lg-8">
                     <div class="section-tittle text-center">
                       <h2> We are serving you Via​​</h2>
                     </div>
                   </div>
                 </div>
-                <div class="row">
+                <div class="rows">
                   <div class="col-lg-6 col-md-6">
                     <div class="single-generating d-flex mb-30">
                       <div class="generating-icon">
@@ -277,7 +277,7 @@ class Home extends Component {
 
             <div class="we-create-area create-padding">
               <div class="container">
-                <div class="row d-flex align-items-end">
+                <div class="rows d-flex align-items-end">
                   <div class="col-lg-6 col-md-12">
                     <div class="we-create-img">
                       <img
@@ -308,14 +308,14 @@ class Home extends Component {
 
             <div class="what-we-do we-padding">
               <div class="container">
-                <div class="row d-flex justify-content-center">
+                <div class="rows d-flex justify-content-center">
                   <div class="col-lg-8">
                     <div class="section-tittle text-center">
                       <h2>What We Will Do For Your Business​</h2>
                     </div>
                   </div>
                 </div>
-                <div class="row">
+                <div class="rows">
                   <div class="col-lg-4 col-md-6">
                     <div class="single-do text-center mb-30">
                       <div class="do-icon">
@@ -379,14 +379,14 @@ class Home extends Component {
 
             <div class="choose-best choose-padding">
               <div class="container">
-                <div class="row d-flex justify-content-center">
+                <div class="rows d-flex justify-content-center">
                   <div class="col-lg-7">
                     <div class="section-tittle text-center">
                       <h2>Choose Your Very Best Pricing Plan </h2>
                     </div>
                   </div>
                 </div>
-                <div class="row">
+                <div class="rows">
                   <div class="col-lg-4 col-md-6">
                     <div class="single-choose text-center mb-30">
                       <div class="do-icon">
@@ -441,7 +441,7 @@ class Home extends Component {
 
             <div class="visit-area fix visite-padding">
               <div class="container">
-                <div class="row d-flex justify-content-center">
+                <div class="rows d-flex justify-content-center">
                   <div class="col-lg-6 pr-0">
                     <div class="section-tittle text-center">
                       <h2>Visit Some Of Our Awsome Stuffs</h2>
@@ -450,7 +450,7 @@ class Home extends Component {
                 </div>
               </div>
               <div class="container-fluid p-0">
-                <div class="row ">
+                <div class="rows ">
                   <div class="col-lg-3 col-md-4">
                     <div class="single-visited mb-30">
                       <div class="visited-img">
@@ -510,14 +510,14 @@ class Home extends Component {
             <div class="testimonial-area">
               <div class="container">
                 <div class="testimonial-main">
-                  <div class="row d-flex justify-content-center">
+                  <div class="rows d-flex justify-content-center">
                     <div class="col-lg-5  col-md-8 pr-0">
                       <div class="section-tittle text-center">
                         <h2>What Client Say About Us</h2>
                       </div>
                     </div>
                   </div>
-                  <div class="row d-flex justify-content-center">
+                  <div class="rows d-flex justify-content-center">
                     <div class="col-lg-10 col-md-9">
                       <div class="h1-testimonial-active">
                         <div class="single-testimonial text-center">
@@ -583,14 +583,14 @@ class Home extends Component {
 
             <div class="tips-triks-area tips-padding">
               <div class="container">
-                <div class="row d-flex justify-content-center">
+                <div class="rows d-flex justify-content-center">
                   <div class="col-lg-6 col-md-8 pr-0">
                     <div class="section-tittle text-center">
                       <h2>Tips and Tricks From Our Exparts</h2>
                     </div>
                   </div>
                 </div>
-                <div class="row">
+                <div class="rows">
                   <div class="col-xl-4 col-lg-4 col-md-6">
                     <div class="single-tips mb-50">
                       <div class="tips-img">
@@ -647,7 +647,7 @@ class Home extends Component {
                       "linear-gradient(90deg, rgba(245,90,150,1) 0%, rgba(139,0,175,1) 85%)"
                   }}
                 >
-                  <div class="row d-flex align-items-center">
+                  <div class="rows d-flex align-items-center">
                     <div class="col-xl-7 col-lg-9 col-md-12">
                       <div class="wantToWork-caption">
                         <h2>Have project in mind?</h2>

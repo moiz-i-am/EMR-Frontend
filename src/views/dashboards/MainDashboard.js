@@ -16,11 +16,14 @@ import { withRouter } from "react-router-dom";
 
 import { getUserWithProfile } from "./../../actions/userDetailsAction";
 import { logoutUser } from "../../actions/authActions";
+
 import DashboardContainer from "../../components/dashboardContainers/DashboardContainer";
 import ShowProfile from "../../components/dashboardContainers/ShowProfile";
 import EditProfile from "../../components/dashboardContainers/EditProfile";
-
 import EditProfilePatient from "../../components/dashboardContainers/editProfiles/EditProfilePatients";
+
+import BookingPatient from "../../components/dashboardContainers/bookingsList/bookingPatient";
+import BookingDoctor from "../../components/dashboardContainers/bookingsList/bookingDoctor";
 
 const trigger = (state, name) => (
   <span style={{ fontSize: 11 }}>
@@ -212,7 +215,9 @@ export class MainDashboard extends Component {
           </Grid.Row>
           <Grid.Row>
             {/* here containers which appears in dashboard i.e edit profile are used to render */}
-            {this.state.home && <DashboardContainer />}
+            {this.state.home && (
+              <BookingPatient id={this.props.match.params.id} />
+            )}
             {this.state.browse && <ShowProfile userData={users.user} />}
             {this.state.editProfile && (
               <EditProfilePatient userData={users.user} />
@@ -327,7 +332,9 @@ export class MainDashboard extends Component {
           </Grid.Row>
           <Grid.Row>
             {/* here containers which appears in dashboard i.e edit profile are used to render */}
-            {this.state.home && <DashboardContainer />}
+            {this.state.home && (
+              <BookingDoctor id={this.props.match.params.id} />
+            )}
             {this.state.browse && <ShowProfile userData={users.user} />}
             {this.state.editProfile && <EditProfile userData={users.user} />}
           </Grid.Row>
@@ -336,7 +343,7 @@ export class MainDashboard extends Component {
     ) : (
       <div>Access Denied</div>
     );
-  /////////////////////////////////////////////// for Patients dashboard end ////////////////////////////////////////////
+  /////////////////////////////////////////////// for doctor dashboard end ////////////////////////////////////////////
 
   render() {
     const { activeItem } = this.state;

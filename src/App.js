@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Container } from "semantic-ui-react";
 
 import Footer from "./components/footer";
 import { withRouter } from "react-router-dom";

@@ -525,7 +525,7 @@ pre code {
   margin-right: auto;
   margin-left: auto;
 }
-.row {
+.rows {
   display: -ms-flexbox;
   display: flex;
   -ms-flex-wrap: wrap;

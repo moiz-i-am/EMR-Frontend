@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid, List, Header, Icon, Button } from "semantic-ui-react";
-import moment from "moment";
+import logo from "../assets/Logo.png";
 
 import background from "../assets/footer_bg.png";
 
@@ -17,7 +17,7 @@ const footer = () => {
                     <div class="single-footer-caption mb-30">
                       <div class="footer-logo">
                         <a href="index.html">
-                          <img src="assets/img/logo/logo2_footer.png" alt="" />
+                          <img alt="" />
                         </a>
                       </div>
                       <div class="footer-tittle">

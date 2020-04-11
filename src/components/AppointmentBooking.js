@@ -45,9 +45,6 @@ export class AppointmentBooking extends Component {
         timeSlot: this.state.choosenSlot
       };
       this.props.createAppointmentBooking(bookingData, this.state.token);
-      ///////////////////////// update time slot for disappearing
-
-      //////////////////////////////////////////
       this.setState({ open: false });
     } else {
       console.log("ERROR: not authanticated");
@@ -70,32 +67,38 @@ export class AppointmentBooking extends Component {
     });
   };
 
+  //////////////////////////////////////////// no bookings yet check no appearing need to fix it ////////
+
   renderDocTimeSlots = schedules =>
     schedules.schedule ? (
       <div>
-        {schedules.schedule[0].timeSlots.map((schedule, index) => {
-          if (schedules) {
-            if (schedule.reserved != "true") {
-              return (
-                <div
-                  id="lab"
-                  key={schedule.value}
-                  style={{ display: "inline-block", padding: "5px" }}
-                >
-                  <Button
-                    inverted
-                    color="blue"
-                    onClick={() => this.addTimeSlot(schedule.label)}
-                  >
-                    <Icon name="clock" /> {schedule.label}
-                  </Button>
-                </div>
-              );
-            }
-          } else {
-            return <div>sorry janu</div>;
-          }
-        })}
+        {schedules.schedule.map(schedule => (
+          <div>
+            {schedule === null ? (
+              <h1>No Bookings Yet</h1>
+            ) : (
+              schedule.timeSlots.map(booking => {
+                if (booking.reserved != "true") {
+                  return (
+                    <div
+                      id="lab"
+                      key={booking.value}
+                      style={{ display: "inline-block", padding: "5px" }}
+                    >
+                      <Button
+                        inverted
+                        color="blue"
+                        onClick={() => this.addTimeSlot(booking.label)}
+                      >
+                        <Icon name="clock" /> {booking.label}
+                      </Button>
+                    </div>
+                  );
+                }
+              })
+            )}
+          </div>
+        ))}
       </div>
     ) : (
       <div style={{ height: "60px" }}>Sorry, no time slots available</div>
@@ -103,11 +106,6 @@ export class AppointmentBooking extends Component {
 
   render() {
     let schedules = this.props.schedule;
-
-    console.log("psotays :" + this.state.choosenSlot);
-    console.log("doc id :" + this.state.docId);
-    console.log("date :" + this.state.date);
-    console.log("pat id :" + this.state.patientId);
 
     const selectedDay = val => {
       const localTime = moment(val).format("YYYY-MM-DD"); // store localTime
