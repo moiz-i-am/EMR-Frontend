@@ -71,6 +71,26 @@ export const loginUser = user => dispatch => {
     });
 };
 
+export const popupLoginUser = user => dispatch => {
+  axios
+    .post("/v1/auth/login", user)
+    .then(res => {
+      let token = res.data;
+      token = JSON.stringify(token);
+      console.log(token);
+      localStorage.setItem("jwtToken", token);
+      setAuthToken(token);
+      const decode = jwt_decode(token);
+      dispatch(setCurrentUser(decode));
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
+};
+
 //set logged in user
 export const setCurrentUser = decoded => {
   return {

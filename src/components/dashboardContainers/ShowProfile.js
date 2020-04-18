@@ -12,7 +12,7 @@ export class ShowProfile extends Component {
   render() {
     return (
       <div className="main-view-profile-info">
-        <Card fluid>
+        <Card fluid raised>
           <Card.Content>
             <Grid>
               <Grid.Column width={5}>

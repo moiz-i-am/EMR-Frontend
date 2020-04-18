@@ -15,6 +15,9 @@ import SignupNavigator2 from "./views/SignupNavigator2";
 import Login2 from "./views/Login2";
 import Search from "./views/Search";
 
+import AdminLogin from "./views/AdminComponents/AdminLogin";
+import DashboardAdmin from "./views/AdminComponents/AdminDashboard";
+
 const routes = () => {
   return (
     <div>
@@ -30,6 +33,9 @@ const routes = () => {
         <Route exact path="/listDoctors" component={DoctorsList} />
         <Route exact path="/search" component={Search} />
         <Route exact path="/docProfile/:id" component={DoctorDetailedProfile} />
+
+        <Route exact path="/admin" component={AdminLogin} />
+        <Route exact path="/dashboardAdmin/:id" component={DashboardAdmin} />
 
         <Route component={NotFound} />
       </Switch>

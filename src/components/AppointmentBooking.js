@@ -1,5 +1,15 @@
 import React, { Component } from "react";
-import { Card, Button, Label, Icon, Confirm } from "semantic-ui-react";
+import {
+  Card,
+  Button,
+  Label,
+  Icon,
+  Confirm,
+  Segment,
+  Message,
+  Header,
+  TransitionablePortal
+} from "semantic-ui-react";
 import DatePicker from "react-horizontal-datepicker";
 import { connect } from "react-redux";
 import moment from "moment";
@@ -8,6 +18,8 @@ import { withRouter } from "react-router-dom";
 import { getDoctorTimeSlots } from "./../actions/schedulingActions";
 import { createAppointmentBooking } from "./../actions/bookingActions";
 
+import LoginPopup from "./LoginPopup";
+
 export class AppointmentBooking extends Component {
   state = {
     token: "",
@@ -15,7 +27,9 @@ export class AppointmentBooking extends Component {
     docId: this.props.docId,
     choosenSlot: "",
     date: "",
-    open: false
+    role: "",
+    open: false,
+    formError: false
   };
 
   componentDidMount() {
@@ -24,17 +38,38 @@ export class AppointmentBooking extends Component {
       this.setState({
         token: this.documentData.token.accessToken,
         patientId: this.documentData.user.id,
-        name: this.documentData.user.name
+        name: this.documentData.user.name,
+        role: this.documentData.user.role
       });
     } else {
       this.setState({
         token: "",
-        patientId: ""
+        patientId: "",
+        role: ""
+      });
+    }
+  }
+
+  componentWillReceiveProps() {
+    this.documentData = JSON.parse(localStorage.getItem("jwtToken"));
+    if (localStorage.getItem("jwtToken")) {
+      this.setState({
+        patientId: this.documentData.user.id,
+        role: this.documentData.user.role
+      });
+    } else {
+      this.setState({
+        patientId: "",
+        role: ""
       });
     }
   }
 
   show = () => this.setState({ open: true });
+
+  // handleOpen = () => this.setState({ formError: true });
+
+  handleClose = () => this.setState({ formError: false });
 
   handleConfirm = () => {
     if (this.props.auth.isAuthenticated) {
@@ -44,8 +79,21 @@ export class AppointmentBooking extends Component {
         patient: this.state.patientId,
         timeSlot: this.state.choosenSlot
       };
-      this.props.createAppointmentBooking(bookingData, this.state.token);
-      this.setState({ open: false });
+
+      if (
+        this.state.role === "doctor" ||
+        this.state.role === "lab" ||
+        this.state.role === "hospital" ||
+        this.state.role === "admin"
+      ) {
+        return alert(
+          `sorry you are ${this.state.role} you cannot make booking form this account !!!`
+        );
+      } else {
+        this.props.createAppointmentBooking(bookingData, this.state.token);
+        // console.log("pat: " + bookingData.patient + "doc: " + bookingData.doctor);
+        this.setState({ open: false, formError: true });
+      }
     } else {
       console.log("ERROR: not authanticated");
     }
@@ -57,7 +105,13 @@ export class AppointmentBooking extends Component {
     if (this.props.auth.isAuthenticated) {
       return <div style={{ textAlign: "center" }}>hello bc</div>;
     } else {
-      return <div style={{ textAlign: "center" }}>login kr bc</div>;
+      return (
+        <div style={{ textAlign: "center" }}>
+          {/* <Segment style={{ overflow: "auto", maxHeight: 572, minHeight: 572 }}> */}
+          <LoginPopup />
+          {/* </Segment> */}
+        </div>
+      );
     }
   }
 
@@ -136,7 +190,15 @@ export class AppointmentBooking extends Component {
         </Card.Content>
         <Card.Content>{this.renderDocTimeSlots(schedules)}</Card.Content>
         <Card.Content extra>
-          <Button onClick={this.show} color="blue" style={{ width: "100%" }}>
+          <Button
+            className="btn btn-ans"
+            onClick={this.show}
+            style={{
+              width: "100%",
+              color: "#ffffff",
+              backgroundColor: "#4D7BF3"
+            }}
+          >
             Book Now
           </Button>
           <Confirm
@@ -148,6 +210,25 @@ export class AppointmentBooking extends Component {
             size="medium"
           />
         </Card.Content>
+        <div style={{ position: "absolute" }}>
+          {this.state.formError ? (
+            <div
+              style={{
+                left: "40%",
+                position: "fixed",
+                top: "50%",
+                zIndex: 1000
+              }}
+            >
+              <Message
+                color="green"
+                onDismiss={this.handleClose}
+                header="Appointment is created successfully"
+              />
+              {/* <button onClick={this.handleClose}>ok</button> */}
+            </div>
+          ) : null}
+        </div>
       </Card>
     );
   }

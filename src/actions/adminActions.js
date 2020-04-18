@@ -1,9 +1,9 @@
 import axios from "axios";
 import { GET_USER_DATA, CLEAR_USER_DATA, GET_ERRORS } from "./types";
 
-export const createAppointmentBooking = (bookingData, token) => dispatch => {
+export const updateUserData = (data, id, token) => dispatch => {
   axios
-    .post(`/v1/booking`, bookingData, {
+    .patch(`/v1/users/${id}`, data, {
       // headers: {
       //   Authorization: `Bearer ${token}`
       // }
@@ -17,9 +17,9 @@ export const createAppointmentBooking = (bookingData, token) => dispatch => {
     );
 };
 
-export const deleteAppointmentBooking = (deleteData, token) => dispatch => {
+export const deleteUser = (id, token) => dispatch => {
   axios
-    .post(`/v1/booking/deletebooking`, deleteData, {
+    .delete(`/v1/users/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }

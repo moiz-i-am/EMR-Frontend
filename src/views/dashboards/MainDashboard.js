@@ -7,7 +7,8 @@ import {
   Header,
   Image,
   GridColumn,
-  Divider
+  Divider,
+  Segment
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import propTypes from "prop-types";
@@ -126,7 +127,11 @@ export class MainDashboard extends Component {
           <Menu
             vertical
             inverted
-            style={{ backgroundColor: "#2C3436", width: "105%" }}
+            style={{
+              backgroundColor: "#2C3436",
+              width: "105%",
+              height: "100%"
+            }}
           >
             <Menu.Item>
               <Link to="/">
@@ -214,14 +219,18 @@ export class MainDashboard extends Component {
             </div>
           </Grid.Row>
           <Grid.Row>
-            {/* here containers which appears in dashboard i.e edit profile are used to render */}
-            {this.state.home && (
-              <BookingPatient id={this.props.match.params.id} />
-            )}
-            {this.state.browse && <ShowProfile userData={users.user} />}
-            {this.state.editProfile && (
-              <EditProfilePatient userData={users.user} />
-            )}
+            <Segment
+              style={{ overflow: "auto", maxHeight: 572, minHeight: 572 }}
+            >
+              {/* here containers which appears in dashboard i.e edit profile are used to render */}
+              {this.state.home && (
+                <BookingPatient id={this.props.match.params.id} />
+              )}
+              {this.state.browse && <ShowProfile userData={users.user} />}
+              {this.state.editProfile && (
+                <EditProfilePatient userData={users.user} />
+              )}
+            </Segment>
           </Grid.Row>
         </Grid.Column>
       </Grid>
@@ -241,7 +250,11 @@ export class MainDashboard extends Component {
           <Menu
             vertical
             inverted
-            style={{ backgroundColor: "#2C3436", width: "105%" }}
+            style={{
+              backgroundColor: "#2C3436",
+              width: "105%",
+              height: "100%"
+            }}
           >
             <Menu.Item>
               <Link to="/">
@@ -331,12 +344,16 @@ export class MainDashboard extends Component {
             </div>
           </Grid.Row>
           <Grid.Row>
-            {/* here containers which appears in dashboard i.e edit profile are used to render */}
-            {this.state.home && (
-              <BookingDoctor id={this.props.match.params.id} />
-            )}
-            {this.state.browse && <ShowProfile userData={users.user} />}
-            {this.state.editProfile && <EditProfile userData={users.user} />}
+            <Segment
+              style={{ overflow: "auto", maxHeight: 572, minHeight: 572 }}
+            >
+              {/* here containers which appears in dashboard i.e edit profile are used to render */}
+              {this.state.home && (
+                <BookingDoctor id={this.props.match.params.id} />
+              )}
+              {this.state.browse && <ShowProfile userData={users.user} />}
+              {this.state.editProfile && <EditProfile userData={users.user} />}
+            </Segment>
           </Grid.Row>
         </Grid.Column>
       </Grid>

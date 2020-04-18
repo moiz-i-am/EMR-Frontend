@@ -18,13 +18,10 @@ class bookingPatient extends Component {
     };
     axios.post(`/v1/booking/bookingList/patient`, data).then(res => {
       this.setState({ bookings: res.data });
-      const hello = JSON.stringify(res.data);
-      console.log("res data: " + hello);
     });
   }
 
   render() {
-    console.log("booking state: " + this.state.bookings);
     return (
       <div>
         <div className="generating-area ">
@@ -45,6 +42,8 @@ class bookingPatient extends Component {
                     <PatientBookingCard
                       date={booking.date}
                       doctor={booking.doctor.name}
+                      doctorId={booking.doctor._id}
+                      patientId={booking.patient}
                       timeSlot={booking.timeSlot}
                     />
                   </div>

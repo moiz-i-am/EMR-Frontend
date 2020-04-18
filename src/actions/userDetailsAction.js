@@ -41,9 +41,9 @@ export const updateUserData = (upUserData, history, id, token) => dispatch => {
 export const deleteUser = (id, token) => dispatch => {
   axios
     .delete(`/v1/users/${id}`, {
-      // headers: {
-      //   Authorization: `Bearer ${token}`
-      // }
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
     })
     .then(res => {})
     .catch(err =>
