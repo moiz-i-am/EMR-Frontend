@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { Segment, Dimmer, Loader, Image } from "semantic-ui-react";
 
 import PatientBookingCard from "../../cards/PatientBookingCard";
 
@@ -8,7 +9,8 @@ class bookingPatient extends Component {
     super(props);
     this.state = {
       id: this.props.id,
-      bookings: []
+      bookings: [],
+      loading: false
     };
   }
 
@@ -17,7 +19,11 @@ class bookingPatient extends Component {
       patient: this.state.id
     };
     axios.post(`/v1/booking/bookingList/patient`, data).then(res => {
-      this.setState({ bookings: res.data });
+      // this.setState({ bookings: res.data });
+      this.setState({ loading: true });
+      setTimeout(() => {
+        this.setState({ loading: false, bookings: res.data });
+      }, 2000);
     });
   }
 
@@ -52,6 +58,17 @@ class bookingPatient extends Component {
             )}
           </div>
         </div>
+        {this.state.loading ? (
+          <Segment>
+            <Dimmer active inverted>
+              <Loader size="massive">Loading</Loader>
+            </Dimmer>
+
+            <Image src="https://react.semantic-ui.com/images/wireframe/short-paragraph.png" />
+            <Image src="https://react.semantic-ui.com/images/wireframe/short-paragraph.png" />
+            <Image src="https://react.semantic-ui.com/images/wireframe/short-paragraph.png" />
+          </Segment>
+        ) : null}
       </div>
     );
   }

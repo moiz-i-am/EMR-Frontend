@@ -9,16 +9,14 @@ import {
   Rating,
   Divider
 } from "semantic-ui-react";
-import { Link } from "react-router-dom";
-import "./../styles/profileCards.css";
-import logo from "./../assets/user-solid.svg";
+import "../../styles/profileCards.css";
+import logo from "../../assets/user-solid.svg";
 
 class ProfileCards extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      specializations: this.props.docSpec,
-      docId: this.props.docId
+      specializations: this.props.docSpec
     };
   }
 
@@ -69,6 +67,7 @@ class ProfileCards extends Component {
                       </Card.Meta>
                       <Divider />
                       <div>
+                        {}
                         {this.state.specializations == null ? (
                           <Label>no specializations yet</Label>
                         ) : (
@@ -115,18 +114,6 @@ class ProfileCards extends Component {
                   </Grid.Column>
                 </Grid>
               </div>
-              <Card.Content>
-                <div style={{ textAlign: "right" }}>
-                  <Link to={`/docProfile/${this.state.docId}`}>
-                    <Button>Visit Profile</Button>
-                  </Link>
-                  <Button
-                    icon="stethoscope"
-                    content="Book Appointment"
-                    labelPosition="left"
-                  />
-                </div>
-              </Card.Content>
             </Card>
           </div>
         </div>

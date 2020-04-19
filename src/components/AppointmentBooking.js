@@ -1,15 +1,5 @@
 import React, { Component } from "react";
-import {
-  Card,
-  Button,
-  Label,
-  Icon,
-  Confirm,
-  Segment,
-  Message,
-  Header,
-  TransitionablePortal
-} from "semantic-ui-react";
+import { Card, Button, Icon, Confirm, Message } from "semantic-ui-react";
 import DatePicker from "react-horizontal-datepicker";
 import { connect } from "react-redux";
 import moment from "moment";
@@ -24,12 +14,13 @@ export class AppointmentBooking extends Component {
   state = {
     token: "",
     patientId: "",
+    name: "",
     docId: this.props.docId,
     choosenSlot: "",
     date: "",
     role: "",
     open: false,
-    formError: false
+    success: false
   };
 
   componentDidMount() {
@@ -45,7 +36,8 @@ export class AppointmentBooking extends Component {
       this.setState({
         token: "",
         patientId: "",
-        role: ""
+        role: "",
+        name: ""
       });
     }
   }
@@ -55,11 +47,13 @@ export class AppointmentBooking extends Component {
     if (localStorage.getItem("jwtToken")) {
       this.setState({
         patientId: this.documentData.user.id,
+        name: this.documentData.user.name,
         role: this.documentData.user.role
       });
     } else {
       this.setState({
         patientId: "",
+        name: "",
         role: ""
       });
     }
@@ -69,7 +63,7 @@ export class AppointmentBooking extends Component {
 
   // handleOpen = () => this.setState({ formError: true });
 
-  handleClose = () => this.setState({ formError: false });
+  handleClose = () => this.setState({ success: false });
 
   handleConfirm = () => {
     if (this.props.auth.isAuthenticated) {
@@ -92,7 +86,10 @@ export class AppointmentBooking extends Component {
       } else {
         this.props.createAppointmentBooking(bookingData, this.state.token);
         // console.log("pat: " + bookingData.patient + "doc: " + bookingData.doctor);
-        this.setState({ open: false, formError: true });
+        this.setState({ open: false, success: true });
+        setTimeout(() => {
+          this.setState({ success: false });
+        }, 3000);
       }
     } else {
       console.log("ERROR: not authanticated");
@@ -103,7 +100,26 @@ export class AppointmentBooking extends Component {
 
   renderConfirmation() {
     if (this.props.auth.isAuthenticated) {
-      return <div style={{ textAlign: "center" }}>hello bc</div>;
+      return (
+        <div style={{ textAlign: "center" }}>
+          <p>
+            <span>Doctor Name: </span>
+            {this.props.docName}
+          </p>
+          <p>
+            <span>patient Name: </span>
+            {this.state.name}
+          </p>
+          <p>
+            <span>Date Of Appointment: </span>
+            {this.state.date}
+          </p>
+          <p>
+            <span>TIME Of Appointment: </span>
+            {this.state.choosenSlot}
+          </p>
+        </div>
+      );
     } else {
       return (
         <div style={{ textAlign: "center" }}>
@@ -211,12 +227,12 @@ export class AppointmentBooking extends Component {
           />
         </Card.Content>
         <div style={{ position: "absolute" }}>
-          {this.state.formError ? (
+          {this.state.success ? (
             <div
               style={{
-                left: "40%",
+                left: "75%",
                 position: "fixed",
-                top: "50%",
+                top: "90%",
                 zIndex: 1000
               }}
             >
@@ -225,7 +241,6 @@ export class AppointmentBooking extends Component {
                 onDismiss={this.handleClose}
                 header="Appointment is created successfully"
               />
-              {/* <button onClick={this.handleClose}>ok</button> */}
             </div>
           ) : null}
         </div>

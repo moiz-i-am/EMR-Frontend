@@ -95,14 +95,16 @@ class Login2 extends React.Component {
       <Grid verticalAlign="middle" textAlign="center" padded="vertically">
         <GridColumn style={{ maxWidth: 400 }}>
           <Segment>
-            <Header as="h2" textAlign="center">
+            <Header as="h2" textAlign="center" style={{ color: "#9458AE" }}>
               Login
             </Header>
             <Form noValidate onSubmit={this.onSubmit}>
               <Form.Field>
                 <Input
+                  style={{ color: "#9458AE" }}
                   size="small"
                   icon="mail"
+                  color="red"
                   iconPosition="left"
                   type="email"
                   name="email"
@@ -126,6 +128,7 @@ class Login2 extends React.Component {
 
               <Form.Field>
                 <Input
+                  style={{ color: "#9458AE" }}
                   size="small"
                   icon="lock"
                   iconPosition="left"
@@ -144,7 +147,11 @@ class Login2 extends React.Component {
                 <div className="invalid-feedback">{errors.password}</div>
               )}
 
-              <Button fluid type="submit">
+              <Button
+                fluid
+                type="submit"
+                style={{ backgroundColor: "#9458AE", color: "#ffffff" }}
+              >
                 Login
               </Button>
             </Form>

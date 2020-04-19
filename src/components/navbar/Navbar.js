@@ -142,11 +142,11 @@ const NavLinks = styled(animated.ul)`
     cursor: pointer;
 
     &:hover {
-      color: #f55a96;
-      border-bottom: 1px solid #f55a96;
+      color: #9458ae;
+      border-bottom: 1px solid #9458ae;
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 1100px) {
       display: none;
     }
   }
@@ -155,7 +155,7 @@ const NavLinks = styled(animated.ul)`
 const BurgerWrapper = styled.div`
   margin: auto 0;
 
-  @media (min-width: 769px) {
+  @media (min-width: 1100px) {
     display: none;
   }
 `;

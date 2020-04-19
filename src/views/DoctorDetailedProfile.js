@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Grid } from "semantic-ui-react";
-import DocorsProfileCards from "./DoctorsProfileCards";
+import DocorBriefCard from "../components/cards/DoctorBriefCard";
 import TabbedSection from "./TabbedSection";
 import { connect } from "react-redux";
 import { Container } from "semantic-ui-react";
@@ -25,7 +25,7 @@ export class DoctorDetailedProfile extends Component {
       <div style={{ marginTop: "20px", marginBottom: "20px" }}>
         <Grid>
           <Grid.Column width={10}>
-            <DocorsProfileCards
+            <DocorBriefCard
               docName={users.user.name}
               docEmail={users.user.email}
               docSpec={users.user.specializations}

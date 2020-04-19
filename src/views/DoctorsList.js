@@ -2,16 +2,20 @@ import React, { Component } from "react";
 import ProfileCards from "./DoctorsProfileCards";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { Container } from "semantic-ui-react";
+import { Container, Segment, Dimmer, Loader, Image } from "semantic-ui-react";
 
 class DoctorsList extends Component {
   state = {
-    persons: []
+    persons: [],
+    loading: false
   };
 
   componentDidMount() {
     axios.get(`v1/users`).then(res => {
-      this.setState({ persons: res.data });
+      this.setState({ loading: true });
+      setTimeout(() => {
+        this.setState({ loading: false, persons: res.data });
+      }, 2000);
     });
   }
 
@@ -23,7 +27,9 @@ class DoctorsList extends Component {
           style={{ backgroundColor: "#F7F7F7" }}
         >
           {this.state.persons.length === 0 ? (
-            <h1>No Doctors Found</h1>
+            this.state.loading ? null : (
+              <h1>No Doctors Found</h1>
+            )
           ) : (
             this.state.persons.map(persons => {
               if (persons.role === "doctor") {
@@ -32,26 +38,43 @@ class DoctorsList extends Component {
                     style={{ width: "60%", marginTop: "15px" }}
                     key={persons.id}
                   >
-                    <Link to={`/docProfile/${persons.id}`}>
-                      <ProfileCards
-                        docName={persons.name}
-                        docEmail={persons.email}
-                        docSpec={persons.specializations}
-                        docLocation={
-                          persons.location_city +
-                          ", " +
-                          persons.location_state +
-                          ", " +
-                          persons.location_country
-                        }
-                      />
-                    </Link>
+                    {/* <Link to={`/docProfile/${persons.id}`}> */}
+                    <ProfileCards
+                      docId={persons.id}
+                      docName={persons.name}
+                      docEmail={persons.email}
+                      docSpec={persons.specializations}
+                      docLocation={
+                        persons.location_city +
+                        ", " +
+                        persons.location_state +
+                        ", " +
+                        persons.location_country
+                      }
+                    />
+                    {/* </Link> */}
                   </div>
                 );
               }
             })
           )}
         </div>
+        {this.state.loading ? (
+          <Segment>
+            <Dimmer active inverted>
+              <Loader size="massive">Loading</Loader>
+            </Dimmer>
+
+            <Image src="https://react.semantic-ui.com/images/wireframe/short-paragraph.png" />
+            <Image src="https://react.semantic-ui.com/images/wireframe/short-paragraph.png" />
+            <Image src="https://react.semantic-ui.com/images/wireframe/short-paragraph.png" />
+            <Image src="https://react.semantic-ui.com/images/wireframe/short-paragraph.png" />
+            <Image src="https://react.semantic-ui.com/images/wireframe/short-paragraph.png" />
+            <Image src="https://react.semantic-ui.com/images/wireframe/short-paragraph.png" />
+            <Image src="https://react.semantic-ui.com/images/wireframe/short-paragraph.png" />
+            <Image src="https://react.semantic-ui.com/images/wireframe/short-paragraph.png" />
+          </Segment>
+        ) : null}
       </Container>
     );
   }

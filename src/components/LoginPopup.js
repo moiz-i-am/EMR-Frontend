@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { Icon } from "semantic-ui-react";
 
 import { popupLoginUser } from "../actions/authActions";
 
@@ -93,7 +94,7 @@ class LoginPopup extends Component {
                   />
                   <span class="focus-input100"></span>
                   <span class="symbol-input100">
-                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                    <Icon name="mail" />
                   </span>
                 </div>
                 <div
@@ -109,7 +110,7 @@ class LoginPopup extends Component {
                   />
                   <span class="focus-input100"></span>
                   <span class="symbol-input100">
-                    <i class="fa fa-lock" aria-hidden="true"></i>
+                    <Icon name="key" />
                   </span>
                 </div>
                 <div class="container-login100-form-btn">
