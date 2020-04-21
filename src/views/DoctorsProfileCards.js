@@ -58,7 +58,7 @@ class ProfileCards extends Component {
                 <Divider />
               </Card.Content>
               <div className="short-info">
-                <Grid>
+                <Grid stackable>
                   <Grid.Column width={10}>
                     <div style={{ paddingLeft: "15px" }}>
                       <Card.Meta>
@@ -90,41 +90,42 @@ class ProfileCards extends Component {
                   </Grid.Column>
 
                   <Grid.Column width={6}>
-                    <Rating
-                      maxRating={5}
-                      defaultRating={3}
-                      disabled
-                      icon="star"
-                      size="huge"
-                    />
-                    <List style={{ color: "black" }}>
-                      <List.Item icon="money" content="3000 -/Rs" />
-                      <List.Item
-                        icon="marker"
-                        content={<p>{this.props.docLocation}</p>}
+                    <div style={{ paddingLeft: "15px" }}>
+                      <Rating
+                        maxRating={5}
+                        defaultRating={3}
+                        disabled
+                        icon="star"
+                        size="huge"
                       />
-                      <List.Item
-                        icon="mail"
-                        content={
-                          <a href="mailto: ${this.props.docEmail}">
-                            {this.props.docEmail}
-                          </a>
-                        }
-                      />
-                    </List>
+                      <List style={{ color: "black" }}>
+                        <List.Item icon="money" content="3000 -/Rs" />
+                        <List.Item
+                          icon="marker"
+                          content={<p>{this.props.docLocation}</p>}
+                        />
+                        <List.Item
+                          icon="mail"
+                          content={
+                            <a href="mailto: ${this.props.docEmail}">
+                              {this.props.docEmail}
+                            </a>
+                          }
+                        />
+                      </List>
+                    </div>
                   </Grid.Column>
                 </Grid>
               </div>
               <Card.Content>
                 <div style={{ textAlign: "right" }}>
                   <Link to={`/docProfile/${this.state.docId}`}>
-                    <Button>Visit Profile</Button>
+                    <Button
+                      icon="user md"
+                      labelPosition="left"
+                      content="Visit Profile"
+                    />
                   </Link>
-                  <Button
-                    icon="stethoscope"
-                    content="Book Appointment"
-                    labelPosition="left"
-                  />
                 </div>
               </Card.Content>
             </Card>

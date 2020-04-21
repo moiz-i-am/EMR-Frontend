@@ -9,7 +9,7 @@ import { popupLoginUser } from "../actions/authActions";
 import Logo from "../assets/Logo.png";
 
 // import "../styles/util.css";
-import "../styles/main.css";
+// import "../styles/main.css";
 
 const initialState = {
   email: "",

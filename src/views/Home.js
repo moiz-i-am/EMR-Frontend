@@ -14,6 +14,9 @@ import "../styles/styles.css";
 import "../styles/bootstrap.min.css";
 import { Link } from "react-router-dom";
 
+// import Styles from "../styles/style";
+// import BootStyles from "../styles/boot.style";
+
 import DocCardSegment from "../components/cardSegments/DocCardSegment";
 import HospCardSegment from "../components/cardSegments/HospCardSegment";
 import LabCardSegment from "../components/cardSegments/LabCardSegment";
@@ -58,6 +61,8 @@ class Home extends Component {
   render() {
     return (
       <div>
+        {/* 
+        <BootStyles /> */}
         <Container style={{ width: "90%" }}>
           <Grid
             stackable
@@ -275,16 +280,16 @@ class Home extends Component {
             </Container>
             {/* rendring doctors etc ends */}
 
-            <div class="we-create-area create-padding">
+            <div class="we-create-area">
               <div class="container">
                 <div class="rows d-flex align-items-end">
-                  <div class="col-lg-6 col-md-12">
-                    <div class="we-create-img">
-                      <img
-                        src={image2}
-                        style={{ height: "417px", width: "584px" }}
-                        alt=""
-                      />
+                  <div class="col-lg-6">
+                    <div
+                      class="we-create-img"
+                      data-animation="fadeInRight"
+                      data-delay="1s"
+                    >
+                      <img src={image2} style={{ height: "417px" }} alt="" />
                     </div>
                   </div>
                   <div class="col-lg-6 col-md-12">
@@ -671,6 +676,7 @@ class Home extends Component {
             </div>
           </div>
         </div>
+        {/* <Styles /> */}
       </div>
     );
   }

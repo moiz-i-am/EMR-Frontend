@@ -31,7 +31,7 @@ class DocCardSegment extends Component {
 
   render() {
     return (
-      <Grid className="main_DocList-div">
+      <Grid className="main_DocList-div" stackable>
         <Grid.Row columns={4}>
           {this.state.doctors.length === 0 ? (
             <h1>No Doctors Found</h1>
@@ -40,19 +40,20 @@ class DocCardSegment extends Component {
               if (doctors.role === "doctor") {
                 return (
                   <Grid.Column width="4" key={doctors.id}>
-                    <Link to={`/docProfile/${doctors.id}`}>
-                      <DocCard
-                        docName={doctors.name}
-                        docPic={doctors.picture}
-                        docLoc={
-                          doctors.location_city +
-                          ", " +
-                          doctors.location_state +
-                          ", " +
-                          doctors.location_country
-                        }
-                      />
-                    </Link>
+                    {/* <Link to={`/docProfile/${doctors.id}`}> */}
+                    <DocCard
+                      docId={doctors.id}
+                      docName={doctors.name}
+                      docPic={doctors.picture}
+                      docLoc={
+                        doctors.location_city +
+                        ", " +
+                        doctors.location_state +
+                        ", " +
+                        doctors.location_country
+                      }
+                    />
+                    {/* </Link> */}
                   </Grid.Column>
                 );
               }

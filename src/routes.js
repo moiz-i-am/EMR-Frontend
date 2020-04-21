@@ -18,6 +18,8 @@ import Search from "./views/Search";
 import AdminLogin from "./views/AdminComponents/AdminLogin";
 import DashboardAdmin from "./views/AdminComponents/AdminDashboard";
 
+//import BootstrapStyles from "./styles/style";
+
 const routes = () => {
   return (
     <div>

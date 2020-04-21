@@ -23,7 +23,7 @@ export class DoctorDetailedProfile extends Component {
   renderDocProfile = users =>
     users.user ? (
       <div style={{ marginTop: "20px", marginBottom: "20px" }}>
-        <Grid>
+        <Grid stackable>
           <Grid.Column width={10}>
             <DocorBriefCard
               docName={users.user.name}
@@ -37,7 +37,6 @@ export class DoctorDetailedProfile extends Component {
                 users.user.location_country
               }
             />
-            <TabbedSection />
           </Grid.Column>
           <Grid.Column width={6}>
             <AppointmentBooking
@@ -46,6 +45,9 @@ export class DoctorDetailedProfile extends Component {
             />
           </Grid.Column>
         </Grid>
+        <div style={{ width: "62%", marginTop: "30px" }}>
+          <TabbedSection />
+        </div>
       </div>
     ) : null;
 

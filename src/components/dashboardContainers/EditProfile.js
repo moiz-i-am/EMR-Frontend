@@ -352,7 +352,7 @@ class EditProfile extends Component {
       <div className="main-view-profile-info">
         <Card fluid>
           <Card.Content>
-            <Grid>
+            <Grid stackable>
               <Grid.Column width={5}>
                 <div style={{ textAlign: "center" }}>
                   <Image
@@ -371,6 +371,7 @@ class EditProfile extends Component {
                   }}
                 >
                   <Input
+                    style={{ width: "100%" }}
                     name="uname"
                     value={this.state.userData.name}
                     onChange={this.onChange}
@@ -399,6 +400,7 @@ class EditProfile extends Component {
             >
               <span>Phone No.</span>
               <Input
+                style={{ width: "100%" }}
                 name="phone"
                 value={this.state.phone}
                 onChange={this.onChange}
@@ -411,7 +413,7 @@ class EditProfile extends Component {
                 marginTop: "15px"
               }}
             >
-              <Grid>
+              <Grid stackable>
                 <Grid.Column width={5}>
                   city:{" "}
                   <Input

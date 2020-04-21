@@ -125,7 +125,7 @@ class EditProfilePatient extends Component {
       <div className="main-view-profile-info">
         <Card fluid>
           <Card.Content>
-            <Grid>
+            <Grid stackable>
               <Grid.Column width={5}>
                 <div style={{ textAlign: "center" }}>
                   <Image
@@ -184,7 +184,7 @@ class EditProfilePatient extends Component {
                 marginTop: "15px"
               }}
             >
-              <Grid>
+              <Grid stackable>
                 <Grid.Column width={5}>
                   city:{" "}
                   <Input

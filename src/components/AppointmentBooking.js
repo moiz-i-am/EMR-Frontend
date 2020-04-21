@@ -7,7 +7,7 @@ import { withRouter } from "react-router-dom";
 
 import { getDoctorTimeSlots } from "./../actions/schedulingActions";
 import { createAppointmentBooking } from "./../actions/bookingActions";
-
+import MainStyles from "../styles/main.style";
 import LoginPopup from "./LoginPopup";
 
 export class AppointmentBooking extends Component {
@@ -125,6 +125,8 @@ export class AppointmentBooking extends Component {
         <div style={{ textAlign: "center" }}>
           {/* <Segment style={{ overflow: "auto", maxHeight: 572, minHeight: 572 }}> */}
           <LoginPopup />
+          {/* this is  the styles file imported for this specific component */}
+          <MainStyles />
           {/* </Segment> */}
         </div>
       );

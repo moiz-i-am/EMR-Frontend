@@ -6,7 +6,7 @@ import logo from "../../assets/Logo.png";
 
 const Brand = () => {
   return (
-    <Link to="/">
+    <Link to="/" style={{ width: "11%" }}>
       <Image src={logo} alt="Company Logo" />
     </Link>
   );

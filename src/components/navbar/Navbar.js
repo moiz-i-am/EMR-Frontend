@@ -14,24 +14,18 @@ import BurgerMenu from "./BurgerMenu";
 import CollapseMenu from "./CollapseMenu";
 
 const trigger = name => (
-  <span style={{ color: "white" }}>
+  <span style={{ color: "black" }}>
     <Icon name="user" /> {name}
   </span>
 );
 
-const options = name => [
-  {
-    key: "user",
-    text: (
-      <span>
-        Signed in as <strong>{name}</strong>
-      </span>
-    ),
-    disabled: true
-  },
-  { key: "profile", text: "Your Dashboard" },
-  { key: "sign-out", text: "Sign Out" }
-];
+const onDashboardClick = (props, user) => {
+  props.history.push(`/dashboard/${user}`);
+};
+
+const onSignout = props => {
+  props.logoutUser(props.history);
+};
 
 const Navbar = props => {
   const barAnimation = useSpring({
@@ -52,7 +46,19 @@ const Navbar = props => {
       <Link to="/listDoctors">Find Doctors</Link>
       <Link to="/">Hospitals</Link>
       <Link to="/">Labs</Link>
-      <Dropdown trigger={trigger(user.name)} options={options(user.name)} />
+      {/* <Dropdown trigger={trigger(user.name)} options={options(user.name)} /> */}
+
+      <Drop trigger={trigger(user.name)}>
+        <Dropdown.Menu>
+          <Dropdown.Item text={`Signed in as ${user.name}`} disabled={true} />
+          <Dropdown.Divider />
+          <Dropdown.Item
+            text="Your Dashboard"
+            onClick={() => onDashboardClick(props, user.id)}
+          />
+          <Dropdown.Item text="Sign Out" onClick={() => onSignout(props)} />
+        </Dropdown.Menu>
+      </Drop>
     </div>
   );
 
@@ -146,7 +152,14 @@ const NavLinks = styled(animated.ul)`
       border-bottom: 1px solid #9458ae;
     }
 
-    @media (max-width: 1100px) {
+    @media (max-width: 1089px) {
+      display: none;
+    }
+  }
+`;
+
+const Drop = styled(Dropdown)`
+    @media (max-width: 1089px) {
       display: none;
     }
   }
@@ -155,7 +168,7 @@ const NavLinks = styled(animated.ul)`
 const BurgerWrapper = styled.div`
   margin: auto 0;
 
-  @media (min-width: 1100px) {
+  @media (min-width: 1090px) {
     display: none;
   }
 `;

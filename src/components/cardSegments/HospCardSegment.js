@@ -28,7 +28,7 @@ class HospCardSegment extends Component {
   }
   render() {
     return (
-      <Grid>
+      <Grid stackable>
         <Grid.Row columns={4}>
           {this.state.hospitals.length === 0 ? (
             <Grid.Column>

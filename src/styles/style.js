@@ -1,3 +1,6 @@
+import { createGlobalStyle } from "styled-components";
+
+const Styles = createGlobalStyle`
 @import "https://fonts.googleapis.com/css?family=Poppins:100i,200,300,300i,400,500,600,700,800,900&display=swap";
 .white-bg {
   background: #fff;
@@ -335,7 +338,7 @@ hr {
   margin-bottom: 0;
   padding: 30px 44px;
   border-radius: 5px;
-  /* min-width: 200px; */
+  min-width: 200px;
   cursor: pointer;
   transition: color 0.4s linear;
   position: relative;
@@ -5884,3 +5887,7 @@ del {
 .footer-main {
   background-image: url(../assets//footer_bg.png);
 }
+
+`;
+
+export default Styles;

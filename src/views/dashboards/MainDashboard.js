@@ -8,7 +8,8 @@ import {
   Image,
   GridColumn,
   Divider,
-  Segment
+  Segment,
+  Responsive
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import propTypes from "prop-types";
@@ -25,6 +26,8 @@ import EditProfilePatient from "../../components/dashboardContainers/editProfile
 
 import BookingPatient from "../../components/dashboardContainers/bookingsList/bookingPatient";
 import BookingDoctor from "../../components/dashboardContainers/bookingsList/bookingDoctor";
+
+import Logo from "../../assets/Logo.png";
 
 const trigger = (state, name) => (
   <span style={{ fontSize: 11 }}>
@@ -124,73 +127,176 @@ export class MainDashboard extends Component {
           {/* <SideBar username={this.state.name} /> */}
           {/* /////////////////////////////////////////////////////////////////////////////////////// */}
 
-          <Menu
-            vertical
-            inverted
+          <Responsive
+            maxWidth={1090}
             style={{
-              backgroundColor: "#2C3436",
               width: "105%",
               height: "100%"
             }}
           >
-            <Menu.Item>
-              <Link to="/">
-                <h1 style={{ textAlign: "center" }}>HEALTH-E</h1>
-              </Link>
-            </Menu.Item>
-            <Menu.Item>
-              <Dropdown
-                floating
-                item
-                trigger={trigger(this.state, users.user.name)}
+            <Menu
+              vertical
+              inverted
+              style={{
+                backgroundColor: "#2C3436",
+                width: "105%",
+                height: "100%"
+              }}
+            >
+              <Menu.Item>
+                <Link to="/">
+                  <Image src={Logo} />
+                </Link>
+              </Menu.Item>
+              <Menu.Item>
+                <Image
+                  src="https://react.semantic-ui.com/images/wireframe/square-image.png"
+                  size="small"
+                  circular
+                />
+              </Menu.Item>
+              <Menu.Item
+                style={{ height: "10%" }}
+                onClick={() => this.addProfilePatient()}
               >
+                <Icon
+                  style={{ width: "100%", paddingTop: "10px" }}
+                  name="user"
+                  size="large"
+                />
+              </Menu.Item>
+              <Menu.Item
+                style={{ height: "10%" }}
+                onClick={() => this.editProfilePatient()}
+              >
+                <Icon
+                  style={{ width: "100%", paddingTop: "10px" }}
+                  name="edit"
+                  size="large"
+                />
+              </Menu.Item>
+
+              <Menu.Item
+                style={{ height: "10%" }}
+                icon="history"
+                active={activeItem === "appointments"}
+                onClick={() => this.addAppointments()}
+              >
+                <Icon
+                  style={{ width: "100%", paddingTop: "10px" }}
+                  name="history"
+                  size="large"
+                />
+              </Menu.Item>
+
+              <Menu.Item
+                style={{ height: "10%" }}
+                active={activeItem === "prescriptions"}
+                onClick={this.handleItemClick}
+              >
+                <Icon
+                  style={{ width: "100%", paddingTop: "10px" }}
+                  name="sticky note outline"
+                  size="large"
+                />
+              </Menu.Item>
+              <Menu.Item
+                style={{ height: "10%" }}
+                active={activeItem === "labtests"}
+                onClick={this.handleItemClick}
+              >
+                <Icon
+                  style={{ width: "100%", paddingTop: "10px" }}
+                  name="lab"
+                  size="large"
+                />
+              </Menu.Item>
+
+              <Dropdown item text="More">
                 <Dropdown.Menu>
-                  <Dropdown.Item
-                    icon="user"
-                    text="View Profile"
-                    onClick={() => this.addProfilePatient()}
-                  />
-                  <Dropdown.Item
-                    icon="edit"
-                    text="Edit Profile"
-                    onClick={() => this.editProfilePatient()}
-                  />
+                  <Dropdown.Item icon="edit" text="Edit Profile" />
+                  <Dropdown.Item icon="globe" text="Choose Language" />
+                  <Dropdown.Item icon="settings" text="Account Settings" />
                 </Dropdown.Menu>
               </Dropdown>
-            </Menu.Item>
+            </Menu>
+          </Responsive>
 
-            <Menu.Item
-              name="appointments"
-              active={activeItem === "appointments"}
-              onClick={() => this.addAppointments()}
+          <Responsive
+            minWidth={1091}
+            style={{
+              width: "105%",
+              height: "100%"
+            }}
+          >
+            <Menu
+              vertical
+              inverted
+              style={{
+                backgroundColor: "#2C3436",
+                width: "105%",
+                height: "100%"
+              }}
             >
-              Appointment History
-            </Menu.Item>
+              <Menu.Item>
+                <Link to="/">
+                  <h1 style={{ textAlign: "center" }}>HEALTH-E</h1>
+                </Link>
+              </Menu.Item>
+              <Menu.Item>
+                <Dropdown
+                  floating
+                  item
+                  trigger={trigger(this.state, users.user.name)}
+                >
+                  <Dropdown.Menu>
+                    <Dropdown.Item
+                      icon="user"
+                      text="View Profile"
+                      onClick={() => this.addProfilePatient()}
+                    />
+                    <Dropdown.Item
+                      icon="edit"
+                      text="Edit Profile"
+                      onClick={() => this.editProfilePatient()}
+                    />
+                  </Dropdown.Menu>
+                </Dropdown>
+              </Menu.Item>
 
-            <Menu.Item
-              name="prescriptions"
-              active={activeItem === "prescriptions"}
-              onClick={this.handleItemClick}
-            >
-              <Icon name="grid layout" />
-              View Previous Prescriptions
-            </Menu.Item>
-            <Menu.Item
-              name="labtests"
-              active={activeItem === "labtests"}
-              onClick={this.handleItemClick}
-            >
-              View Lab Test Results
-            </Menu.Item>
+              <Menu.Item
+                name="appointments"
+                active={activeItem === "appointments"}
+                onClick={() => this.addAppointments()}
+              >
+                Appointment History
+              </Menu.Item>
 
-            <Dropdown item text="More">
-              <Dropdown.Menu>
-                <Dropdown.Item icon="edit" text="Edit Profile" />
-                <Dropdown.Item icon="globe" text="Choose Language" />
-                <Dropdown.Item icon="settings" text="Account Settings" />
-              </Dropdown.Menu>
-            </Dropdown>
-          </Menu>
+              <Menu.Item
+                name="prescriptions"
+                active={activeItem === "prescriptions"}
+                onClick={this.handleItemClick}
+              >
+                <Icon name="grid layout" />
+                View Previous Prescriptions
+              </Menu.Item>
+              <Menu.Item
+                name="labtests"
+                active={activeItem === "labtests"}
+                onClick={this.handleItemClick}
+              >
+                View Lab Test Results
+              </Menu.Item>
+
+              <Dropdown item text="More">
+                <Dropdown.Menu>
+                  <Dropdown.Item icon="edit" text="Edit Profile" />
+                  <Dropdown.Item icon="globe" text="Choose Language" />
+                  <Dropdown.Item icon="settings" text="Account Settings" />
+                </Dropdown.Menu>
+              </Dropdown>
+            </Menu>
+          </Responsive>
 
           {/* /////////////////////////////////////////////////////////////////////////////////////// */}
         </Grid.Column>
@@ -247,76 +353,178 @@ export class MainDashboard extends Component {
           {/* <SideBar username={this.state.name} /> */}
           {/* /////////////////////////////////////////////////////////////////////////////////////// */}
 
-          <Menu
-            vertical
-            inverted
+          <Responsive
+            maxWidth={1090}
             style={{
-              backgroundColor: "#2C3436",
               width: "105%",
               height: "100%"
             }}
           >
-            <Menu.Item>
-              <Link to="/">
-                <h1 style={{ textAlign: "center", color: "white" }}>
-                  HEALTH-<span style={{ color: "red" }}>E</span>
-                </h1>
-              </Link>
-            </Menu.Item>
-            <Menu.Item>
-              <Dropdown
-                floating
-                item
-                trigger={trigger(this.state, users.user.name)}
+            <Menu
+              vertical
+              inverted
+              style={{
+                backgroundColor: "#2C3436",
+                width: "105%",
+                height: "100%"
+              }}
+            >
+              <Menu.Item>
+                <Link to="/">
+                  <Image src={Logo} />
+                </Link>
+              </Menu.Item>
+              <Menu.Item>
+                <Image
+                  src="https://react.semantic-ui.com/images/wireframe/square-image.png"
+                  size="small"
+                  circular
+                />
+              </Menu.Item>
+              <Menu.Item
+                style={{ height: "10%" }}
+                onClick={() => this.addProfile()}
               >
+                <Icon
+                  style={{ width: "100%", paddingTop: "10px" }}
+                  name="user"
+                  size="large"
+                />
+              </Menu.Item>
+              <Menu.Item
+                style={{ height: "10%" }}
+                onClick={() => this.editProfile()}
+              >
+                <Icon
+                  style={{ width: "100%", paddingTop: "10px" }}
+                  name="edit"
+                  size="large"
+                />
+              </Menu.Item>
+
+              <Menu.Item
+                style={{ height: "10%" }}
+                icon="history"
+                active={activeItem === "appointments"}
+                onClick={() => this.addAppointments()}
+              >
+                <Icon
+                  style={{ width: "100%", paddingTop: "10px" }}
+                  name="history"
+                  size="large"
+                />
+              </Menu.Item>
+
+              <Menu.Item
+                style={{ height: "10%" }}
+                active={activeItem === "prescriptions"}
+                onClick={this.handleItemClick}
+              >
+                <Icon
+                  style={{ width: "100%", paddingTop: "10px" }}
+                  name="sticky note outline"
+                  size="large"
+                />
+              </Menu.Item>
+              <Menu.Item
+                style={{ height: "10%" }}
+                active={activeItem === "labtests"}
+                onClick={this.handleItemClick}
+              >
+                <Icon
+                  style={{ width: "100%", paddingTop: "10px" }}
+                  name="lab"
+                  size="large"
+                />
+              </Menu.Item>
+
+              <Dropdown item text="More">
                 <Dropdown.Menu>
-                  <Dropdown.Item
-                    icon="user"
-                    text="View Profile"
-                    onClick={() => this.addProfile()}
-                  />
-                  <Dropdown.Item
-                    icon="edit"
-                    text="Edit Profile"
-                    onClick={() => this.editProfile()}
-                  />
+                  <Dropdown.Item icon="edit" text="Edit Profile" />
+                  <Dropdown.Item icon="globe" text="Choose Language" />
+                  <Dropdown.Item icon="settings" text="Account Settings" />
                 </Dropdown.Menu>
               </Dropdown>
-            </Menu.Item>
+            </Menu>
+          </Responsive>
 
-            <Menu.Item
-              name="appointments"
-              active={activeItem === "appointments"}
-              onClick={() => this.addAppointments()}
+          <Responsive
+            minWidth={1091}
+            style={{
+              width: "105%",
+              height: "100%"
+            }}
+          >
+            <Menu
+              vertical
+              inverted
+              style={{
+                backgroundColor: "#2C3436",
+                width: "105%",
+                height: "100%"
+              }}
             >
-              Appointment History
-            </Menu.Item>
+              <Menu.Item>
+                <Link to="/">
+                  <h1 style={{ textAlign: "center", color: "white" }}>
+                    HEALTH-<span style={{ color: "red" }}>E</span>
+                  </h1>
+                </Link>
+              </Menu.Item>
+              <Menu.Item>
+                <Dropdown
+                  floating
+                  item
+                  trigger={trigger(this.state, users.user.name)}
+                >
+                  <Dropdown.Menu>
+                    <Dropdown.Item
+                      icon="user"
+                      text="View Profile"
+                      onClick={() => this.addProfile()}
+                    />
+                    <Dropdown.Item
+                      icon="edit"
+                      text="Edit Profile"
+                      onClick={() => this.editProfile()}
+                    />
+                  </Dropdown.Menu>
+                </Dropdown>
+              </Menu.Item>
 
-            <Menu.Item
-              name="prescriptions"
-              active={activeItem === "prescriptions"}
-              onClick={this.handleItemClick}
-            >
-              <Icon name="grid layout" />
-              View Previous Prescriptions
-            </Menu.Item>
-            <Menu.Item
-              name="labtests"
-              active={activeItem === "labtests"}
-              onClick={this.handleItemClick}
-            >
-              View Lab Test Results
-            </Menu.Item>
+              <Menu.Item
+                name="appointments"
+                active={activeItem === "appointments"}
+                onClick={() => this.addAppointments()}
+              >
+                Appointment History
+              </Menu.Item>
 
-            <Dropdown item text="More">
-              <Dropdown.Menu>
-                <Dropdown.Item icon="edit" text="Edit Profile" />
-                <Dropdown.Item icon="globe" text="Choose Language" />
-                <Dropdown.Item icon="settings" text="Account Settings" />
-              </Dropdown.Menu>
-            </Dropdown>
-          </Menu>
+              <Menu.Item
+                name="prescriptions"
+                active={activeItem === "prescriptions"}
+                onClick={this.handleItemClick}
+              >
+                <Icon name="grid layout" />
+                View Previous Prescriptions
+              </Menu.Item>
+              <Menu.Item
+                name="labtests"
+                active={activeItem === "labtests"}
+                onClick={this.handleItemClick}
+              >
+                View Lab Test Results
+              </Menu.Item>
 
+              <Dropdown item text="More">
+                <Dropdown.Menu>
+                  <Dropdown.Item icon="edit" text="Edit Profile" />
+                  <Dropdown.Item icon="globe" text="Choose Language" />
+                  <Dropdown.Item icon="settings" text="Account Settings" />
+                </Dropdown.Menu>
+              </Dropdown>
+            </Menu>
+          </Responsive>
           {/* /////////////////////////////////////////////////////////////////////////////////////// */}
         </Grid.Column>
         <Grid.Column width={13}>
