@@ -38,6 +38,22 @@ export const updateUserData = (upUserData, history, id, token) => dispatch => {
     );
 };
 
+export const updateSocketData = (upUserData, id, token) => dispatch => {
+  axios
+    .patch(`/v1/users/${id}`, upUserData, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .then(res => {})
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
 export const deleteUser = (id, token) => dispatch => {
   axios
     .delete(`/v1/users/${id}`, {

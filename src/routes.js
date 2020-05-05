@@ -18,6 +18,8 @@ import Search from "./views/Search";
 import AdminLogin from "./views/AdminComponents/AdminLogin";
 import DashboardAdmin from "./views/AdminComponents/AdminDashboard";
 
+import CallOutgoingScreen from "./components/videoCall/CallOutgoingScreen";
+import CallIncomingScreen from "./components/videoCall/CallIncomingScreen";
 //import BootstrapStyles from "./styles/style";
 
 const routes = () => {
@@ -38,6 +40,9 @@ const routes = () => {
 
         <Route exact path="/admin" component={AdminLogin} />
         <Route exact path="/dashboardAdmin/:id" component={DashboardAdmin} />
+
+        <Route exact path="/call-outgoing" component={CallOutgoingScreen} />
+        <Route exact path="/call-incoming" component={CallIncomingScreen} />
 
         <Route component={NotFound} />
       </Switch>
