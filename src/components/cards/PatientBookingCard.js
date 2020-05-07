@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import { Message } from "semantic-ui-react";
+import { Redirect } from "react-router-dom";
+import axios from "axios";
 
 import { deleteAppointmentBooking } from "../../actions/bookingActions";
 
@@ -19,7 +19,9 @@ class PatientBookingCard extends Component {
       callerSignal: "",
       stream: "",
       callAccepted: false,
-      visible: true
+      visible: true,
+      partnerSocketId: "",
+      redirect: false
     };
     this.socket = {};
   }
@@ -37,15 +39,9 @@ class PatientBookingCard extends Component {
         id: ""
       });
     }
-
-    this.state.socketCurrent.on("hey", data => {
-      this.setState({ receivingCall: true });
-      this.setState({ caller: data.from });
-      this.setState({ callerSignal: data.signal });
-    });
   }
 
-  handleClick = (doctorId, patientId, date, time) => {
+  handleClickDelete = (doctorId, patientId, date, time) => {
     const deleteData = {
       date: date,
       timeSlot: time,
@@ -55,29 +51,33 @@ class PatientBookingCard extends Component {
     this.props.dispatch(deleteAppointmentBooking(deleteData, this.state.token));
   };
 
+  handleClickGetSocket = doctorId => {
+    const data = {
+      id: doctorId
+    };
+    axios.get(`/v1/users/${data.id}`).then(res => {
+      this.setState({ partnerSocketId: res.data.socketHandler });
+    });
+
+    setTimeout(() => {
+      this.setState({ redirect: true });
+    }, 1000);
+  };
+
   render() {
-    let incomingCall;
-    if (this.state.receivingCall) {
-      incomingCall = (
-        <div>
-          <h1>{this.state.caller} is calling you</h1>
-          <Link
-            to={{
-              pathname: "/call-incoming",
-              socketIdProps: this.state.yourID, //passing role to signup
-              partnerSocketIdProps: this.props.socketId,
-              socketCurrentProps: this.state.socketCurrent,
-              callerProps: this.state.caller,
-              callerSignalProps: this.state.callerSignal
-            }}
-          >
-            <button className="btn btn-outline-success">Accept</button>
-          </Link>
-        </div>
+    if (this.state.redirect) {
+      return (
+        <Redirect
+          push
+          to={{
+            pathname: "/call-outgoing",
+            socketIdProps: this.state.yourID, //passing role to signup
+            partnerSocketIdProps: this.state.partnerSocketId,
+            socketCurrentProps: this.state.socketCurrent
+          }}
+        />
       );
     }
-
-    //console.log("socketCurrent: " + this.state.socketCurrent);
 
     return (
       <div>
@@ -101,7 +101,7 @@ class PatientBookingCard extends Component {
                 <div>
                   <button
                     onClick={() =>
-                      this.handleClick(
+                      this.handleClickDelete(
                         this.props.doctorId,
                         this.props.patientId,
                         this.props.date,
@@ -112,20 +112,16 @@ class PatientBookingCard extends Component {
                   >
                     delete appointment
                   </button>
-                  <Link
-                    to={{
-                      pathname: "/call-outgoing",
-                      socketIdProps: this.state.yourID, //passing role to signup
-                      partnerSocketIdProps: this.props.socketId,
-                      socketCurrentProps: this.state.socketCurrent
-                    }}
+
+                  <button
+                    onClick={() =>
+                      this.handleClickGetSocket(this.props.doctorId)
+                    }
+                    className="btn btn-outline-info"
                   >
-                    <button className="btn btn-outline-info">
-                      call doctor {this.props.socketId}
-                    </button>
-                  </Link>
+                    call doctor
+                  </button>
                 </div>
-                {incomingCall}
               </div>
             </div>
           </div>

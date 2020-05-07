@@ -12,7 +12,12 @@ if (localStorage.getItem("jwtToken")) {
 } else {
   id = "";
 }
-const exclusionArray = [`/dashboard/${id}`, `/dashboardAdmin/${id}`];
+const exclusionArray = [
+  `/dashboard/${id}`,
+  `/dashboardAdmin/${id}`,
+  "/call-outgoing",
+  "/call-incoming"
+];
 
 class App extends Component {
   state = {

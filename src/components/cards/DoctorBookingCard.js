@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import axios from "axios";
 
 class DoctorBookingCard extends Component {
   constructor(props) {
@@ -15,7 +16,9 @@ class DoctorBookingCard extends Component {
       callerSignal: "",
       stream: "",
       callAccepted: false,
-      visible: true
+      visible: true,
+      partnerSocketId: "",
+      redirect: false
     };
     this.socket = {};
   }
@@ -33,33 +36,33 @@ class DoctorBookingCard extends Component {
         id: ""
       });
     }
-
-    this.state.socketCurrent.on("hey", data => {
-      this.setState({ receivingCall: true });
-      this.setState({ caller: data.from });
-      this.setState({ callerSignal: data.signal });
-    });
   }
 
+  handleClickGetSocket = patientId => {
+    const data = {
+      id: patientId
+    };
+    axios.get(`/v1/users/${data.id}`).then(res => {
+      this.setState({ partnerSocketId: res.data.socketHandler });
+    });
+
+    setTimeout(() => {
+      this.setState({ redirect: true });
+    }, 1000);
+  };
+
   render() {
-    let incomingCall;
-    if (this.state.receivingCall) {
-      incomingCall = (
-        <div>
-          <h1>{this.state.caller} is calling you</h1>
-          <Link
-            to={{
-              pathname: "/call-incoming",
-              socketIdProps: this.state.yourID, //passing role to signup
-              partnerSocketIdProps: this.props.socketId,
-              socketCurrentProps: this.state.socketCurrent,
-              callerProps: this.state.caller,
-              callerSignalProps: this.state.callerSignal
-            }}
-          >
-            <button className="btn btn-outline-success">Accept call</button>
-          </Link>
-        </div>
+    if (this.state.redirect) {
+      return (
+        <Redirect
+          push
+          to={{
+            pathname: "/call-outgoing",
+            socketIdProps: this.state.yourID, //passing role to signup
+            partnerSocketIdProps: this.state.partnerSocketId,
+            socketCurrentProps: this.state.socketCurrent
+          }}
+        />
       );
     }
 
@@ -82,19 +85,15 @@ class DoctorBookingCard extends Component {
                   <span style={{ color: "black" }}>Time of Appointment: </span>
                   {this.props.timeSlot}
                 </p>
-                <Link
-                  to={{
-                    pathname: "/call-outgoing",
-                    socketIdProps: this.state.yourID, //passing role to signup
-                    partnerSocketIdProps: this.props.socketId,
-                    socketCurrentProps: this.state.socketCurrent
-                  }}
+
+                <button
+                  onClick={() =>
+                    this.handleClickGetSocket(this.props.patientId)
+                  }
+                  className="btn btn-outline-info"
                 >
-                  <button className="btn btn-outline-info">
-                    call patient {this.props.socketId}
-                  </button>
-                </Link>
-                {incomingCall}
+                  call patient
+                </button>
               </div>
             </div>
           </div>

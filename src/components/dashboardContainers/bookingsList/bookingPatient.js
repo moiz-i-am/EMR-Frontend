@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import axios from "axios";
 import io from "socket.io-client";
 import { Segment, Dimmer, Loader, Image } from "semantic-ui-react";
 
-import PatientBookingCard from "../../cards/PatientBookingCard copy";
+import PatientBookingCard from "../../cards/PatientBookingCard";
 
 import { updateSocketData } from "../../../actions/userDetailsAction";
 
@@ -18,7 +18,10 @@ class bookingPatient extends Component {
       bookings: [],
       loading: false,
       yourID: "",
-      socketCurrent: ""
+      socketCurrent: "",
+      receivingCall: false,
+      caller: "",
+      callerSignal: ""
     };
     this.socket = {};
   }
@@ -28,7 +31,6 @@ class bookingPatient extends Component {
       patient: this.state.id
     };
     axios.post(`/v1/booking/bookingList/patient`, data).then(res => {
-      // this.setState({ bookings: res.data });
       this.setState({ loading: true });
       setTimeout(() => {
         this.setState({ loading: false, bookings: res.data });
@@ -40,12 +42,10 @@ class bookingPatient extends Component {
     if (localStorage.getItem("jwtToken")) {
       this.setState({
         token: this.documentData.token.accessToken
-        // id: this.documentData.user.id
       });
     } else {
       this.setState({
         token: ""
-        // id: ""
       });
     }
 
@@ -55,6 +55,12 @@ class bookingPatient extends Component {
 
     this.socket.current.on("yourID", id => {
       this.setState({ yourID: id });
+    });
+
+    this.socket.current.on("hey", data => {
+      this.setState({ receivingCall: true });
+      this.setState({ caller: data.from });
+      this.setState({ callerSignal: data.signal });
     });
   }
 
@@ -69,14 +75,53 @@ class bookingPatient extends Component {
         this.state.token
       );
     } else {
-      console.log(
-        //"sock id: " + updateSocket.socketHandler + " user id: " + this.state.id
-        "not logged in"
-      );
+      console.log("not logged in");
     }
   }
 
+  handleCallDecline = () => {
+    this.setState({ receivingCall: false });
+  };
+
   render() {
+    //////////////////////////////// call accept functionality ////////////////
+    let incomingCall;
+    if (this.state.receivingCall) {
+      incomingCall = (
+        <div style={{ backgroundColor: "#2C3436" }}>
+          <h1 style={{ padding: "20px", color: "#ffffff" }}>
+            {this.state.caller} is calling you
+          </h1>
+          <div style={{ textAlign: "center", padding: "15px" }}>
+            <Link
+              to={{
+                pathname: "/call-incoming",
+                socketIdProps: this.state.yourID, //passing role to signup
+                socketCurrentProps: this.state.socketCurrent,
+                callerProps: this.state.caller,
+                callerSignalProps: this.state.callerSignal
+              }}
+            >
+              <button
+                className="btn btn-outline-success"
+                style={{ marginRight: "5px" }}
+              >
+                Accept
+              </button>
+            </Link>
+            <button
+              onClick={() => this.handleCallDecline()}
+              className="btn btn-outline-danger"
+              style={{ marginLeft: "5px" }}
+            >
+              Decline
+            </button>
+          </div>
+        </div>
+      );
+    }
+    //////////////////////////////// call accept functionality ////////////////
+
     return (
       <div>
         <div className="generating-area ">
@@ -121,6 +166,9 @@ class bookingPatient extends Component {
             <Image src="https://react.semantic-ui.com/images/wireframe/short-paragraph.png" />
           </Segment>
         ) : null}
+        <div style={{ position: "fixed", top: 0, left: "500px" }}>
+          {incomingCall}
+        </div>
       </div>
     );
   }
@@ -146,5 +194,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(withRouter(bookingPatient));
-
-//export default bookingPatient;
