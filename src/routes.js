@@ -2,10 +2,8 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 
 import Home from "./views/Home";
-import SignupNavigator from "./views/SignupNavigator";
-import Signup from "./views/Signup";
+
 import Signup2 from "./views/Signup2";
-import Login from "./views/Login";
 
 import NotFound from "./components/NotFound";
 import Dashboard from "./views/dashboards/MainDashboard";
@@ -20,7 +18,8 @@ import DashboardAdmin from "./views/AdminComponents/AdminDashboard";
 
 import CallOutgoingScreen from "./components/videoCall/CallOutgoingScreen";
 import CallIncomingScreen from "./components/videoCall/CallIncomingScreen";
-//import BootstrapStyles from "./styles/style";
+
+import CallScreen from "./components/videoCall/CallScreen";
 
 const routes = () => {
   return (
@@ -43,6 +42,8 @@ const routes = () => {
 
         <Route exact path="/call-outgoing" component={CallOutgoingScreen} />
         <Route exact path="/call-incoming" component={CallIncomingScreen} />
+
+        <Route exact path="/call" component={CallScreen} />
 
         <Route component={NotFound} />
       </Switch>

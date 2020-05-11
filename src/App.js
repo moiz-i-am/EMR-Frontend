@@ -16,7 +16,8 @@ const exclusionArray = [
   `/dashboard/${id}`,
   `/dashboardAdmin/${id}`,
   "/call-outgoing",
-  "/call-incoming"
+  "/call-incoming",
+  "/call"
 ];
 
 class App extends Component {

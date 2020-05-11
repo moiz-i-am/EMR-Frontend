@@ -1,24 +1,15 @@
 import React, { Component } from "react";
-import Peer from "simple-peer";
+import { Grid, Button, Image, Icon } from "semantic-ui-react";
 import { Redirect } from "react-router-dom";
-import { Grid, Button, Icon } from "semantic-ui-react";
 
 import SyncingPrescriptionEditor from "./SyncingPrescriptionEditor";
 
-class CallOutgoingScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      myId: this.props.location.userId,
-      partnerId: "",
-      yourID: this.props.location.socketIdProps,
-      receivingCall: false,
-      stream: "",
-      callAccepted: false,
-      redirect: false,
-      muted: false
-    };
-  }
+class CallScreen extends Component {
+  state = {
+    stream: "",
+    redirect: false,
+    muted: false
+  };
 
   componentDidMount() {
     navigator.mediaDevices
@@ -28,33 +19,10 @@ class CallOutgoingScreen extends Component {
         if (this.userVideo) {
           this.userVideo.srcObject = stream;
         }
-      });
-
-    setTimeout(() => {
-      const peer = new Peer({
-        initiator: true,
-        trickle: false,
-        stream: this.state.stream
-      });
-      peer.on("signal", data => {
-        this.props.location.socketCurrentProps.emit("callUser", {
-          userToCall: this.props.location.partnerSocketIdProps,
-          signalData: data,
-          from: this.state.yourID
-        });
-      });
-
-      peer.on("stream", stream => {
         if (this.partnerVideo) {
-          console.log("partner ahsdjasdkasjhdkjh");
           this.partnerVideo.srcObject = stream;
         }
       });
-      this.props.location.socketCurrentProps.on("callAccepted", signal => {
-        this.setState({ callAccepted: true });
-        peer.signal(signal);
-      });
-    }, 2000);
   }
 
   callEndHandler = () => {
@@ -75,24 +43,14 @@ class CallOutgoingScreen extends Component {
   };
 
   render() {
-    console.log(
-      "my id: " +
-        this.state.myId +
-        "socketID call screen: " +
-        this.state.yourID +
-        " sa:  " +
-        this.props.location.socketCurrentProps +
-        " partner ID:  " +
-        this.props.location.partnerSocketIdProps
-    );
-
     if (this.state.redirect) {
-      return <Redirect push to={`/dashboard/${this.state.myId}`} />;
+      return <Redirect push to={"/"} />;
     }
 
     return (
       <div style={{ width: "100%" }}>
-        <Grid columns={3} style={{ padding: 0, margin: 0 }} divided>
+        {/* , backgroundImage: `url(${Background})` */}
+        <Grid stackable columns={3} style={{ padding: 0, margin: 0 }} divided>
           <Grid.Column width={10} style={{ padding: 0 }}>
             <div className="partner-video" style={{ height: "670px" }}>
               <video
@@ -111,7 +69,7 @@ class CallOutgoingScreen extends Component {
                 <video
                   style={{ width: "100%" }}
                   playsInline
-                  muted
+                  // muted
                   ref={ref => {
                     this.userVideo = ref;
                   }}
@@ -128,10 +86,16 @@ class CallOutgoingScreen extends Component {
                   position: "relative"
                 }}
               >
-                <SyncingPrescriptionEditor
-                  currentSocket={this.props.location.socketCurrentProps}
-                  partnerSocketId={this.props.location.partnerSocketIdProps}
-                />
+                {/* <h3 style={{ backgroundColor: "#faed86", textAlign: "center" }}>
+                  Write a prescription
+                </h3>
+
+                <textarea class="notes"></textarea>
+
+                <div style={{ textAlign: "right", marginRight: "20px" }}>
+                  <Button color="yellow">Save</Button>
+                </div> */}
+                <SyncingPrescriptionEditor />
               </div>
             </Grid.Row>
           </Grid.Column>
@@ -189,4 +153,4 @@ class CallOutgoingScreen extends Component {
   }
 }
 
-export default CallOutgoingScreen;
+export default CallScreen;

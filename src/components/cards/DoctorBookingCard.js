@@ -60,7 +60,8 @@ class DoctorBookingCard extends Component {
             pathname: "/call-outgoing",
             socketIdProps: this.state.yourID, //passing role to signup
             partnerSocketIdProps: this.state.partnerSocketId,
-            socketCurrentProps: this.state.socketCurrent
+            socketCurrentProps: this.state.socketCurrent,
+            userId: this.state.id
           }}
         />
       );

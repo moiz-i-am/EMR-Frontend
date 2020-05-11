@@ -32,7 +32,10 @@ class Login2 extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
       const { user } = nextProps.auth;
+      // setTimeout(() => {
       this.props.history.push(`/dashboard/${user.id}`);
+      // }, 4000);
+
       // push user to dashboard when they login
     }
     if (nextProps.errors) {

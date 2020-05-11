@@ -65,7 +65,7 @@ const Navbar = props => {
   const guestLinks = (
     <div>
       <Link to="/listDoctors">Doctors</Link>
-      <Link to="/">Hospitals</Link>
+      <Link to="/call">Hospitals</Link>
       <Link to="/">Labs</Link>
       <Link to="/Login">Login</Link>
       <Link to="/SignupSelector">Signup</Link>

@@ -3,7 +3,14 @@ import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
 import axios from "axios";
 import io from "socket.io-client";
-import { Segment, Dimmer, Loader, Image } from "semantic-ui-react";
+import {
+  Segment,
+  Dimmer,
+  Loader,
+  Image,
+  Button,
+  Icon
+} from "semantic-ui-react";
 
 import PatientBookingCard from "../../cards/PatientBookingCard";
 
@@ -84,6 +91,8 @@ class bookingPatient extends Component {
   };
 
   render() {
+    console.log("my id bookingPatient: " + this.state.id);
+
     //////////////////////////////// call accept functionality ////////////////
     let incomingCall;
     if (this.state.receivingCall) {
@@ -92,30 +101,41 @@ class bookingPatient extends Component {
           <h1 style={{ padding: "20px", color: "#ffffff" }}>
             {this.state.caller} is calling you
           </h1>
-          <div style={{ textAlign: "center", padding: "15px" }}>
+          <div style={{ textAlign: "left", padding: "15px" }}>
             <Link
               to={{
                 pathname: "/call-incoming",
                 socketIdProps: this.state.yourID, //passing role to signup
                 socketCurrentProps: this.state.socketCurrent,
                 callerProps: this.state.caller,
-                callerSignalProps: this.state.callerSignal
+                callerSignalProps: this.state.callerSignal,
+                userId: this.state.id,
+                partnerSocketIdProps: this.state.caller
               }}
             >
-              <button
-                className="btn btn-outline-success"
-                style={{ marginRight: "5px" }}
+              <Button
+                animated="vertical"
+                positive
+                style={{ marginRight: "5px", width: "100px" }}
               >
-                Accept
-              </button>
+                <Button.Content hidden>Accept Call</Button.Content>
+                <Button.Content visible>
+                  <Icon name="call" />
+                </Button.Content>
+              </Button>
             </Link>
-            <button
+
+            <Button
+              animated="vertical"
+              negative
+              style={{ marginLeft: "5px", width: "100px" }}
               onClick={() => this.handleCallDecline()}
-              className="btn btn-outline-danger"
-              style={{ marginLeft: "5px" }}
             >
-              Decline
-            </button>
+              <Button.Content hidden>Decline Call</Button.Content>
+              <Button.Content visible>
+                <Icon name="call" />
+              </Button.Content>
+            </Button>
           </div>
         </div>
       );
@@ -166,7 +186,9 @@ class bookingPatient extends Component {
             <Image src="https://react.semantic-ui.com/images/wireframe/short-paragraph.png" />
           </Segment>
         ) : null}
-        <div style={{ position: "fixed", top: 0, left: "500px" }}>
+        <div
+          style={{ position: "fixed", top: 0, width: "100%", zIndex: "300000" }}
+        >
           {incomingCall}
         </div>
       </div>
