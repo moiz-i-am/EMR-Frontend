@@ -112,13 +112,9 @@ const NavBar = styled(animated.nav)`
   width: 100%;
   top: 0;
   left: 0;
-  background: transparent;
-  // background: rgb(218, 218, 218);
-  // background: linear-gradient(
-  //   90deg,
-  //   rgba(218, 218, 218, 1) 0%,
-  //   rgba(139, 0, 175, 1) 100%
-  // );
+  height: 85px;
+  background: #fff;
+  box-shadow: 10px 10px 15px #aaaaaa;
   z-index: 2;
   font-size: 1.4rem;
 `;

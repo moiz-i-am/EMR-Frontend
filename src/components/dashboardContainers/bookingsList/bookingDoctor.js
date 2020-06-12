@@ -29,7 +29,9 @@ class bookingDoctor extends Component {
       socketCurrent: "",
       receivingCall: "",
       caller: "",
-      callerSignal: ""
+      callerSignal: "",
+      partnerId: "",
+      partnerName: ""
     };
     this.socket = {};
   }
@@ -68,6 +70,17 @@ class bookingDoctor extends Component {
       this.setState({ receivingCall: true });
       this.setState({ caller: data.from });
       this.setState({ callerSignal: data.signal });
+
+      const sock = {
+        socketId: this.state.caller
+      };
+      axios.post(`/v1/users/socket`, sock).then(res => {
+        const a = 0;
+        this.setState({
+          partnerId: res.data[a]._id,
+          partnerName: res.data[a].name
+        });
+      });
     });
   }
 
@@ -92,13 +105,16 @@ class bookingDoctor extends Component {
 
   render() {
     console.log("my id bookingDoctor: " + this.state.id);
+    console.log(
+      "id and name: " + this.state.partnerId + " " + this.state.partnerName
+    );
     //////////////////////////////// call accept functionality ////////////////
     let incomingCall;
     if (this.state.receivingCall) {
       incomingCall = (
         <div style={{ backgroundColor: "#2C3436" }}>
           <h1 style={{ padding: "20px", color: "#ffffff" }}>
-            {this.state.caller} is calling you
+            {this.state.partnerName} is calling you
           </h1>
           <div style={{ textAlign: "left", padding: "15px" }}>
             <Link
@@ -109,7 +125,9 @@ class bookingDoctor extends Component {
                 callerProps: this.state.caller,
                 callerSignalProps: this.state.callerSignal,
                 userId: this.state.id,
-                partnerSocketIdProps: this.state.caller
+                partnerSocketIdProps: this.state.caller,
+                partnerIdProps: this.state.partnerId,
+                partnerNameProps: this.state.partnerName
               }}
             >
               <Button

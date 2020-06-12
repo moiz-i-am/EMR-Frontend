@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-import logo from "../../assets/Logo.png";
+import logo from "../../assets/L.png";
 
 const Brand = () => {
   return (
@@ -15,6 +15,6 @@ const Brand = () => {
 export default Brand;
 
 const Image = styled.img`
-  height: 85%;
+  height: 120%;
   margin: auto 0;
 `;

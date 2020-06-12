@@ -131,6 +131,8 @@ class CallOutgoingScreen extends Component {
                 <SyncingPrescriptionEditor
                   currentSocket={this.props.location.socketCurrentProps}
                   partnerSocketId={this.props.location.partnerSocketIdProps}
+                  partnerId={this.props.location.partnerIdProps}
+                  partnerName={this.props.location.partnerNameProps}
                 />
               </div>
             </Grid.Row>

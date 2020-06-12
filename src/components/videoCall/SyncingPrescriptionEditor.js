@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import { Button } from "semantic-ui-react";
+import { connect } from "react-redux";
 
 import "../../styles/notes.style.css";
+
+import { savePrescription } from "../../actions/prescriptionActions";
 
 class SyncingPrescriptionEditor extends Component {
   constructor(props) {
@@ -9,7 +12,11 @@ class SyncingPrescriptionEditor extends Component {
     this.state = {
       currentSocket: this.props.currentSocket,
       partnerSocketId: this.props.partnerSocketId,
+      partnerId: this.props.partnerId,
+      partnerName: this.props.partnerName,
       role: "",
+      doctorName: "",
+      doctorId: "",
       value: "",
       data: ""
     };
@@ -20,7 +27,9 @@ class SyncingPrescriptionEditor extends Component {
     this.documentData = JSON.parse(localStorage.getItem("jwtToken"));
     if (localStorage.getItem("jwtToken")) {
       this.setState({
-        role: this.documentData.user.role
+        role: this.documentData.user.role,
+        doctorName: this.documentData.user.name,
+        doctorId: this.documentData.user.id
       });
     } else {
       this.setState({
@@ -47,8 +56,22 @@ class SyncingPrescriptionEditor extends Component {
     this.setState({ value: event.target.value });
   };
 
+  handleSavePrescription = () => {
+    const data = {
+      prescriptionText: this.state.value,
+      patientId: this.state.partnerId,
+      patientName: this.state.partnerName,
+      doctorId: this.state.doctorId,
+      doctorName: this.state.doctorName,
+      date: new Date()
+    };
+
+    //console.log("data is : " + data.prescriptionText + " " + data.doctorId);
+    this.props.savePrescription(data);
+  };
+
   render() {
-    console.log("data: " + this.state.data);
+    console.log("data: " + this.state.value);
     return (
       <div>
         {this.state.role === "doctor" ? (
@@ -67,7 +90,12 @@ class SyncingPrescriptionEditor extends Component {
             ></textarea>
 
             <div style={{ textAlign: "right", marginRight: "20px" }}>
-              <Button color="yellow">Save</Button>
+              <Button
+                color="yellow"
+                onClick={() => this.handleSavePrescription()}
+              >
+                Save
+              </Button>
             </div>
           </div>
         ) : (
@@ -90,4 +118,12 @@ class SyncingPrescriptionEditor extends Component {
   }
 }
 
-export default SyncingPrescriptionEditor;
+const mapStateToProps = state => {
+  return {
+    auth: state.auth
+  };
+};
+
+export default connect(mapStateToProps, { savePrescription })(
+  SyncingPrescriptionEditor
+);

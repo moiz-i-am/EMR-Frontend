@@ -21,6 +21,8 @@ class PatientBookingCard extends Component {
       callAccepted: false,
       visible: true,
       partnerSocketId: "",
+      partnerId: "",
+      partnerName: "",
       redirect: false
     };
     this.socket = {};
@@ -56,7 +58,11 @@ class PatientBookingCard extends Component {
       id: doctorId
     };
     axios.get(`/v1/users/${data.id}`).then(res => {
-      this.setState({ partnerSocketId: res.data.socketHandler });
+      this.setState({
+        partnerSocketId: res.data.socketHandler,
+        partnerId: res.data.id,
+        partnerName: res.data.name
+      });
     });
 
     setTimeout(() => {
@@ -73,6 +79,8 @@ class PatientBookingCard extends Component {
             pathname: "/call-outgoing",
             socketIdProps: this.state.yourID, //passing role to signup
             partnerSocketIdProps: this.state.partnerSocketId,
+            partnerIdProps: this.state.partnerId,
+            partnerNameProps: this.state.partnerName,
             socketCurrentProps: this.state.socketCurrent,
             userId: this.state.id
           }}
