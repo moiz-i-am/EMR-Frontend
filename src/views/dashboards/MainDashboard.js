@@ -27,6 +27,9 @@ import EditProfilePatient from "../../components/dashboardContainers/editProfile
 import BookingPatient from "../../components/dashboardContainers/bookingsList/bookingPatient";
 import BookingDoctor from "../../components/dashboardContainers/bookingsList/bookingDoctor";
 
+import PrescriptionPatient from "../../components/dashboardContainers/prescriptions/PrescriptionLists/PrescriptionPatient";
+import PrescriptionDoctor from "../../components/dashboardContainers/prescriptions/PrescriptionLists/PrescriptionDoctor";
+
 import Logo from "../../assets/Logo.png";
 
 const trigger = (state, name) => (
@@ -53,6 +56,7 @@ export class MainDashboard extends Component {
     home: true,
     browse: false,
     editProfile: false,
+    presctiptionList: false,
     horizontalNameShow: "Appointments History"
   };
 
@@ -61,6 +65,7 @@ export class MainDashboard extends Component {
       home: !this.state.home,
       browse: false,
       editProfile: false,
+      presctiptionList: false,
       horizontalNameShow: "Appointments History"
     });
   };
@@ -69,6 +74,7 @@ export class MainDashboard extends Component {
       browse: !this.state.browse,
       home: false,
       editProfile: false,
+      presctiptionList: false,
       horizontalNameShow: "Profile"
     });
   };
@@ -77,6 +83,7 @@ export class MainDashboard extends Component {
       editProfile: !this.state.editProfile,
       home: false,
       browse: false,
+      presctiptionList: false,
       horizontalNameShow: "Edit Profile"
     });
   };
@@ -86,6 +93,7 @@ export class MainDashboard extends Component {
       browse: !this.state.browse,
       home: false,
       editProfile: false,
+      presctiptionList: false,
       horizontalNameShow: "Profile"
     });
   };
@@ -94,7 +102,18 @@ export class MainDashboard extends Component {
       editProfile: !this.state.editProfile,
       home: false,
       browse: false,
+      presctiptionList: false,
       horizontalNameShow: "Edit Profile"
+    });
+  };
+
+  prescriptionList = () => {
+    this.setState({
+      presctiptionList: !this.state.presctiptionList,
+      home: false,
+      browse: false,
+      editProfile: false,
+      horizontalNameShow: "Prescriptions"
     });
   };
 
@@ -192,7 +211,7 @@ export class MainDashboard extends Component {
               <Menu.Item
                 style={{ height: "10%" }}
                 active={activeItem === "prescriptions"}
-                onClick={this.handleItemClick}
+                onClick={() => this.prescriptionList()}
               >
                 <Icon
                   style={{ width: "100%", paddingTop: "10px" }}
@@ -275,7 +294,7 @@ export class MainDashboard extends Component {
               <Menu.Item
                 name="prescriptions"
                 active={activeItem === "prescriptions"}
-                onClick={this.handleItemClick}
+                onClick={() => this.prescriptionList()}
               >
                 <Icon name="grid layout" />
                 View Previous Prescriptions
@@ -335,6 +354,9 @@ export class MainDashboard extends Component {
               {this.state.browse && <ShowProfile userData={users.user} />}
               {this.state.editProfile && (
                 <EditProfilePatient userData={users.user} />
+              )}
+              {this.state.presctiptionList && (
+                <PrescriptionPatient id={this.props.match.params.id} />
               )}
             </Segment>
           </Grid.Row>
@@ -418,7 +440,7 @@ export class MainDashboard extends Component {
               <Menu.Item
                 style={{ height: "10%" }}
                 active={activeItem === "prescriptions"}
-                onClick={this.handleItemClick}
+                onClick={() => this.prescriptionList()}
               >
                 <Icon
                   style={{ width: "100%", paddingTop: "10px" }}
@@ -503,7 +525,7 @@ export class MainDashboard extends Component {
               <Menu.Item
                 name="prescriptions"
                 active={activeItem === "prescriptions"}
-                onClick={this.handleItemClick}
+                onClick={() => this.prescriptionList()}
               >
                 <Icon name="grid layout" />
                 View Previous Prescriptions
@@ -561,6 +583,9 @@ export class MainDashboard extends Component {
               )}
               {this.state.browse && <ShowProfile userData={users.user} />}
               {this.state.editProfile && <EditProfile userData={users.user} />}
+              {this.state.presctiptionList && (
+                <PrescriptionDoctor id={this.props.match.params.id} />
+              )}
             </Segment>
           </Grid.Row>
         </Grid.Column>

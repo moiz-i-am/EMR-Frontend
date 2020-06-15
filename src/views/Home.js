@@ -13,15 +13,15 @@ import {
 import "../styles/styles.css";
 import "../styles/bootstrap.min.css";
 import { Link } from "react-router-dom";
-
-// import Styles from "../styles/style";
-// import BootStyles from "../styles/boot.style";
+import Zoom from "react-reveal/Zoom";
+import Fade from "react-reveal/Fade";
+import Flip from "react-reveal/Flip";
 
 import DocCardSegment from "../components/cardSegments/DocCardSegment";
 import HospCardSegment from "../components/cardSegments/HospCardSegment";
 import LabCardSegment from "../components/cardSegments/LabCardSegment";
-import image from "../assets/doc.jpg";
-import image2 from "../assets/doc-pc.jpg";
+import image from "../assets/home1.jpg";
+import image2 from "../assets/home2.jpg";
 
 const options = [
   { key: "doctor", text: "Doctor", value: "doctor" },
@@ -112,24 +112,35 @@ class Home extends Component {
         <div class="slider-area " style={{ background: "white", marginTop: 0 }}>
           <div class="slider-active">
             <div
+              // style={{ backgroundImage: { imageBG } }}
               class="single-slider slider-height d-flex align-items-center"
-              data-background="assets/img/hero/h1_hero.png"
+              // data-background={imageBG}
             >
               <div class="container">
                 <div class="rows d-flex align-items-center">
                   <div class="col-lg-7 col-md-9 ">
                     <div class="hero__caption">
-                      <h1 data-animation="fadeInLeft" data-delay=".4s">
-                        We Collect
-                        <br /> High Quality Leads
-                      </h1>
-                      <p data-animation="fadeInLeft" data-delay=".6s">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua. Quis ipsum suspendisse ultrices gravi.
-                      </p>
+                      <Zoom>
+                        <h1
+                          style={{ color: "#8F58AF" }}
+                          data-animation="fadeInLeft"
+                          data-delay=".4s"
+                        >
+                          We provide
+                          <br /> Best Assistance
+                        </h1>
+                        <p
+                          style={{ color: "#113562" }}
+                          data-animation="fadeInLeft"
+                          data-delay=".6s"
+                        >
+                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit, sed do eiusmod tempor incididunt ut labore et
+                          dolore magna aliqua. Quis ipsum suspendisse ultrices
+                          gravi.
+                        </p>
 
-                      <div
+                        {/* <div
                         class="hero__btn"
                         data-animation="fadeInLeft"
                         data-delay=".8s"
@@ -137,16 +148,24 @@ class Home extends Component {
                         <a href="industries.html" class="btn hero-btn">
                           Contact Us
                         </a>
-                      </div>
+                      </div> */}
+                      </Zoom>
                     </div>
                   </div>
+
                   <div class="col-lg-5">
                     <div
                       class="hero__img d-none d-lg-block"
                       data-animation="fadeInRight"
                       data-delay="1s"
                     >
-                      <img src={image} style={{ height: "500px" }} alt="" />
+                      <Zoom>
+                        <img
+                          src={image}
+                          style={{ height: "500px", paddingRight: "40px" }}
+                          alt=""
+                        />
+                      </Zoom>
                     </div>
                   </div>
                 </div>
@@ -158,81 +177,91 @@ class Home extends Component {
                 <div class="rows d-flex justify-content-center">
                   <div class="col-lg-8">
                     <div class="section-tittle text-center">
-                      <h2> We are serving you Via​​</h2>
+                      <Fade top big>
+                        <h2 style={{ color: "#8F58AF" }}> Serving You Via​​</h2>
+                      </Fade>
                     </div>
                   </div>
                 </div>
                 <div class="rows">
                   <div class="col-lg-6 col-md-6">
                     <div class="single-generating d-flex mb-30">
-                      <div class="generating-icon">
-                        <span class="flaticon-chart"></span>
-                      </div>
-                      <div class="generating-cap">
-                        <h4>
-                          {" "}
-                          <Icon name="doctor" size="large" />
-                          Doctors
-                        </h4>
-                        <p>
-                          Professional Doctors available at one click, all time,
-                          everytime{" "}
-                        </p>
-                      </div>
+                      <Fade left big>
+                        <div class="generating-icon">
+                          <span class="flaticon-chart"></span>
+                        </div>
+                        <div class="generating-cap">
+                          <h4 style={{ color: "#8F58AF" }}>
+                            {" "}
+                            <Icon name="doctor" size="large" />
+                            Doctors
+                          </h4>
+                          <p style={{ color: "#113562" }}>
+                            Professional Doctors available at one click, all
+                            time, everytime{" "}
+                          </p>
+                        </div>
+                      </Fade>
                     </div>
                   </div>
                   <div class="col-lg-6 col-md-6">
                     <div class="single-generating d-flex mb-30">
-                      <div class="generating-icon">
-                        <span class="flaticon-social-media-marketing"></span>
-                      </div>
-                      <div class="generating-cap">
-                        <h4>
-                          {" "}
-                          <Icon name="hospital" size="large" />
-                          Hospitals
-                        </h4>
-                        <p>
-                          High Standard, Highly regarded hospitals are
-                          affiliated with us{" "}
-                        </p>
-                      </div>
+                      <Fade right big>
+                        <div class="generating-icon">
+                          <span class="flaticon-social-media-marketing"></span>
+                        </div>
+                        <div class="generating-cap">
+                          <h4 style={{ color: "#8F58AF" }}>
+                            {" "}
+                            <Icon name="hospital" size="large" />
+                            Hospitals
+                          </h4>
+                          <p style={{ color: "#113562" }}>
+                            High Standard, Highly regarded hospitals are
+                            affiliated with us{" "}
+                          </p>
+                        </div>
+                      </Fade>
                     </div>
                   </div>
                   <div class="col-lg-6 col-md-6">
                     <div class="single-generating d-flex mb-30">
-                      <div class="generating-icon">
-                        <span class="flaticon-speaker"></span>
-                      </div>
-                      <div class="generating-cap">
-                        <h4>
-                          {" "}
-                          <Icon name="lab" size="large" />
-                          laboratories
-                        </h4>
-                        <p>
-                          Professional and go-to laboratories that are near to
-                          your place{" "}
-                        </p>
-                      </div>
+                      <Fade left big>
+                        <div class="generating-icon">
+                          <span class="flaticon-speaker"></span>
+                        </div>
+                        <div class="generating-cap">
+                          <h4 style={{ color: "#8F58AF" }}>
+                            {" "}
+                            <Icon name="lab" size="large" />
+                            laboratories
+                          </h4>
+                          <p style={{ color: "#113562" }}>
+                            Professional and go-to laboratories that are near to
+                            your place{" "}
+                          </p>
+                        </div>
+                      </Fade>
                     </div>
                   </div>
                   <div class="col-lg-6 col-md-6">
                     <div class="single-generating d-flex mb-30">
-                      <div class="generating-icon">
-                        <span class="flaticon-growth"></span>
-                      </div>
-                      <div class="generating-cap">
-                        <h4>
-                          {" "}
-                          <Icon name="user" size="large" />
-                          Patients
-                        </h4>
-                        <p>
-                          Hundreds of users benefit daily from our system,
-                          staying healthy{" "}
-                        </p>
-                      </div>
+                      <Fade right big>
+                        <div class="generating-icon">
+                          <span class="flaticon-growth"></span>
+                        </div>
+                        <div class="generating-cap">
+                          <h4 style={{ color: "#8F58AF" }}>
+                            {" "}
+                            <Icon name="sticky note" size="large" />
+                            Record Management
+                          </h4>
+                          <p style={{ color: "#113562" }}>
+                            Hundreds of users benefit daily from our system, by
+                            getting rid of old paper work{" "}
+                          </p>
+                        </div>
+                      </Fade>
                     </div>
                   </div>
                 </div>
@@ -294,10 +323,10 @@ class Home extends Component {
                   </div>
                   <div class="col-lg-6 col-md-12">
                     <div class="we-create-cap">
-                      <h3>
+                      <h3 style={{ color: "#8F58AF" }}>
                         We Create a Steps to Build a Successful Digital Product
                       </h3>
-                      <p>
+                      <p style={{ color: "#113562" }}>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                         sed do eiusmod tempor incididunt ut labore et dolore
                         magna aliqua. Quis ipsum suspendisse ultrices gravida.
@@ -310,370 +339,43 @@ class Home extends Component {
                 </div>
               </div>
             </div>
-
-            <div class="what-we-do we-padding">
-              <div class="container">
-                <div class="rows d-flex justify-content-center">
-                  <div class="col-lg-8">
-                    <div class="section-tittle text-center">
-                      <h2>What We Will Do For Your Business​</h2>
-                    </div>
-                  </div>
-                </div>
-                <div class="rows">
-                  <div class="col-lg-4 col-md-6">
-                    <div class="single-do text-center mb-30">
-                      <div class="do-icon">
-                        <span class="flaticon-tasks"></span>
-                      </div>
-                      <div class="do-caption">
-                        <h4>Link Building</h4>
-                        <p>
-                          Hunky dory barney fanny around up the duff no biggie
-                          loo cup of tea jolly good ruddy say arse!
-                        </p>
-                      </div>
-                      <div class="do-btn">
-                        <a href="#">
-                          <i class="ti-arrow-right"></i> get started
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-4 col-md-6">
-                    <div class="single-do active text-center mb-30">
-                      <div class="do-icon">
-                        <span class="flaticon-social-media-marketing"></span>
-                      </div>
-                      <div class="do-caption">
-                        <h4>Content marketing</h4>
-                        <p>
-                          Hunky dory barney fanny around up the duff no biggie
-                          loo cup of tea jolly good ruddy say arse!
-                        </p>
-                      </div>
-                      <div class="do-btn">
-                        <a href="#">
-                          <i class="ti-arrow-right"></i> get started
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-4 col-md-6">
-                    <div class="single-do text-center mb-30">
-                      <div class="do-icon">
-                        <span class="flaticon-project"></span>
-                      </div>
-                      <div class="do-caption">
-                        <h4>On Page SEO</h4>
-                        <p>
-                          Hunky dory barney fanny around up the duff no biggie
-                          loo cup of tea jolly good ruddy say arse!
-                        </p>
-                      </div>
-                      <div class="do-btn">
-                        <a href="#">
-                          <i class="ti-arrow-right"></i> get started
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="choose-best choose-padding">
-              <div class="container">
-                <div class="rows d-flex justify-content-center">
-                  <div class="col-lg-7">
-                    <div class="section-tittle text-center">
-                      <h2>Choose Your Very Best Pricing Plan </h2>
-                    </div>
-                  </div>
-                </div>
-                <div class="rows">
-                  <div class="col-lg-4 col-md-6">
-                    <div class="single-choose text-center mb-30">
-                      <div class="do-icon">
-                        <span class="flaticon-growth"></span>
-                      </div>
-                      <div class="do-caption">
-                        <h4>$ 05.00</h4>
-                        <ul>
-                          <li>Increase traffic 50%</li>
-                          <li>Social Media Marketing</li>
-                          <li>10 Free Optimization</li>
-                          <li>24/7 support</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-4 col-md-6">
-                    <div class="single-choose active text-center mb-30">
-                      <div class="do-icon">
-                        <span class="flaticon-award"></span>
-                      </div>
-                      <div class="do-caption">
-                        <h4>$ 20.00</h4>
-                        <ul>
-                          <li>Increase traffic 50%</li>
-                          <li>Social Media Marketing</li>
-                          <li>10 Free Optimization</li>
-                          <li>24/7 support</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-4 col-md-6">
-                    <div class="single-choose text-center mb-30">
-                      <div class="do-icon">
-                        <span class="flaticon-project"></span>
-                      </div>
-                      <div class="do-caption">
-                        <h4>$ 30.00</h4>
-                        <ul>
-                          <li>Increase traffic 50%</li>
-                          <li>Social Media Marketing</li>
-                          <li>10 Free Optimization</li>
-                          <li>24/7 support</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="visit-area fix visite-padding">
-              <div class="container">
-                <div class="rows d-flex justify-content-center">
-                  <div class="col-lg-6 pr-0">
-                    <div class="section-tittle text-center">
-                      <h2>Visit Some Of Our Awsome Stuffs</h2>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="container-fluid p-0">
-                <div class="rows ">
-                  <div class="col-lg-3 col-md-4">
-                    <div class="single-visited mb-30">
-                      <div class="visited-img">
-                        <img src="assets/img/visit/visit_1.jpg" alt="" />
-                      </div>
-                      <div class="visited-cap">
-                        <h3>
-                          <a href="#">citmv.com</a>
-                        </h3>
-                        <p>Email Marketing</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-3 col-md-4">
-                    <div class="single-visited mb-30">
-                      <div class="visited-img">
-                        <img src="assets/img/visit/visit_2.jpg" alt="" />
-                      </div>
-                      <div class="visited-cap">
-                        <h3>
-                          <a href="#">mvsp.net</a>
-                        </h3>
-                        <p>Email Marketing</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-3 col-md-4">
-                    <div class="single-visited mb-30">
-                      <div class="visited-img">
-                        <img src="assets/img/visit/visit_3.jpg" alt="" />
-                      </div>
-                      <div class="visited-cap">
-                        <h3>
-                          <a href="#">dmcal.co</a>
-                        </h3>
-                        <p>Email Marketing</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-3 col-md-4">
-                    <div class="single-visited mb-30">
-                      <div class="visited-img">
-                        <img src="assets/img/visit/visit_4.jpg" alt="" />
-                      </div>
-                      <div class="visited-cap">
-                        <h3>
-                          <a href="#">dmco.net</a>
-                        </h3>
-                        <p>Email Marketing</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="testimonial-area">
-              <div class="container">
-                <div class="testimonial-main">
-                  <div class="rows d-flex justify-content-center">
-                    <div class="col-lg-5  col-md-8 pr-0">
-                      <div class="section-tittle text-center">
-                        <h2>What Client Say About Us</h2>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="rows d-flex justify-content-center">
-                    <div class="col-lg-10 col-md-9">
-                      <div class="h1-testimonial-active">
-                        <div class="single-testimonial text-center">
-                          <div class="testimonial-caption ">
-                            <div class="testimonial-top-cap">
-                              <p>
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua.
-                                Quis ipsum suspendisse ultrices gravida. Risus
-                                commodo viverra maecenas accumsan lacus vel
-                                facilisis.{" "}
-                              </p>
-                            </div>
-
-                            <div class="testimonial-founder d-flex align-items-center justify-content-center">
-                              <div class="founder-img">
-                                <img
-                                  src="assets/img/testmonial/testimonial.png"
-                                  alt=""
-                                />
-                              </div>
-                              <div class="founder-text">
-                                <span>Oliva jems</span>
-                                <p>UIX designer</p>
-                              </div>
-                            </div>
-                          </div>
+            <Flip left>
+              <div
+                class="have-project"
+                style={{ paddingTop: "75px", paddingBottom: "75px" }}
+              >
+                <div class="container">
+                  <div
+                    class="haveAproject"
+                    style={{
+                      background: "rgb(245,90,150)",
+                      background:
+                        "linear-gradient(90deg, rgba(245,90,150,1) 0%, rgba(139,0,175,1) 85%)"
+                    }}
+                  >
+                    <div class="rows d-flex align-items-center">
+                      <div class="col-xl-7 col-lg-9 col-md-12">
+                        <div class="wantToWork-caption">
+                          <h2>Have project in mind?</h2>
+                          <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing
+                            elit, sed do eiusmod tempor incididunt ut labore et
+                            dolore magna aliqua. Ut.
+                          </p>
                         </div>
-                        <div class="single-testimonial text-center">
-                          <div class="testimonial-caption ">
-                            <div class="testimonial-top-cap">
-                              <p>
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua.
-                                Quis ipsum suspendisse ultrices gravida. Risus
-                                commodo viverra maecenas accumsan lacus vel
-                                facilisis.{" "}
-                              </p>
-                            </div>
-
-                            <div class="testimonial-founder d-flex align-items-center justify-content-center">
-                              <div class="founder-img">
-                                <img
-                                  src="assets/img/testmonial/testimonial.png"
-                                  alt=""
-                                />
-                              </div>
-                              <div class="founder-text">
-                                <span>Oliva jems</span>
-                                <p>UIX designer</p>
-                              </div>
-                            </div>
-                          </div>
+                      </div>
+                      <div class="col-xl-5 col-lg-3 col-md-12">
+                        <div class="wantToWork-btn f-right">
+                          <a href="#" class="btn btn-ans">
+                            Contact Us
+                          </a>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-
-            <div class="tips-triks-area tips-padding">
-              <div class="container">
-                <div class="rows d-flex justify-content-center">
-                  <div class="col-lg-6 col-md-8 pr-0">
-                    <div class="section-tittle text-center">
-                      <h2>Tips and Tricks From Our Exparts</h2>
-                    </div>
-                  </div>
-                </div>
-                <div class="rows">
-                  <div class="col-xl-4 col-lg-4 col-md-6">
-                    <div class="single-tips mb-50">
-                      <div class="tips-img">
-                        <img src="assets/img/tips/tips_1.jpg" alt="" />
-                      </div>
-                      <div class="tips-caption">
-                        <h4>
-                          <a href="#">Twice profit than before you ever got</a>
-                        </h4>
-                        <span>Continue Reading</span>
-                        <p>March 3, 2020</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-xl-4 col-lg-4 col-md-6">
-                    <div class="single-tips mb-50">
-                      <div class="tips-img">
-                        <img src="assets/img/tips/tips_2.jpg" alt="" />
-                      </div>
-                      <div class="tips-caption">
-                        <h4>
-                          <a href="#">Twice profit than before you ever got</a>
-                        </h4>
-                        <span>Continue Reading</span>
-                        <p>March 3, 2020</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-xl-4 col-lg-4 col-md-6">
-                    <div class="single-tips mb-50">
-                      <div class="tips-img">
-                        <img src="assets/img/tips/tips_3.jpg" alt="" />
-                      </div>
-                      <div class="tips-caption">
-                        <h4>
-                          <a href="#">Twice profit than before you ever got</a>
-                        </h4>
-                        <span>Continue Reading</span>
-                        <p>March 3, 2020</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="have-project">
-              <div class="container">
-                <div
-                  class="haveAproject"
-                  style={{
-                    background: "rgb(245,90,150)",
-                    background:
-                      "linear-gradient(90deg, rgba(245,90,150,1) 0%, rgba(139,0,175,1) 85%)"
-                  }}
-                >
-                  <div class="rows d-flex align-items-center">
-                    <div class="col-xl-7 col-lg-9 col-md-12">
-                      <div class="wantToWork-caption">
-                        <h2>Have project in mind?</h2>
-                        <p>
-                          Lorem ipsum dolor sit amet, consectetur adipisicing
-                          elit, sed do eiusmod tempor incididunt ut labore et
-                          dolore magna aliqua. Ut.
-                        </p>
-                      </div>
-                    </div>
-                    <div class="col-xl-5 col-lg-3 col-md-12">
-                      <div class="wantToWork-btn f-right">
-                        <a href="#" class="btn btn-ans">
-                          Contact Us
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            </Flip>
           </div>
         </div>
         {/* <Styles /> */}

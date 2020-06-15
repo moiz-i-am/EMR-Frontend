@@ -95,7 +95,7 @@ class CallScreen extends Component {
                 <div style={{ textAlign: "right", marginRight: "20px" }}>
                   <Button color="yellow">Save</Button>
                 </div> */}
-                <SyncingPrescriptionEditor />
+                {/* <SyncingPrescriptionEditor /> */}
               </div>
             </Grid.Row>
           </Grid.Column>
