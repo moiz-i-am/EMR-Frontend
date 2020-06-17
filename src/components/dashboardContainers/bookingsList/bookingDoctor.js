@@ -23,6 +23,7 @@ class bookingDoctor extends Component {
     this.state = {
       id: this.props.id,
       token: "",
+      role: "",
       bookings: [],
       loading: false,
       yourID: "",
@@ -51,11 +52,13 @@ class bookingDoctor extends Component {
     this.documentData = JSON.parse(localStorage.getItem("jwtToken"));
     if (localStorage.getItem("jwtToken")) {
       this.setState({
-        token: this.documentData.token.accessToken
+        token: this.documentData.token.accessToken,
+        role: this.documentData.user.role
       });
     } else {
       this.setState({
-        token: ""
+        token: "",
+        role: ""
       });
     }
 
@@ -127,7 +130,8 @@ class bookingDoctor extends Component {
                 userId: this.state.id,
                 partnerSocketIdProps: this.state.caller,
                 partnerIdProps: this.state.partnerId,
-                partnerNameProps: this.state.partnerName
+                partnerNameProps: this.state.partnerName,
+                role: this.state.role
               }}
             >
               <Button

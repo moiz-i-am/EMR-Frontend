@@ -21,6 +21,8 @@ import CallIncomingScreen from "./components/videoCall/CallIncomingScreen";
 
 import CallScreen from "./components/videoCall/CallScreen";
 
+import RatingScreen from "./components/videoCall/RateDoctor";
+
 const routes = () => {
   return (
     <div>
@@ -44,6 +46,7 @@ const routes = () => {
         <Route exact path="/call-incoming" component={CallIncomingScreen} />
 
         <Route exact path="/call" component={CallScreen} />
+        <Route exact path="/rate" component={RatingScreen} />
 
         <Route component={NotFound} />
       </Switch>

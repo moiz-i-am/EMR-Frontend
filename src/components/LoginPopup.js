@@ -6,7 +6,7 @@ import { Icon } from "semantic-ui-react";
 
 import { popupLoginUser } from "../actions/authActions";
 
-import Logo from "../assets/Logo.png";
+import Logo from "../assets/L.png";
 
 // import "../styles/util.css";
 // import "../styles/main.css";

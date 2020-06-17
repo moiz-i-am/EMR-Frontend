@@ -8,6 +8,7 @@ class DoctorBookingCard extends Component {
     this.state = {
       token: "",
       id: "",
+      role: "",
       yourID: this.props.yourSocketId,
       socketCurrent: this.props.socketCurrent,
       users: {},
@@ -30,12 +31,14 @@ class DoctorBookingCard extends Component {
     if (localStorage.getItem("jwtToken")) {
       this.setState({
         token: this.documentData.token.accessToken,
-        id: this.documentData.user.id
+        id: this.documentData.user.id,
+        role: this.documentData.user.role
       });
     } else {
       this.setState({
         token: "",
-        id: ""
+        id: "",
+        role: ""
       });
     }
   }
@@ -69,7 +72,8 @@ class DoctorBookingCard extends Component {
             partnerIdProps: this.state.partnerId,
             partnerNameProps: this.state.partnerName,
             socketCurrentProps: this.state.socketCurrent,
-            userId: this.state.id
+            userId: this.state.id,
+            role: this.state.role
           }}
         />
       );

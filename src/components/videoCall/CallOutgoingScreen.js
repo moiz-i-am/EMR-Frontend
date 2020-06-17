@@ -4,19 +4,21 @@ import { Redirect } from "react-router-dom";
 import { Grid, Button, Icon } from "semantic-ui-react";
 
 import SyncingPrescriptionEditor from "./SyncingPrescriptionEditor";
+import RateDoctor from "./RateDoctor";
 
 class CallOutgoingScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
       myId: this.props.location.userId,
-      partnerId: "",
+      partnerUId: "",
       yourID: this.props.location.socketIdProps,
       receivingCall: false,
       stream: "",
       callAccepted: false,
       redirect: false,
-      muted: false
+      muted: false,
+      ratedoctor: false
     };
   }
 
@@ -55,13 +57,30 @@ class CallOutgoingScreen extends Component {
         peer.signal(signal);
       });
     }, 2000);
+
+    this.props.location.socketCurrentProps.on("new-call-end", data => {
+      //this.setState({ redirect: true });
+      if (this.props.location.role === "patient") {
+        this.setState({ ratedoctor: true });
+      } else {
+        this.setState({ redirect: true });
+      }
+    });
   }
 
   callEndHandler = () => {
     this.state.stream.getTracks().forEach(track => {
       track.stop();
     });
-    this.setState({ redirect: true });
+
+    this.props.location.socketCurrentProps.emit("call-ending", {
+      partnerId: this.props.location.partnerSocketIdProps
+    });
+    if (this.props.location.role === "patient") {
+      this.setState({ ratedoctor: true });
+    } else {
+      this.setState({ redirect: true });
+    }
   };
 
   callMuteHandler = () => {
@@ -75,16 +94,7 @@ class CallOutgoingScreen extends Component {
   };
 
   render() {
-    console.log(
-      "my id: " +
-        this.state.myId +
-        "socketID call screen: " +
-        this.state.yourID +
-        " sa:  " +
-        this.props.location.socketCurrentProps +
-        " partner ID:  " +
-        this.props.location.partnerSocketIdProps
-    );
+    console.log("partner user Id: " + this.props.location.partnerUid);
 
     if (this.state.redirect) {
       return <Redirect push to={`/dashboard/${this.state.myId}`} />;
@@ -186,6 +196,12 @@ class CallOutgoingScreen extends Component {
             </div>
           </Grid.Column>
         </Grid>
+        {this.state.ratedoctor ? (
+          <RateDoctor
+            myId={this.state.myId}
+            partnerId={this.props.location.partnerIdProps}
+          />
+        ) : null}
       </div>
     );
   }

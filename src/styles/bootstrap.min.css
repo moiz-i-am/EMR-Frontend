@@ -4885,7 +4885,7 @@ button.close {
   border: 0;
   -webkit-appearance: none;
 }
-.modal-open {
+/* .modal-open {
   overflow: hidden;
 }
 .modal-open .modal {
@@ -4894,11 +4894,11 @@ button.close {
 }
 .modal {
   position: fixed;
-  top: 0;
+  /* top: 0;
   right: 0;
   bottom: 0;
-  left: 0;
-  z-index: 1050;
+  left: 0; */
+/* z-index: 1050;
   display: none;
   overflow: hidden;
   outline: 0;
@@ -5034,8 +5034,8 @@ button.close {
   .modal-lg {
     max-width: 800px;
   }
-}
-.tooltip {
+} */
+*/ .tooltip {
   position: absolute;
   z-index: 1070;
   display: block;

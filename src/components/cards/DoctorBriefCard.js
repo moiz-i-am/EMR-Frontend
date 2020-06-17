@@ -92,7 +92,7 @@ class ProfileCards extends Component {
                     <div style={{ paddingLeft: "15px" }}>
                       <Rating
                         maxRating={5}
-                        defaultRating={3}
+                        defaultRating={this.props.rating}
                         disabled
                         icon="star"
                         size="huge"

@@ -36,6 +36,7 @@ export class DoctorDetailedProfile extends Component {
                 ", " +
                 users.user.location_country
               }
+              rating={users.user.rating}
             />
           </Grid.Column>
           <Grid.Column width={6}>

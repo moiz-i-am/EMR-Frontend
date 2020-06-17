@@ -51,6 +51,7 @@ class DoctorsList extends Component {
                         ", " +
                         persons.location_country
                       }
+                      rating={persons.rating}
                     />
                     {/* </Link> */}
                   </div>

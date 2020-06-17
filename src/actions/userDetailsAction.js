@@ -54,6 +54,22 @@ export const updateSocketData = (upUserData, id, token) => dispatch => {
     );
 };
 
+export const updateRatingData = (upRatingData, id) => dispatch => {
+  axios
+    .patch(`/v1/users/${id}`, upRatingData, {
+      // headers: {
+      //   Authorization: `Bearer ${token}`
+      // }
+    })
+    .then(res => {})
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
 export const deleteUser = (id, token) => dispatch => {
   axios
     .delete(`/v1/users/${id}`, {
