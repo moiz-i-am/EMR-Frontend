@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_USER_DATA, CLEAR_USER_DATA, GET_ERRORS } from "./types";
+import { GET_ERRORS } from "./types";
 
 export const createAppointmentBooking = (bookingData, token) => dispatch => {
   axios

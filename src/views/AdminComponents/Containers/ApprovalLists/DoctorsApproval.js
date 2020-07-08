@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Container, Segment } from "semantic-ui-react";
+import { Container } from "semantic-ui-react";
 
 import DoctorApprovalCard from "../cards/DoctorApprovalCard";
 

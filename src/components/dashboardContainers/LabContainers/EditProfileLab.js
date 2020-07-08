@@ -3,26 +3,25 @@ import PropTypes from "prop-types";
 import {
   Grid,
   Input,
+  Image,
   Card,
   Button,
+  Label,
+  Icon,
   Confirm,
   Message,
   Divider
 } from "semantic-ui-react";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
-import axios from "axios";
-
-import Image from "../../../data/Image";
 
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
 
 import { updateUserData, deleteUser } from "../../../actions/userDetailsAction";
 
-import UploadProfilePicture from "../../profilePicture/UploadProfilePicture";
+import { withRouter } from "react-router-dom";
 
-class EditProfilePatient extends Component {
+class EditProfileLab extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -36,9 +35,7 @@ class EditProfilePatient extends Component {
       location_state: this.props.userData.location_state,
       location_country: this.props.userData.location_country,
       discription: "",
-      image: "",
-      open: false,
-      openPictureUpload: false
+      open: false
     };
   }
 
@@ -64,20 +61,6 @@ class EditProfilePatient extends Component {
         id: ""
       });
     }
-
-    const userId = this.props.match.params.id;
-
-    axios
-      .get(`/v1/uploading/post/${userId}`)
-      .then(res => {
-        console.log(res.data.post);
-        this.setState({
-          image: "http://localhost:3001/" + res.data.post.fileURL
-        });
-      })
-      .catch(err => {
-        console.log(err);
-      });
   }
 
   onChange = e => {
@@ -105,18 +88,6 @@ class EditProfilePatient extends Component {
   handleConfirmSchedule = () => this.setState({ open2: false });
 
   handleCancel = () => this.setState({ open: false });
-
-  showPictureUpload = () => this.setState({ openPictureUpload: true });
-
-  handleConfirmPictureUpload = () => {
-    this.setState({ openPictureUpload: false });
-  };
-
-  handleCancelPictureUpload = () => this.setState({ openPictureUpload: false });
-
-  renderConfirmationPictureUpload() {
-    return <UploadProfilePicture userId={this.props.match.params.id} />;
-  }
 
   onSubmit = e => {
     e.preventDefault();
@@ -156,23 +127,13 @@ class EditProfilePatient extends Component {
           <Card.Content>
             <Grid stackable>
               <Grid.Column width={5}>
-                {/* <div style={{ textAlign: "center" }}> */}
-                <Image contain fileURL={this.state.image} />
-                {/* </div> */}
-                <Button
-                  onClick={() => this.showPictureUpload()}
-                  style={{ contentAllign: "center" }}
-                >
-                  Update Picture
-                </Button>
-                <Confirm
-                  open={this.state.openPictureUpload}
-                  content={this.renderConfirmationPictureUpload()}
-                  header="Upload Picture"
-                  onCancel={this.handleCancelPictureUpload}
-                  onConfirm={this.handleConfirmPictureUpload}
-                  size="small"
-                />
+                <div style={{ textAlign: "center" }}>
+                  <Image
+                    src="https://react.semantic-ui.com/images/wireframe/square-image.png"
+                    size="small"
+                    circular
+                  />
+                </div>
               </Grid.Column>
 
               <Grid.Column width={6}>
@@ -274,7 +235,7 @@ class EditProfilePatient extends Component {
     );
   }
 }
-EditProfilePatient.propTypes = {
+EditProfileLab.propTypes = {
   updateUserData: PropTypes.func.isRequired,
   auth: PropTypes.func.isRequired
 };
@@ -299,4 +260,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(EditProfilePatient));
+)(withRouter(EditProfileLab));

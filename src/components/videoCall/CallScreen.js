@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-import { Grid, Button, Image, Icon } from "semantic-ui-react";
+import { Grid, Button, Icon } from "semantic-ui-react";
 import { Redirect } from "react-router-dom";
-
-import SyncingPrescriptionEditor from "./SyncingPrescriptionEditor";
 
 class CallScreen extends Component {
   state = {

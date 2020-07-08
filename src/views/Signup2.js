@@ -12,7 +12,6 @@ import {
 } from "../actions/authActions";
 import {
   Grid,
-  GridColumn,
   Form,
   Input,
   Segment,

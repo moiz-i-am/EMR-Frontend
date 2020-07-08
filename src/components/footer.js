@@ -224,21 +224,7 @@
 // export default footer;
 
 import React, { Component } from "react";
-import {
-  Button,
-  Container,
-  Divider,
-  Grid,
-  Header,
-  Icon,
-  Image,
-  List,
-  Menu,
-  Responsive,
-  Segment,
-  Sidebar,
-  Visibility
-} from "semantic-ui-react";
+import { Container, Grid, Header, List, Segment } from "semantic-ui-react";
 
 class footer extends Component {
   render() {

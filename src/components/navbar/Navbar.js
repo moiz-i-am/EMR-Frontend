@@ -45,7 +45,7 @@ const Navbar = props => {
     <div>
       <Link to="/listDoctors">Find Doctors</Link>
       <Link to="/">Hospitals</Link>
-      <Link to="/">Labs</Link>
+      <Link to="/imageviewer">Labs</Link>
       {/* <Dropdown trigger={trigger(user.name)} options={options(user.name)} /> */}
 
       <Drop trigger={trigger(user.name)}>
@@ -66,7 +66,7 @@ const Navbar = props => {
     <div>
       <Link to="/listDoctors">Doctors</Link>
       <Link to="/call">Hospitals</Link>
-      <Link to="/">Labs</Link>
+      <Link to="/imageviewer">Labs</Link>
       <Link to="/Login">Login</Link>
       <Link to="/SignupSelector">Signup</Link>
     </div>

@@ -30,6 +30,10 @@ import BookingDoctor from "../../components/dashboardContainers/bookingsList/boo
 import PrescriptionPatient from "../../components/dashboardContainers/prescriptions/PrescriptionLists/PrescriptionPatient";
 import PrescriptionDoctor from "../../components/dashboardContainers/prescriptions/PrescriptionLists/PrescriptionDoctor";
 
+import ShowProfileLab from "../../components/dashboardContainers/LabContainers/ShowProfileLab";
+import EditProfileLab from "../../components/dashboardContainers/LabContainers/EditProfileLab";
+import PatientsListLab from "../../components/dashboardContainers/LabContainers/PatientsListLab";
+
 import Logo from "../../assets/Logo.png";
 
 const trigger = (state, name) => (
@@ -57,6 +61,9 @@ export class MainDashboard extends Component {
     browse: false,
     editProfile: false,
     presctiptionList: false,
+    showLabProfile: false,
+    editLabProfile: false,
+    uploadLabTests: true,
     horizontalNameShow: "Appointments History"
   };
 
@@ -116,6 +123,36 @@ export class MainDashboard extends Component {
       horizontalNameShow: "Prescriptions"
     });
   };
+
+  ////////////////////////////// for lab onClicks start ////////////////////////////////////
+
+  addProfileLab = () => {
+    this.setState({
+      showLabProfile: !this.state.showLabProfile,
+      editLabProfile: false,
+      uploadLabTests: false,
+      horizontalNameShow: "Profile"
+    });
+  };
+  editProfileLab = () => {
+    this.setState({
+      editLabProfile: !this.state.editLabProfile,
+      showLabProfile: false,
+      uploadLabTests: false,
+      horizontalNameShow: "Edit Profile"
+    });
+  };
+
+  uploadLabTests = () => {
+    this.setState({
+      uploadLabTests: !this.state.uploadLabTests,
+      showLabProfile: false,
+      editLabProfile: false,
+      horizontalNameShow: "Upload test results"
+    });
+  };
+
+  ////////////////////////////// for lab onClicks end ////////////////////////////////////
 
   onLogoutClick = e => {
     e.preventDefault();
@@ -594,6 +631,215 @@ export class MainDashboard extends Component {
       <div>Access Denied</div>
     );
   /////////////////////////////////////////////// for doctor dashboard end ////////////////////////////////////////////
+
+  /////////////////////////////////////////////// for Lab dashboard start ////////////////////////////////////////////
+  renderDashboardLab = (users, activeItem) =>
+    users.user ? (
+      <Grid className="grid">
+        <Grid.Column width={3}>
+          {/* <SideBar username={this.state.name} /> */}
+          {/* /////////////////////////////////////////////////////////////////////////////////////// */}
+
+          <Responsive
+            maxWidth={1090}
+            style={{
+              width: "105%",
+              height: "100%"
+            }}
+          >
+            <Menu
+              vertical
+              inverted
+              style={{
+                backgroundColor: "#2C3436",
+                width: "105%",
+                height: "100%"
+              }}
+            >
+              <Menu.Item>
+                <Link to="/">
+                  <Image src={Logo} />
+                </Link>
+              </Menu.Item>
+              <Menu.Item>
+                <Image
+                  src="https://react.semantic-ui.com/images/wireframe/square-image.png"
+                  size="small"
+                  circular
+                />
+              </Menu.Item>
+              <Menu.Item
+                style={{ height: "10%" }}
+                onClick={() => this.addProfileLab()}
+              >
+                <Icon
+                  style={{ width: "100%", paddingTop: "10px" }}
+                  name="user"
+                  size="large"
+                />
+              </Menu.Item>
+              <Menu.Item
+                style={{ height: "10%" }}
+                onClick={() => this.editProfileLab()}
+              >
+                <Icon
+                  style={{ width: "100%", paddingTop: "10px" }}
+                  name="edit"
+                  size="large"
+                />
+              </Menu.Item>
+
+              <Menu.Item
+                style={{ height: "10%" }}
+                active={activeItem === "prescriptions"}
+                onClick={() => this.uploadLabTests()}
+              >
+                <Icon
+                  style={{ width: "100%", paddingTop: "10px" }}
+                  name="cloud upload"
+                  size="large"
+                />
+              </Menu.Item>
+
+              <Menu.Item
+                style={{ height: "10%" }}
+                active={activeItem === "labtests"}
+                onClick={this.handleItemClick}
+              >
+                <Icon
+                  style={{ width: "100%", paddingTop: "10px" }}
+                  name="lab"
+                  size="large"
+                />
+              </Menu.Item>
+
+              <Dropdown item text="More">
+                <Dropdown.Menu>
+                  <Dropdown.Item icon="edit" text="Edit Profile" />
+                  <Dropdown.Item icon="globe" text="Choose Language" />
+                  <Dropdown.Item icon="settings" text="Account Settings" />
+                </Dropdown.Menu>
+              </Dropdown>
+            </Menu>
+          </Responsive>
+
+          <Responsive
+            minWidth={1091}
+            style={{
+              width: "105%",
+              height: "100%"
+            }}
+          >
+            <Menu
+              vertical
+              inverted
+              style={{
+                backgroundColor: "#2C3436",
+                width: "105%",
+                height: "100%"
+              }}
+            >
+              <Menu.Item>
+                <Link to="/">
+                  <h1 style={{ textAlign: "center", color: "white" }}>
+                    HEALTH-<span style={{ color: "red" }}>E</span>
+                  </h1>
+                </Link>
+              </Menu.Item>
+              <Menu.Item>
+                <Dropdown
+                  floating
+                  item
+                  trigger={trigger(this.state, users.user.name)}
+                >
+                  <Dropdown.Menu>
+                    <Dropdown.Item
+                      icon="user"
+                      text="View Profile"
+                      onClick={() => this.addProfileLab()}
+                    />
+                    <Dropdown.Item
+                      icon="edit"
+                      text="Edit Profile"
+                      onClick={() => this.editProfileLab()}
+                    />
+                  </Dropdown.Menu>
+                </Dropdown>
+              </Menu.Item>
+
+              <Menu.Item
+                name="prescriptions"
+                active={activeItem === "prescriptions"}
+                onClick={() => this.uploadLabTests()}
+              >
+                <Icon name="grid layout" />
+                upload Lab Tests
+              </Menu.Item>
+              <Menu.Item
+                name="labtests"
+                active={activeItem === "labtests"}
+                onClick={this.handleItemClick}
+              >
+                View Lab Test Results
+              </Menu.Item>
+
+              <Dropdown item text="More">
+                <Dropdown.Menu>
+                  <Dropdown.Item icon="edit" text="Edit Profile" />
+                  <Dropdown.Item icon="globe" text="Choose Language" />
+                  <Dropdown.Item icon="settings" text="Account Settings" />
+                </Dropdown.Menu>
+              </Dropdown>
+            </Menu>
+          </Responsive>
+          {/* /////////////////////////////////////////////////////////////////////////////////////// */}
+        </Grid.Column>
+        <Grid.Column width={13}>
+          <Grid.Row>
+            <div style={{ marginBottom: "35px" }}>
+              {/* <HorizontalBar /> */}
+              {/* /////////////////////////////////////////////////////////////////////////////////////// */}
+              <Menu size="huge">
+                <Menu.Item
+                  name={this.state.horizontalNameShow}
+                  active={activeItem === "home"}
+                />
+
+                <Menu.Menu position="right">
+                  <Dropdown item icon="bars">
+                    <Dropdown.Menu>
+                      <Dropdown.Item onClick={this.onLogoutClick}>
+                        Logout
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </Menu.Menu>
+              </Menu>
+              {/* /////////////////////////////////////////////////////////////////////////////////////// */}
+            </div>
+          </Grid.Row>
+          <Grid.Row>
+            <Segment
+              style={{ overflow: "auto", maxHeight: 572, minHeight: 572 }}
+            >
+              {/* here containers which appears in dashboard i.e edit profile are used to render */}
+              {this.state.uploadLabTests && (
+                <PatientsListLab id={this.props.match.params.id} />
+              )}
+              {this.state.showLabProfile && (
+                <ShowProfileLab userData={users.user} />
+              )}
+              {this.state.editLabProfile && (
+                <EditProfileLab userData={users.user} />
+              )}
+            </Segment>
+          </Grid.Row>
+        </Grid.Column>
+      </Grid>
+    ) : (
+      <div>Access Denied</div>
+    );
+  /////////////////////////////////////////////// for Lab dashboard end ////////////////////////////////////////////
 
   render() {
     const { activeItem } = this.state;

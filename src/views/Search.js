@@ -15,16 +15,19 @@ class Search extends Component {
           console.log(this.props);
           this.setState({ filteredData: res.data });
         });
+        break;
       case "Hospital":
         axios.get(`v1/hospital`).then(res => {
           console.log(res.data);
           this.setState({ filteredData: res.data });
         });
+        break;
       case "Labs":
         axios.get(`v1/lab`).then(res => {
           console.log(this.props);
           this.setState({ filteredData: res.data });
         });
+        break;
       default:
         axios.get(`v1/users`).then(res => {
           console.log(this.props);

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Tab, Segment } from "semantic-ui-react";
+import { Tab } from "semantic-ui-react";
 
 import DoctorApproval from "../Containers/ApprovalLists/DoctorsApproval";
 

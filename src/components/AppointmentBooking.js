@@ -150,7 +150,7 @@ export class AppointmentBooking extends Component {
               <h1>No Bookings Yet</h1>
             ) : (
               schedule.timeSlots.map(booking => {
-                if (booking.reserved != "true") {
+                if (booking.reserved !== "true") {
                   return (
                     <div
                       id="lab"

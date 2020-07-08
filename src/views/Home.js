@@ -7,7 +7,6 @@ import {
   Grid,
   Divider,
   Icon,
-  Header,
   Container
 } from "semantic-ui-react";
 import "../styles/styles.css";
