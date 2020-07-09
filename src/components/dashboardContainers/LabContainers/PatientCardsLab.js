@@ -17,7 +17,7 @@ class PatientCardsLab extends Component {
   handleCancel = () => this.setState({ open: false });
 
   renderConfirmation() {
-    return <UploadLabTests />;
+    return <UploadLabTests labId={this.props.id} userId={this.props.PId} />;
   }
 
   render() {

@@ -51,7 +51,7 @@
 // export default Image;
 
 import React, { Component } from "react";
-import Image from "../data/Image";
+import Image from "./profilePicture/Image";
 import axios from "axios";
 import "./SinglePost.css";
 

@@ -35,7 +35,7 @@ class UploadProfilePicture extends Component {
         <input
           id="myInput"
           type="file"
-          //accept=".jpg, .png, .jpeg|image/*"
+          accept=".jpg, .png, .jpeg|image/*"
           onChange={this.onChangeHandler}
         />
 

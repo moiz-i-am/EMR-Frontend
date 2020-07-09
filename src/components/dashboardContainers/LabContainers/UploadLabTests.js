@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-// import { Button } from "semantic-ui-react";
+import { Button } from "semantic-ui-react";
+import axios from "axios";
 
 class UploadLabTests extends Component {
   constructor(props) {
     super(props);
     this.state = {
       selectedFile: null
-      //url: 'http://localhost:3000/upload'
     };
   }
 
@@ -19,14 +19,14 @@ class UploadLabTests extends Component {
   };
 
   onClickHandler = () => {
-    const data = new FormData();
-    data.append("file", this.state.selectedFile);
+    const formData = new FormData();
+    formData.append("file", this.state.selectedFile);
+    formData.append("labId", this.props.labId);
+    formData.append("userId", this.props.userId);
 
-    // axios.post(this.state.url, data, {
-
-    // }).then(res => {
-    //   console.log(res.data);
-    // })
+    axios.post("/v1/uploading/labUpload", formData).then(res => {
+      console.log(res.data);
+    });
   };
 
   render() {
@@ -35,16 +35,15 @@ class UploadLabTests extends Component {
         <input
           id="myInput"
           type="file"
-          //accept=".jpg, .png, .jpeg|image/*"
+          accept="application/pdf"
           onChange={this.onChangeHandler}
         />
-
-        {/* <Button
+        <Button
           color="teal"
           icon="cloud upload"
           content="Upload file"
-          onClick={() => this.onChangeHandler}
-        /> */}
+          onClick={() => this.onClickHandler()}
+        />
       </div>
     );
   }

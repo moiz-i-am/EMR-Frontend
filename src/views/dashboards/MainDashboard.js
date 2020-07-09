@@ -33,6 +33,9 @@ import PrescriptionDoctor from "../../components/dashboardContainers/prescriptio
 import ShowProfileLab from "../../components/dashboardContainers/LabContainers/ShowProfileLab";
 import EditProfileLab from "../../components/dashboardContainers/LabContainers/EditProfileLab";
 import PatientsListLab from "../../components/dashboardContainers/LabContainers/PatientsListLab";
+import UploadedTestsList from "../../components/dashboardContainers/LabContainers/UploadedTestsList";
+
+import LabTestsList from "../../components/dashboardContainers/PatientContainers/LabTestsList";
 
 import Logo from "../../assets/Logo.png";
 
@@ -64,6 +67,7 @@ export class MainDashboard extends Component {
     showLabProfile: false,
     editLabProfile: false,
     uploadLabTests: true,
+    showUploadedResults: false,
     horizontalNameShow: "Appointments History"
   };
 
@@ -73,6 +77,7 @@ export class MainDashboard extends Component {
       browse: false,
       editProfile: false,
       presctiptionList: false,
+      showUploadedResults: false,
       horizontalNameShow: "Appointments History"
     });
   };
@@ -101,6 +106,7 @@ export class MainDashboard extends Component {
       home: false,
       editProfile: false,
       presctiptionList: false,
+      showUploadedResults: false,
       horizontalNameShow: "Profile"
     });
   };
@@ -110,6 +116,7 @@ export class MainDashboard extends Component {
       home: false,
       browse: false,
       presctiptionList: false,
+      showUploadedResults: false,
       horizontalNameShow: "Edit Profile"
     });
   };
@@ -120,6 +127,18 @@ export class MainDashboard extends Component {
       home: false,
       browse: false,
       editProfile: false,
+      showUploadedResults: false,
+      horizontalNameShow: "Prescriptions"
+    });
+  };
+
+  labTestResults = () => {
+    this.setState({
+      showUploadedResults: !this.state.showUploadedResults,
+      home: false,
+      browse: false,
+      editProfile: false,
+      presctiptionList: false,
       horizontalNameShow: "Prescriptions"
     });
   };
@@ -131,6 +150,7 @@ export class MainDashboard extends Component {
       showLabProfile: !this.state.showLabProfile,
       editLabProfile: false,
       uploadLabTests: false,
+      showUploadedResults: false,
       horizontalNameShow: "Profile"
     });
   };
@@ -139,6 +159,7 @@ export class MainDashboard extends Component {
       editLabProfile: !this.state.editLabProfile,
       showLabProfile: false,
       uploadLabTests: false,
+      showUploadedResults: false,
       horizontalNameShow: "Edit Profile"
     });
   };
@@ -148,6 +169,17 @@ export class MainDashboard extends Component {
       uploadLabTests: !this.state.uploadLabTests,
       showLabProfile: false,
       editLabProfile: false,
+      showUploadedResults: false,
+      horizontalNameShow: "Upload test results"
+    });
+  };
+
+  uploadedTests = () => {
+    this.setState({
+      showUploadedResults: !this.state.showUploadedResults,
+      showLabProfile: false,
+      editLabProfile: false,
+      uploadLabTests: false,
       horizontalNameShow: "Upload test results"
     });
   };
@@ -259,7 +291,7 @@ export class MainDashboard extends Component {
               <Menu.Item
                 style={{ height: "10%" }}
                 active={activeItem === "labtests"}
-                onClick={this.handleItemClick}
+                onClick={() => this.labTestResults()}
               >
                 <Icon
                   style={{ width: "100%", paddingTop: "10px" }}
@@ -339,7 +371,7 @@ export class MainDashboard extends Component {
               <Menu.Item
                 name="labtests"
                 active={activeItem === "labtests"}
-                onClick={this.handleItemClick}
+                onClick={() => this.labTestResults()}
               >
                 View Lab Test Results
               </Menu.Item>
@@ -394,6 +426,9 @@ export class MainDashboard extends Component {
               )}
               {this.state.presctiptionList && (
                 <PrescriptionPatient id={this.props.match.params.id} />
+              )}
+              {this.state.showUploadedResults && (
+                <LabTestsList id={this.props.match.params.id} />
               )}
             </Segment>
           </Grid.Row>
@@ -704,7 +739,7 @@ export class MainDashboard extends Component {
               <Menu.Item
                 style={{ height: "10%" }}
                 active={activeItem === "labtests"}
-                onClick={this.handleItemClick}
+                onClick={() => this.uploadedTests()}
               >
                 <Icon
                   style={{ width: "100%", paddingTop: "10px" }}
@@ -778,7 +813,7 @@ export class MainDashboard extends Component {
               <Menu.Item
                 name="labtests"
                 active={activeItem === "labtests"}
-                onClick={this.handleItemClick}
+                onClick={() => this.uploadedTests()}
               >
                 View Lab Test Results
               </Menu.Item>
@@ -825,6 +860,9 @@ export class MainDashboard extends Component {
               {/* here containers which appears in dashboard i.e edit profile are used to render */}
               {this.state.uploadLabTests && (
                 <PatientsListLab id={this.props.match.params.id} />
+              )}
+              {this.state.showUploadedResults && (
+                <UploadedTestsList id={this.props.match.params.id} />
               )}
               {this.state.showLabProfile && (
                 <ShowProfileLab userData={users.user} />

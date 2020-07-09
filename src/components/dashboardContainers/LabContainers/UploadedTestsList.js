@@ -2,19 +2,20 @@ import React, { Component } from "react";
 import axios from "axios";
 import { Container, Segment, Dimmer, Loader, Image } from "semantic-ui-react";
 
-import PatientCardsLab from "./PatientCardsLab";
+import TestResultCard from "./TestResultCard";
 
-class PatientsListLab extends Component {
+class UploadedTestsList extends Component {
   state = {
-    persons: [],
+    tests: [],
     loading: false
   };
 
   componentDidMount() {
-    axios.get(`/v1/users`).then(res => {
+    axios.get(`/v1/uploading/testResultsLab/${this.props.id}`).then(res => {
+      console.log(res.data);
       this.setState({ loading: true });
       setTimeout(() => {
-        this.setState({ loading: false, persons: res.data });
+        this.setState({ loading: false, tests: res.data.posts });
       }, 2000);
     });
   }
@@ -23,29 +24,21 @@ class PatientsListLab extends Component {
     return (
       <Container>
         <div className="main_DocList-div">
-          {this.state.persons.length === 0 ? (
+          {this.state.tests.length === 0 ? (
             this.state.loading ? null : (
-              <h1>No Patients Found</h1>
+              <h1>No test results uploaded yet</h1>
             )
           ) : (
-            this.state.persons.map(persons => {
-              if (persons.role === "patient") {
-                return (
-                  <div
-                    style={{ width: "60%", marginTop: "15px" }}
-                    key={persons.id}
-                  >
-                    {/* <Link to={`/docProfile/${persons.id}`}> */}
-                    <PatientCardsLab
-                      id={this.props.id}
-                      PId={persons.id}
-                      PName={persons.name}
-                      PEmail={persons.email}
-                    />
-                    {/* </Link> */}
-                  </div>
-                );
-              }
+            this.state.tests.map(tests => {
+              return (
+                <div style={{ width: "60%", marginTop: "15px" }} key={tests.id}>
+                  <TestResultCard
+                    testId={tests._id}
+                    file={tests.fileURL}
+                    userId={tests.userId}
+                  />
+                </div>
+              );
             })
           )}
         </div>
@@ -69,4 +62,4 @@ class PatientsListLab extends Component {
   }
 }
 
-export default PatientsListLab;
+export default UploadedTestsList;

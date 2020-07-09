@@ -13,7 +13,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import axios from "axios";
 
-import Image from "../../../data/Image";
+import Image from "../../profilePicture/Image";
 
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
@@ -68,11 +68,11 @@ class EditProfilePatient extends Component {
     const userId = this.props.match.params.id;
 
     axios
-      .get(`/v1/uploading/post/${userId}`)
+      .get(`/v1/uploading/profilePicture/${userId}`)
       .then(res => {
         console.log(res.data.post);
         this.setState({
-          image: "http://localhost:3001/" + res.data.post.fileURL
+          image: "http://localhost:3001/" + res.data.post.imageURL
         });
       })
       .catch(err => {
