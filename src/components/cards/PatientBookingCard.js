@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import axios from "axios";
+import moment from "moment";
 
 import { deleteAppointmentBooking } from "../../actions/bookingActions";
 
@@ -24,7 +25,8 @@ class PatientBookingCard extends Component {
       partnerSocketId: "",
       partnerId: "",
       partnerName: "",
-      redirect: false
+      redirect: false,
+      enableCallButton: false
     };
     this.socket = {};
   }
@@ -44,6 +46,30 @@ class PatientBookingCard extends Component {
         role: ""
       });
     }
+
+    setInterval(() => {
+      const a = this.props.timeSlot;
+
+      const [timeStart, unit1, dash, timeEnd, unit2] = a.split(" ");
+
+      //console.log(timeStart);
+
+      let format = "h:mm";
+
+      const curTime = moment().format("h:mm");
+
+      const time = moment(curTime, format),
+        beforeTime = moment(timeStart, format),
+        afterTime = moment(timeEnd, format);
+
+      if (time.isBetween(beforeTime, afterTime)) {
+        this.setState({ enableCallButton: true });
+        console.log("true");
+      } else {
+        this.setState({ enableCallButton: false });
+        console.log("false");
+      }
+    }, 20000);
   }
 
   handleClickDelete = (doctorId, patientId, date, time) => {
@@ -126,14 +152,25 @@ class PatientBookingCard extends Component {
                     delete appointment
                   </button>
 
-                  <button
+                  {this.state.enableCallButton ? (
+                    <button
+                      onClick={() =>
+                        this.handleClickGetSocket(this.props.doctorId)
+                      }
+                      className="btn btn-outline-info"
+                    >
+                      call doctor
+                    </button>
+                  ) : null}
+
+                  {/* <button
                     onClick={() =>
                       this.handleClickGetSocket(this.props.doctorId)
                     }
                     className="btn btn-outline-info"
                   >
                     call doctor
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </div>

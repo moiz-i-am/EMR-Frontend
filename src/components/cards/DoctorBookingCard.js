@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import axios from "axios";
-
+import moment from "moment";
 class DoctorBookingCard extends Component {
   constructor(props) {
     super(props);
@@ -41,6 +41,30 @@ class DoctorBookingCard extends Component {
         role: ""
       });
     }
+
+    setInterval(() => {
+      const a = this.props.timeSlot;
+
+      const [timeStart, unit1, dash, timeEnd, unit2] = a.split(" ");
+
+      //console.log(timeStart);
+
+      let format = "h:mm";
+
+      const curTime = moment().format("h:mm");
+
+      const time = moment(curTime, format),
+        beforeTime = moment(timeStart, format),
+        afterTime = moment(timeEnd, format);
+
+      if (time.isBetween(beforeTime, afterTime)) {
+        this.setState({ enableCallButton: true });
+        console.log("true");
+      } else {
+        this.setState({ enableCallButton: false });
+        console.log("false");
+      }
+    }, 3000);
   }
 
   handleClickGetSocket = patientId => {

@@ -20,7 +20,7 @@ class UploadProfilePicture extends Component {
 
   onClickHandler = () => {
     const formData = new FormData();
-    formData.append("image", this.state.selectedFile);
+    formData.append("file", this.state.selectedFile);
     formData.append("userId", this.props.userId);
 
     axios.post("/v1/uploading/profilePicture", formData).then(res => {
