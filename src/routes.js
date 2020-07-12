@@ -21,7 +21,7 @@ import CallIncomingScreen from "./components/videoCall/CallIncomingScreen";
 
 import CallScreen from "./components/videoCall/CallScreen";
 
-import Img from "./components/Img";
+import PaymentIndex from "./components/PaymentContainer/CheckoutForm";
 
 const routes = () => {
   return (
@@ -46,7 +46,7 @@ const routes = () => {
         <Route exact path="/call-incoming" component={CallIncomingScreen} />
 
         <Route exact path="/call" component={CallScreen} />
-        <Route exact path="/imageviewer" component={Img} />
+        <Route exact path="/imageviewer" component={PaymentIndex} />
 
         <Route component={NotFound} />
       </Switch>

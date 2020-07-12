@@ -10,6 +10,8 @@ import { createAppointmentBooking } from "./../actions/bookingActions";
 import MainStyles from "../styles/main.style";
 import LoginPopup from "./LoginPopup";
 
+import PaymentIndex from "./PaymentContainer/CheckoutForm";
+
 export class AppointmentBooking extends Component {
   state = {
     token: "",
@@ -61,8 +63,6 @@ export class AppointmentBooking extends Component {
 
   show = () => this.setState({ open: true });
 
-  // handleOpen = () => this.setState({ formError: true });
-
   handleClose = () => this.setState({ success: false });
 
   handleConfirm = () => {
@@ -85,7 +85,6 @@ export class AppointmentBooking extends Component {
         );
       } else {
         this.props.createAppointmentBooking(bookingData, this.state.token);
-        // console.log("pat: " + bookingData.patient + "doc: " + bookingData.doctor);
         this.setState({ open: false, success: true });
         setTimeout(() => {
           this.setState({ success: false });
@@ -101,33 +100,47 @@ export class AppointmentBooking extends Component {
   renderConfirmation() {
     if (this.props.auth.isAuthenticated) {
       return (
-        <div style={{ textAlign: "center" }}>
-          <p>
-            <span>Doctor Name: </span>
-            {this.props.docName}
-          </p>
-          <p>
-            <span>patient Name: </span>
-            {this.state.name}
-          </p>
-          <p>
-            <span>Date Of Appointment: </span>
-            {this.state.date}
-          </p>
-          <p>
-            <span>TIME Of Appointment: </span>
-            {this.state.choosenSlot}
-          </p>
+        <div>
+          <div style={{ textAlign: "center" }}>
+            <p>
+              <span>Doctor Name: </span>
+              {this.props.docName}
+            </p>
+            <p>
+              <span>patient Name: </span>
+              {this.state.name}
+            </p>
+            <p>
+              <span>Date Of Appointment: </span>
+              {this.state.date}
+            </p>
+            <p>
+              <span>TIME Of Appointment: </span>
+              {this.state.choosenSlot}
+            </p>
+            <h4>
+              <span>Price: </span>
+              2000
+            </h4>
+          </div>
+          <div>
+            <PaymentIndex
+              amount={"2000"}
+              doctorId={this.state.docId}
+              doctorName={this.state.docName}
+              patientId={this.state.patientId}
+              patientName={this.state.name}
+              date={this.state.date}
+              time={this.state.choosenSlot}
+            />
+          </div>
         </div>
       );
     } else {
       return (
         <div style={{ textAlign: "center" }}>
-          {/* <Segment style={{ overflow: "auto", maxHeight: 572, minHeight: 572 }}> */}
           <LoginPopup />
-          {/* this is  the styles file imported for this specific component */}
           <MainStyles />
-          {/* </Segment> */}
         </div>
       );
     }
@@ -271,7 +284,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(withRouter(AppointmentBooking));
-
-// export default connect(mapStateToProps, {
-//   getDoctorTimeSlots
-// })(AppointmentBooking);
