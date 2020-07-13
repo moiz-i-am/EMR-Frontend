@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {
   Grid,
   Input,
-  Image,
+  // Image,
   Card,
   Button,
   Label,
@@ -14,6 +14,7 @@ import {
 } from "semantic-ui-react";
 import { connect } from "react-redux";
 import moment from "moment";
+import axios from "axios";
 
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
@@ -21,6 +22,9 @@ import { DateRangePicker, Calendar } from "react-date-range";
 
 import Select from "react-select";
 import { timeOptions } from "../../data/data";
+
+import UploadProfilePicture from "../profilePicture/UploadProfilePicture";
+import Image from "../profilePicture/Image";
 
 import {
   updateUserData,
@@ -32,9 +36,6 @@ import {
   deleteDoctorsSchedule
 } from "../../actions/schedulingActions";
 import { withRouter } from "react-router-dom";
-
-// const localizer = momentLocalizer(moment);
-// const DnDCalendar = withDragAndDrop(Calendar);
 
 let current_datetime = new Date();
 let formatted_date =
@@ -52,10 +53,12 @@ class EditProfile extends Component {
       id: "",
       name: "",
       email: "",
+      image: "",
       phone: this.props.userData.phone,
       location_city: this.props.userData.location_city,
       location_state: this.props.userData.location_state,
       location_country: this.props.userData.location_country,
+      price: this.props.userData.price,
       discription: "",
       selectedHospitals: [],
       selectedSpecializations: [],
@@ -74,7 +77,8 @@ class EditProfile extends Component {
       },
       todayDate: new Date(),
       selectedDateForDelete: "",
-      selectedDateForUpdate: ""
+      selectedDateForUpdate: "",
+      openPictureUpload: false
     };
   }
 
@@ -100,6 +104,19 @@ class EditProfile extends Component {
         id: ""
       });
     }
+
+    const userId = this.props.match.params.id;
+
+    axios
+      .get(`/v1/uploading/profilePicture/${userId}`)
+      .then(res => {
+        this.setState({
+          image: "http://localhost:3001/" + res.data.post.imageURL
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   onChange = e => {
@@ -127,7 +144,27 @@ class EditProfile extends Component {
     }
   };
 
-  handleConfirmSchedule = () => this.setState({ open2: false });
+  handleConfirmSchedule = () => {
+    this.setState({ open2: false });
+    const addScheduleData = {
+      startDate: this.state.selectionRange.startDate,
+      endDate: this.state.selectionRange.endDate,
+      timeSlots: this.state.val
+    };
+    if (this.state.todayDate > this.state.selectionRange.startDate) {
+      alert(`please select the date onward ${formatted_date}`);
+    } else if (this.props.auth.isAuthenticated) {
+      this.props.createDoctorsSchedule(
+        addScheduleData,
+        this.props.history,
+        // change id to (this.props.match.params.id)
+        this.state.id,
+        this.state.token
+      );
+    } else {
+      console.log("not logged in");
+    }
+  };
 
   handleConfirmDeleteSchedule = () => {
     this.setState({ open3: false });
@@ -163,30 +200,14 @@ class EditProfile extends Component {
       location_city: this.state.location_city,
       location_state: this.state.location_state,
       location_country: this.state.location_country,
-      /// join both prev and new specs
-      // specializations: [
-      //   this.state.selectedPrevSpecializations +
-      //     this.state.selectedSpecializations
-      // ]
+      price: this.state.price,
       specializations: this.state.selectedSpecializations
     };
-    const addScheduleData = {
-      startDate: this.state.selectionRange.startDate,
-      endDate: this.state.selectionRange.endDate,
-      timeSlots: this.state.val
-    };
-    if (this.state.todayDate >= this.state.selectionRange.startDate) {
+    if (this.state.todayDate > this.state.selectionRange.startDate) {
       alert(`please select the date onward ${formatted_date}`);
     } else if (this.props.auth.isAuthenticated) {
       this.props.updateUserData(
         upUserData,
-        this.props.history,
-        // change id to (this.props.match.params.id)
-        this.state.id,
-        this.state.token
-      );
-      this.props.createDoctorsSchedule(
-        addScheduleData,
         this.props.history,
         // change id to (this.props.match.params.id)
         this.state.id,
@@ -273,6 +294,14 @@ class EditProfile extends Component {
     this.setState({ selectedDateForDelete: proposedDate });
   };
 
+  showPictureUpload = () => this.setState({ openPictureUpload: true });
+
+  handleConfirmPictureUpload = () => {
+    this.setState({ openPictureUpload: false });
+  };
+
+  handleCancelPictureUpload = () => this.setState({ openPictureUpload: false });
+
   renderSchedule() {
     return (
       <div>
@@ -331,6 +360,10 @@ class EditProfile extends Component {
     );
   }
 
+  renderConfirmationPictureUpload() {
+    return <UploadProfilePicture userId={this.props.match.params.id} />;
+  }
+
   renderAlert() {
     return (
       <div>
@@ -340,27 +373,36 @@ class EditProfile extends Component {
   }
 
   render() {
-    // console.log(
-    //   "prev asdj: " +
-    //     this.state.selectedPrevSpecializations +
-    //     "," +
-    //     this.state.selectedSpecializations
-    // );
-
-    //console.log("user data: " + JSON.stringify(this.state.userData));
     return (
       <div className="main-view-profile-info">
         <Card fluid>
           <Card.Content>
             <Grid stackable>
               <Grid.Column width={5}>
-                <div style={{ textAlign: "center" }}>
+                {/* <div style={{ textAlign: "center" }}>
                   <Image
                     src="https://react.semantic-ui.com/images/wireframe/square-image.png"
                     size="small"
                     circular
                   />
-                </div>
+                </div> */}
+                {/* <div style={{ textAlign: "center" }}> */}
+                <Image contain fileURL={this.state.image} />
+                {/* </div> */}
+                <Button
+                  onClick={() => this.showPictureUpload()}
+                  style={{ contentAllign: "center" }}
+                >
+                  Update Picture
+                </Button>
+                <Confirm
+                  open={this.state.openPictureUpload}
+                  content={this.renderConfirmationPictureUpload()}
+                  header="Upload Picture"
+                  onCancel={this.handleCancelPictureUpload}
+                  onConfirm={this.handleConfirmPictureUpload}
+                  size="small"
+                />
               </Grid.Column>
 
               <Grid.Column width={6}>
@@ -398,13 +440,26 @@ class EditProfile extends Component {
                 marginTop: "15px"
               }}
             >
-              <span>Phone No.</span>
-              <Input
-                style={{ width: "100%" }}
-                name="phone"
-                value={this.state.phone}
-                onChange={this.onChange}
-              />
+              <Grid stackable>
+                <Grid.Column width={5}>
+                  <span>Phone No:</span>
+                  <Input
+                    // style={{ width: "50%" }}
+                    name="phone"
+                    value={this.state.phone}
+                    onChange={this.onChange}
+                  />
+                </Grid.Column>
+                <Grid.Column width={5}>
+                  <span>price:</span>
+                  <Input
+                    // style={{ width: "50%" }}
+                    name="price"
+                    value={this.state.price}
+                    onChange={this.onChange}
+                  />
+                </Grid.Column>
+              </Grid>
             </div>
             <div
               style={{

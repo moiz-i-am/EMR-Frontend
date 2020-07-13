@@ -120,12 +120,12 @@ export class AppointmentBooking extends Component {
             </p>
             <h4>
               <span>Price: </span>
-              2000
+              {this.props.price}
             </h4>
           </div>
           <div>
             <PaymentIndex
-              amount={"2000"}
+              amount={this.props.price}
               doctorId={this.state.docId}
               doctorName={this.state.docName}
               patientId={this.state.patientId}

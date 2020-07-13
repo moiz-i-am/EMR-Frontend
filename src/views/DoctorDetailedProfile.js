@@ -26,6 +26,7 @@ export class DoctorDetailedProfile extends Component {
         <Grid stackable>
           <Grid.Column width={10}>
             <DocorBriefCard
+              docId={users.user.id}
               docName={users.user.name}
               docEmail={users.user.email}
               docSpec={users.user.specializations}
@@ -37,12 +38,14 @@ export class DoctorDetailedProfile extends Component {
                 users.user.location_country
               }
               rating={users.user.rating}
+              price={users.user.price}
             />
           </Grid.Column>
           <Grid.Column width={6}>
             <AppointmentBooking
               docName={users.user.name}
               docId={this.props.match.params.id}
+              price={users.user.price}
             />
           </Grid.Column>
         </Grid>

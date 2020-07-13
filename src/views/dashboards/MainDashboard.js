@@ -5,9 +5,6 @@ import {
   Icon,
   Menu,
   Header,
-  Image,
-  GridColumn,
-  Divider,
   Segment,
   Responsive
 } from "semantic-ui-react";
@@ -15,6 +12,7 @@ import { Link } from "react-router-dom";
 import propTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+import axios from "axios";
 
 import { getUserWithProfile } from "./../../actions/userDetailsAction";
 import { logoutUser } from "../../actions/authActions";
@@ -39,16 +37,14 @@ import LabTestsList from "../../components/dashboardContainers/PatientContainers
 
 import Logo from "../../assets/Logo.png";
 
-const trigger = (state, name) => (
+import Image from "../../components/profilePicture/Image";
+
+const trigger = (state, name, image) => (
   <span style={{ fontSize: 11 }}>
     <Header as="h7" color="teal" textAlign="center">
       <Grid>
         <Grid.Column width={6}>
-          <Image
-            src="https://react.semantic-ui.com/images/wireframe/square-image.png"
-            size="small"
-            circular
-          />
+          <Image contain fileURL={image} />
         </Grid.Column>
         <Grid.Column width={8}>{name}</Grid.Column>
       </Grid>
@@ -68,7 +64,8 @@ export class MainDashboard extends Component {
     editLabProfile: false,
     uploadLabTests: true,
     showUploadedResults: false,
-    horizontalNameShow: "Appointments History"
+    horizontalNameShow: "Appointments History",
+    image: ""
   };
 
   addAppointments = () => {
@@ -205,6 +202,20 @@ export class MainDashboard extends Component {
       });
     }
     this.props.dispatch(getUserWithProfile(this.props.match.params.id));
+
+    const userId = this.props.match.params.id;
+
+    axios
+      .get(`/v1/uploading/profilePicture/${userId}`)
+      .then(res => {
+        console.log(res.data.post);
+        this.setState({
+          image: "http://localhost:3001/" + res.data.post.imageURL
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   /////////////////////////////////////////////// for Patients dashboard start ////////////////////////////////////////////
@@ -237,11 +248,7 @@ export class MainDashboard extends Component {
                 </Link>
               </Menu.Item>
               <Menu.Item>
-                <Image
-                  src="https://react.semantic-ui.com/images/wireframe/square-image.png"
-                  size="small"
-                  circular
-                />
+                <Image contain fileURL={this.state.image} />
               </Menu.Item>
               <Menu.Item
                 style={{ height: "10%" }}
@@ -335,7 +342,11 @@ export class MainDashboard extends Component {
                 <Dropdown
                   floating
                   item
-                  trigger={trigger(this.state, users.user.name)}
+                  trigger={trigger(
+                    this.state,
+                    users.user.name,
+                    this.state.image
+                  )}
                 >
                   <Dropdown.Menu>
                     <Dropdown.Item
@@ -420,7 +431,12 @@ export class MainDashboard extends Component {
               {this.state.home && (
                 <BookingPatient id={this.props.match.params.id} />
               )}
-              {this.state.browse && <ShowProfile userData={users.user} />}
+              {this.state.browse && (
+                <ShowProfile
+                  userData={users.user}
+                  id={this.props.match.params.id}
+                />
+              )}
               {this.state.editProfile && (
                 <EditProfilePatient userData={users.user} />
               )}
@@ -469,11 +485,7 @@ export class MainDashboard extends Component {
                 </Link>
               </Menu.Item>
               <Menu.Item>
-                <Image
-                  src="https://react.semantic-ui.com/images/wireframe/square-image.png"
-                  size="small"
-                  circular
-                />
+                <Image contain fileURL={this.state.image} />
               </Menu.Item>
               <Menu.Item
                 style={{ height: "10%" }}
@@ -569,7 +581,11 @@ export class MainDashboard extends Component {
                 <Dropdown
                   floating
                   item
-                  trigger={trigger(this.state, users.user.name)}
+                  trigger={trigger(
+                    this.state,
+                    users.user.name,
+                    this.state.image
+                  )}
                 >
                   <Dropdown.Menu>
                     <Dropdown.Item

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useSpring, animated, config } from "react-spring";
 import { Dropdown, Icon } from "semantic-ui-react";
@@ -8,14 +8,18 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 import { withRouter } from "react-router-dom";
+import axios from "axios";
 
 import Brand from "./Brand";
 import BurgerMenu from "./BurgerMenu";
 import CollapseMenu from "./CollapseMenu";
 
+import Image from "../profilePicture/Image";
+
 const trigger = name => (
-  <span style={{ color: "black" }}>
+  <span>
     <Icon name="user" /> {name}
+    {/* <Image contain fileURL={image} /> {name} */}
   </span>
 );
 
@@ -39,6 +43,24 @@ const Navbar = props => {
     delay: 800,
     config: config.wobbly
   });
+
+  // const localData = JSON.parse(localStorage.getItem("jwtToken"));
+  // const [userdata, setUserdata] = useState(localData);
+
+  // const [state, setState] = useState({ image: "" });
+
+  // useEffect(() => {
+  //   const userId = userdata.user.id;
+  //   axios
+  //     .get(`/v1/uploading/profilePicture/${userId}`)
+  //     .then(res => {
+  //       console.log(res.data.post);
+  //       setState({ image: "http://localhost:3001/" + res.data.post.imageURL });
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     });
+  // }, []);
 
   const { isAuthenticated, user } = props.auth;
   const authLinks = (

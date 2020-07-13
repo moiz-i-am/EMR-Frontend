@@ -12,7 +12,6 @@ class UploadedTestsList extends Component {
 
   componentDidMount() {
     axios.get(`/v1/uploading/testResultsLab/${this.props.id}`).then(res => {
-      console.log(res.data);
       this.setState({ loading: true });
       setTimeout(() => {
         this.setState({ loading: false, tests: res.data.posts });

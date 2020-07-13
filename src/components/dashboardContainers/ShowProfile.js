@@ -1,12 +1,32 @@
 import React, { Component } from "react";
-import { Card, Grid, Image, Label } from "semantic-ui-react";
+import { Card, Grid, Label } from "semantic-ui-react";
+import axios from "axios";
+
+import Image from "../profilePicture/Image";
 
 export class ShowProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userData: this.props.userData
+      userData: this.props.userData,
+      image: ""
     };
+  }
+
+  componentDidMount() {
+    const userId = this.state.userData.id;
+
+    axios
+      .get(`/v1/uploading/profilePicture/${userId}`)
+      .then(res => {
+        console.log(res.data.post);
+        this.setState({
+          image: "http://localhost:3001/" + res.data.post.imageURL
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   render() {
@@ -16,13 +36,7 @@ export class ShowProfile extends Component {
           <Card.Content>
             <Grid>
               <Grid.Column width={5}>
-                <div style={{ textAlign: "center" }}>
-                  <Image
-                    src="https://react.semantic-ui.com/images/wireframe/square-image.png"
-                    size="small"
-                    circular
-                  />
-                </div>
+                <Image contain fileURL={this.state.image} />
               </Grid.Column>
 
               <Grid.Column width={6}>

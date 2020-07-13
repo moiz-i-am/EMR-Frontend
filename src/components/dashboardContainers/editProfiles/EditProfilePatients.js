@@ -156,9 +156,7 @@ class EditProfilePatient extends Component {
           <Card.Content>
             <Grid stackable>
               <Grid.Column width={5}>
-                {/* <div style={{ textAlign: "center" }}> */}
                 <Image contain fileURL={this.state.image} />
-                {/* </div> */}
                 <Button
                   onClick={() => this.showPictureUpload()}
                   style={{ contentAllign: "center" }}

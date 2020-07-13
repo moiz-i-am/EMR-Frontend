@@ -49,7 +49,9 @@ class PrescriptionPatient extends Component {
               </div>
             </div>
             {this.state.prescriptions.length === 0 ? (
-              <h3>Sorry You have no prescriptions yet!</h3>
+              this.state.loading ? null : (
+                <h3>Sorry You have no prescriptions yet!</h3>
+              )
             ) : (
               this.state.prescriptions.map(prescription => {
                 return (

@@ -174,8 +174,11 @@ class bookingDoctor extends Component {
                 </div>
               </div>
             </div>
+
             {this.state.bookings.length === 0 ? (
-              <h1>No Bookings Yet</h1>
+              this.state.loading ? null : (
+                <h1>No Bookings Yet</h1>
+              )
             ) : (
               this.state.bookings.map(booking => {
                 return (

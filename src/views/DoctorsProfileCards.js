@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import {
   Grid,
   Label,
-  Image,
   Card,
   Button,
   List,
@@ -15,13 +14,34 @@ import Fade from "react-reveal/Fade";
 import "./../styles/profileCards.css";
 import logo from "./../assets/user-solid.svg";
 
+import axios from "axios";
+
+import Image from "../components/profilePicture/Image";
+
 class ProfileCards extends Component {
   constructor(props) {
     super(props);
     this.state = {
       specializations: this.props.docSpec,
-      docId: this.props.docId
+      docId: this.props.docId,
+      image: ""
     };
+  }
+
+  componentDidMount() {
+    const userId = this.state.docId;
+
+    axios
+      .get(`/v1/uploading/profilePicture/${userId}`)
+      .then(res => {
+        console.log(res.data.post);
+        this.setState({
+          image: "http://localhost:3001/" + res.data.post.imageURL
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   render() {
@@ -36,11 +56,11 @@ class ProfileCards extends Component {
                     <Card.Header>
                       <Grid>
                         <Grid.Column width={4}>
-                          <div
+                          {/* <div
                             style={{ borderRadius: "50%", textAlign: "center" }}
-                          >
-                            <Image src={logo} size="tiny" />
-                          </div>
+                          > */}
+                          <Image contain fileURL={this.state.image} />
+                          {/* </div> */}
                         </Grid.Column>
                         <Grid.Column width={12}>
                           <div
@@ -102,7 +122,10 @@ class ProfileCards extends Component {
                           size="huge"
                         />
                         <List style={{ color: "black" }}>
-                          <List.Item icon="money" content="3000 -/Rs" />
+                          <List.Item
+                            icon="money"
+                            content={<p>{this.props.price}</p>}
+                          />
                           <List.Item
                             icon="marker"
                             content={<p>{this.props.docLocation}</p>}
