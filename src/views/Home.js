@@ -17,8 +17,8 @@ import Fade from "react-reveal/Fade";
 import Flip from "react-reveal/Flip";
 
 import DocCardSegment from "../components/cardSegments/DocCardSegment";
-import HospCardSegment from "../components/cardSegments/HospCardSegment";
-import LabCardSegment from "../components/cardSegments/LabCardSegment";
+// import HospCardSegment from "../components/cardSegments/HospCardSegment";
+// import LabCardSegment from "../components/cardSegments/LabCardSegment";
 import image from "../assets/home1.jpg";
 import image2 from "../assets/home2.jpg";
 
@@ -286,7 +286,7 @@ class Home extends Component {
                   </Grid.Column>
                 </Grid.Row>
                 <Divider />
-                <Grid.Row columns="equal">
+                {/* <Grid.Row columns="equal">
                   <Grid.Column width={15}>
                     <HospCardSegment />
                   </Grid.Column>
@@ -302,7 +302,7 @@ class Home extends Component {
                   <Grid.Column>
                     <Button size="large" fluid icon="right arrow" />
                   </Grid.Column>
-                </Grid.Row>
+                </Grid.Row> */}
                 <Divider />
               </Grid>
             </Container>

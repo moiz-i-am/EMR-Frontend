@@ -10,7 +10,7 @@ import { createAppointmentBooking } from "./../actions/bookingActions";
 import MainStyles from "../styles/main.style";
 import LoginPopup from "./LoginPopup";
 
-import PaymentIndex from "./PaymentContainer/CheckoutForm";
+import PaymentIndex from "../containers/PaymentContainer/CheckoutForm";
 
 export class AppointmentBooking extends Component {
   state = {
@@ -73,22 +73,25 @@ export class AppointmentBooking extends Component {
         patient: this.state.patientId,
         timeSlot: this.state.choosenSlot
       };
-
-      if (
-        this.state.role === "doctor" ||
-        this.state.role === "lab" ||
-        this.state.role === "hospital" ||
-        this.state.role === "admin"
-      ) {
-        return alert(
-          `sorry you are ${this.state.role} you cannot make booking form this account !!!`
-        );
+      if (this.state.choosenSlot !== "") {
+        if (
+          this.state.role === "doctor" ||
+          this.state.role === "lab" ||
+          this.state.role === "hospital" ||
+          this.state.role === "admin"
+        ) {
+          return alert(
+            `sorry you are ${this.state.role} you cannot make booking form this account !!!`
+          );
+        } else {
+          this.props.createAppointmentBooking(bookingData, this.state.token);
+          this.setState({ open: false, success: true });
+          setTimeout(() => {
+            this.setState({ success: false });
+          }, 3000);
+        }
       } else {
-        this.props.createAppointmentBooking(bookingData, this.state.token);
-        this.setState({ open: false, success: true });
-        setTimeout(() => {
-          this.setState({ success: false });
-        }, 3000);
+        return alert(`please select a time slot`);
       }
     } else {
       console.log("ERROR: not authanticated");

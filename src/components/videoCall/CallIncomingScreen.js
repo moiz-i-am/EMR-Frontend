@@ -100,12 +100,16 @@ class CallIncomingScreen extends Component {
     }
 
     return (
-      <div style={{ width: "100%" }}>
+      <div style={{ width: "100%", backgroundColor: "#292f35" }}>
         <Grid columns={3} style={{ padding: 0, margin: 0 }} divided>
           <Grid.Column width={10} style={{ padding: 0 }}>
             <div className="partner-video" style={{ height: "670px" }}>
               <video
-                style={{ width: "100%" }}
+                style={{
+                  width: "100%",
+                  maxHeight: "670px",
+                  backgroundColor: "#292f35"
+                }}
                 playsInline
                 ref={ref => {
                   this.partnerVideo = ref;

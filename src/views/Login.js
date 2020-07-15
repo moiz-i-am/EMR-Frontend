@@ -4,6 +4,16 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { loginUser } from "../actions/authActions";
 import classnames from "classnames";
+import {
+  Grid,
+  GridColumn,
+  Header,
+  Form,
+  Input,
+  Button,
+  Message,
+  Segment
+} from "semantic-ui-react";
 
 const initialState = {
   email: "",
@@ -13,7 +23,7 @@ const initialState = {
   errors: {}
 };
 
-class LoginBox extends React.Component {
+class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = initialState;
@@ -22,7 +32,10 @@ class LoginBox extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
       const { user } = nextProps.auth;
+      // setTimeout(() => {
       this.props.history.push(`/dashboard/${user.id}`);
+      // }, 4000);
+
       // push user to dashboard when they login
     }
     if (nextProps.errors) {
@@ -47,7 +60,7 @@ class LoginBox extends React.Component {
     );
     if (!pattern.test(this.state.email)) {
       // if (!this.state.email.includes("@")) {
-      emailError = "*Please enter valid email address";
+      emailError = "* Please enter valid email address";
     }
     if (
       !this.state.password.match(
@@ -82,62 +95,80 @@ class LoginBox extends React.Component {
   render() {
     const { errors } = this.state;
     return (
-      <div className="inner-container">
-        <div className="header">Login</div>
-        <div className="box">
-          <form noValidate onSubmit={this.onSubmit}>
-            <div className="input-group">
-              <label htmlFor="email">email</label>
-              <input
-                type="email"
-                name="email"
-                className={classnames("login-input", {
-                  "email is invalid": errors.email
-                })}
-                placeholder="email"
-                onChange={this.onChange}
-                value={this.state.email}
-                error={errors.email}
-              />
-              <span className="red-text" style={{ fontSize: 12, color: "red" }}>
-                {this.state.emailError}
-                {errors.email}
-                {errors.emailnotfound}
-              </span>
-            </div>
-
-            <div className="input-group">
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                name="password"
-                className={classnames("login-input", {
-                  "password is invalid": errors.password
-                })}
-                placeholder="Password"
-                onChange={this.onChange}
-                value={this.state.password}
-                error={errors.password}
-              />
-            </div>
-            {errors.password && (
-              <div className="invalid-feedback">{errors.password}</div>
-            )}
-
-            <button type="submit" className="login-btn">
+      <Grid verticalAlign="middle" textAlign="center" padded="vertically">
+        <GridColumn style={{ maxWidth: 400 }}>
+          <Segment>
+            <Header as="h2" textAlign="center" style={{ color: "#9458AE" }}>
               Login
-            </button>
-          </form>
-        </div>
-        <p>
-          <Link to="/Signup">not registered yet? Please Register!</Link>
-        </p>
-      </div>
+            </Header>
+            <Form noValidate onSubmit={this.onSubmit}>
+              <Form.Field>
+                <Input
+                  style={{ color: "#9458AE" }}
+                  size="small"
+                  icon="mail"
+                  color="red"
+                  iconPosition="left"
+                  type="email"
+                  name="email"
+                  className={classnames("login-input", {
+                    "email is invalid": errors.email
+                  })}
+                  placeholder="Email address"
+                  onChange={this.onChange}
+                  value={this.state.email}
+                  error={errors.email}
+                />
+                <span
+                  className="red-text"
+                  style={{ fontSize: 12, color: "red", fontWeight: "bold" }}
+                >
+                  {this.state.emailError}
+                  {errors.email}
+                  {errors.emailnotfound}
+                </span>
+              </Form.Field>
+
+              <Form.Field>
+                <Input
+                  style={{ color: "#9458AE" }}
+                  size="small"
+                  icon="lock"
+                  iconPosition="left"
+                  type="password"
+                  name="password"
+                  className={classnames("login-input", {
+                    "password is invalid": errors.password
+                  })}
+                  placeholder="Password"
+                  onChange={this.onChange}
+                  value={this.state.password}
+                  error={errors.password}
+                />
+              </Form.Field>
+              {errors.password && (
+                <div className="invalid-feedback">{errors.password}</div>
+              )}
+
+              <Button
+                fluid
+                type="submit"
+                style={{ backgroundColor: "#9458AE", color: "#ffffff" }}
+              >
+                Login
+              </Button>
+            </Form>
+            <Message>
+              Not Registered Yet? Please<Link to="/Signup"> Register!</Link>
+            </Message>
+          </Segment>
+        </GridColumn>
+      </Grid>
     );
   }
 }
 
-LoginBox.propTypes = {
+Login.propTypes = {
   loginUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
@@ -146,4 +177,4 @@ const mapStateToProps = state => ({
   auth: state.auth,
   errors: state.errors
 });
-export default connect(mapStateToProps, { loginUser })(LoginBox);
+export default connect(mapStateToProps, { loginUser })(Login);

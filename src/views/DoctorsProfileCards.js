@@ -12,7 +12,6 @@ import { Link } from "react-router-dom";
 import Fade from "react-reveal/Fade";
 
 import "./../styles/profileCards.css";
-import logo from "./../assets/user-solid.svg";
 
 import axios from "axios";
 

@@ -1,6 +1,6 @@
 import React from "react";
 import "./signstyle.css";
-import { Link, withRouter } from "react-router-dom";
+import { Link, withRouter, NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import classnames from "classnames";
 import PropTypes from "prop-types";
@@ -9,7 +9,17 @@ import {
   registerUser,
   registerHospital,
   registerLab
-} from "./../actions/authActions";
+} from "../actions/authActions";
+import {
+  Grid,
+  Form,
+  Input,
+  Segment,
+  Header,
+  Button,
+  Message,
+  Icon
+} from "semantic-ui-react";
 
 // const initialState = props => ({
 //   username: "",
@@ -64,7 +74,7 @@ class Signup extends React.Component {
     let passwordError = "";
 
     if (!this.state.username.match(/^[a-zA-Z ]*$/)) {
-      usernameError = "*Please enter alphabet characters only.";
+      usernameError = "* Please enter alphabet characters only.";
     }
 
     var pattern = new RegExp(
@@ -72,14 +82,14 @@ class Signup extends React.Component {
     );
     if (!pattern.test(this.state.email)) {
       // if (!this.state.email.includes("@")) {
-      emailError = "*Please enter valid email address";
+      emailError = "* Please enter valid email address";
     }
     if (
       !this.state.password.match(
         /^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/
       )
     ) {
-      passwordError = "*Please enter secure and strong password.";
+      passwordError = "* Please enter secure and strong password.";
     }
     if (usernameError || emailError || passwordError) {
       this.setState({ usernameError, emailError, passwordError });
@@ -106,6 +116,7 @@ class Signup extends React.Component {
       email: this.state.email,
       password: this.state.password,
       name: this.state.OrName,
+      role: this.state.role,
       location: this.state.OrLocation
     };
     const newLab = {
@@ -113,6 +124,7 @@ class Signup extends React.Component {
       email: this.state.email,
       password: this.state.password,
       name: this.state.OrName,
+      role: this.state.role,
       location: this.state.OrLocation
     };
     const isValid = this.validate();
@@ -139,10 +151,12 @@ class Signup extends React.Component {
     let hospital;
     if (this.state.role === "hospital") {
       hospital = (
-        <div>
-          <div className="input-group">
-            <label htmlFor="hospitalName">Hospital Name</label>
-            <input
+        <Form>
+          <Form.Field required>
+            <Input
+              size="small"
+              icon="hospital"
+              iconPosition="left"
               type="text"
               name="OrName"
               className="login-input"
@@ -151,11 +165,14 @@ class Signup extends React.Component {
               value={this.state.OrName}
             />
             <span className="red-text"></span>
-          </div>
-          <div className="input-group">
-            <label htmlFor="hospitalLocation">Hospital Location</label>
-            <input
+          </Form.Field>
+
+          <Form.Field required>
+            <Input
               type="text"
+              size="small"
+              icon="point"
+              iconPosition="left"
               name="OrLocation"
               className="login-input"
               placeholder="Hospital Location"
@@ -163,8 +180,9 @@ class Signup extends React.Component {
               value={this.state.OrLocation}
             />
             <span className="red-text"></span>
-          </div>
-        </div>
+          </Form.Field>
+          <span />
+        </Form>
       );
     }
 
@@ -173,11 +191,13 @@ class Signup extends React.Component {
     let lab;
     if (this.state.role === "lab") {
       lab = (
-        <div>
-          <div className="input-group">
-            <label htmlFor="labName">Lab Name</label>
-            <input
+        <Form>
+          <Form.Field required>
+            <Input
               type="text"
+              size="small"
+              icon="lab"
+              iconPosition="left"
               name="OrName"
               className="login-input"
               placeholder="lab Name"
@@ -185,11 +205,14 @@ class Signup extends React.Component {
               value={this.state.OrName}
             />
             <span className="red-text"></span>
-          </div>
-          <div className="input-group">
-            <label htmlFor="labLocation">Lab Location</label>
-            <input
+          </Form.Field>
+
+          <Form.Field required>
+            <Input
               type="text"
+              size="small"
+              icon="point"
+              iconPosition="left"
               name="OrLocation"
               className="login-input"
               placeholder="Lab Location"
@@ -197,83 +220,163 @@ class Signup extends React.Component {
               value={this.state.OrLocation}
             />
             <span className="red-text"></span>
-          </div>
-        </div>
+          </Form.Field>
+          <span />
+        </Form>
       );
     }
+
+    ///////////////////////for tips section/////////////////////////
 
     //////////////////////////// normal rendring ///////////////////
 
     const { errors } = this.state;
     return (
-      <div className="inner-container">
-        <div className="header">Register</div>
-        <div className="box">
-          <form noValidate onSubmit={this.onSubmit}>
-            <div className="input-group">
-              <label htmlFor="username">Username</label>
-              <input
-                type="text"
-                name="username"
-                placeholder="Username"
-                onChange={this.onChange}
-                value={this.state.username}
-                error={errors.username}
-                className={classnames("login-input", {
-                  invalid: errors.username
-                })}
-              />
-              <span className="red-text" style={{ fontSize: 12, color: "red" }}>
-                {this.state.usernameError}
-              </span>
-            </div>
+      <Grid divided="vertically" padded="vertically">
+        <Grid.Row columns={2}>
+          <Grid.Column style={{ maxWidth: 500 }}>
+            <Segment>
+              <Form noValidate onSubmit={this.onSubmit}>
+                <Header as="h2" textAlign="center" content="Register" />
+                <Form.Field required>
+                  <Input
+                    type="text"
+                    size="small"
+                    icon="user"
+                    iconPosition="left"
+                    name="username"
+                    placeholder="Username"
+                    onChange={this.onChange}
+                    value={this.state.username}
+                    error={errors.username}
+                    className={classnames("login-input", {
+                      invalid: errors.username
+                    })}
+                  />
+                  <span
+                    className="red-text"
+                    style={{ fontSize: 12, color: "red", fontWeight: "bold" }}
+                  >
+                    {this.state.usernameError}
+                  </span>
+                </Form.Field>
 
-            <div className="input-group">
-              <label htmlFor="email">Email</label>
-              <input
-                type="text"
-                name="email"
-                className={classnames("login-input", {
-                  invalid: errors.email
-                })}
-                placeholder="Email"
-                onChange={this.onChange}
-                value={this.state.email}
-                error={errors.email}
-              />
-              <span className="red-text" style={{ fontSize: 12, color: "red" }}>
-                {this.state.emailError}
-              </span>
-            </div>
+                <Form.Field required>
+                  <Input
+                    type="text"
+                    size="small"
+                    name="email"
+                    icon="mail"
+                    iconPosition="left"
+                    className={classnames("login-input", {
+                      invalid: errors.email
+                    })}
+                    placeholder="Email"
+                    onChange={this.onChange}
+                    value={this.state.email}
+                    error={errors.email}
+                  />
+                  <span
+                    className="red-text"
+                    style={{ fontSize: 12, color: "red", fontWeight: "bold" }}
+                  >
+                    {this.state.emailError}
+                  </span>
+                </Form.Field>
 
-            <div className="input-group">
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                name="password"
-                className={classnames("login-input", {
-                  invalid: errors.password
-                })}
-                placeholder="Password"
-                onChange={this.onChange}
-                value={this.state.password}
-                error={errors.password}
-              />
-              <span className="red-text" style={{ fontSize: 12, color: "red" }}>
-                {this.state.passwordError}
-              </span>
-            </div>
-            {hospital}
-            {lab}
-            <button type="submit" className="login-btn">
-              Register
-            </button>
-          </form>
-        </div>
-        <p>
-          <Link to="/Login">already registered? Login</Link>
-        </p>
-      </div>
+                <Form.Field required>
+                  <Input
+                    type="password"
+                    size="small"
+                    icon="lock"
+                    iconPosition="left"
+                    name="password"
+                    className={classnames("login-input", {
+                      invalid: errors.password
+                    })}
+                    placeholder="Password"
+                    onChange={this.onChange}
+                    value={this.state.password}
+                    error={errors.password}
+                  />
+                  <span
+                    className="red-text"
+                    style={{ fontSize: 12, color: "red", fontWeight: "bold" }}
+                  >
+                    {this.state.passwordError}
+                  </span>
+                </Form.Field>
+
+                <Form.Field required>
+                  <Input
+                    type="password"
+                    size="small"
+                    icon="lock"
+                    iconPosition="left"
+                    name="confirmPassword"
+                    className={classnames("login-input", {
+                      invalid: errors.password
+                    })}
+                    placeholder="Confirm Password"
+                    onChange={this.onChange}
+                    value={this.state.password}
+                    error={errors.password}
+                  />
+                  <span
+                    className="red-text"
+                    style={{ fontSize: 12, color: "red", fontWeight: "bold" }}
+                  >
+                    {this.state.passwordError}
+                  </span>
+                </Form.Field>
+                {hospital}
+                {lab}
+                <Button fluid type="submit">
+                  Register
+                </Button>
+              </Form>
+            </Segment>
+            <Message attached="bottom" warning>
+              <Icon name="help" />
+              Already Registered?
+              <Link as={NavLink} to="/Login">
+                {" "}
+                Login
+              </Link>{" "}
+              here instead
+            </Message>
+          </Grid.Column>
+          <Grid.Column>
+            <Message color="teal">
+              <Message.Header>Setting up Account</Message.Header>
+              <Message.List>
+                <Message.Item>
+                  Username is visible to others, so make sure it's your real
+                  name.
+                </Message.Item>
+                <Message.Item>
+                  Provide a valid work email which you check more often.
+                </Message.Item>
+                <Message.Item>Password must include</Message.Item>
+              </Message.List>
+            </Message>
+            <Message color="teal">
+              <Message.Header>Setting up Password</Message.Header>
+              <Message.List>
+                <Message.Item>
+                  Password must consist of minimum 6 characters.
+                </Message.Item>
+                <Message.Item>
+                  Password must include atleast one number.
+                </Message.Item>
+                <Message.Item>
+                  Password must include one Capital Letter.
+                </Message.Item>
+              </Message.List>
+            </Message>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
     );
   }
 }

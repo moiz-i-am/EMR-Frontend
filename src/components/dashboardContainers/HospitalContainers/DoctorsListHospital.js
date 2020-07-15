@@ -1,17 +1,17 @@
 import React, { Component } from "react";
-import ProfileCards from "./DoctorsProfileCards";
 import axios from "axios";
-import { Link } from "react-router-dom";
 import { Container, Segment, Dimmer, Loader, Image } from "semantic-ui-react";
 
-class DoctorsList extends Component {
+import DoctorCardsHospital from "./DoctorCardsHospital";
+
+class DoctorsListHospital extends Component {
   state = {
     persons: [],
     loading: false
   };
 
   componentDidMount() {
-    axios.get(`v1/users`).then(res => {
+    axios.get(`/v1/users`).then(res => {
       this.setState({ loading: true });
       setTimeout(() => {
         this.setState({ loading: false, persons: res.data });
@@ -21,11 +21,8 @@ class DoctorsList extends Component {
 
   render() {
     return (
-      <Container style={{ width: "90%" }}>
-        <div
-          className="main_DocList-div"
-          style={{ backgroundColor: "#F7F7F7" }}
-        >
+      <Container>
+        <div className="main_DocList-div">
           {this.state.persons.length === 0 ? (
             this.state.loading ? null : (
               <h1>No Doctors Found</h1>
@@ -39,20 +36,11 @@ class DoctorsList extends Component {
                     key={persons.id}
                   >
                     {/* <Link to={`/docProfile/${persons.id}`}> */}
-                    <ProfileCards
-                      docId={persons.id}
-                      docName={persons.name}
-                      docEmail={persons.email}
-                      docSpec={persons.specializations}
-                      docLocation={
-                        persons.location_city +
-                        ", " +
-                        persons.location_state +
-                        ", " +
-                        persons.location_country
-                      }
-                      rating={persons.rating}
-                      price={persons.price}
+                    <DoctorCardsHospital
+                      id={this.props.id}
+                      DId={persons.id}
+                      DName={persons.name}
+                      DEmail={persons.email}
                     />
                     {/* </Link> */}
                   </div>
@@ -74,7 +62,6 @@ class DoctorsList extends Component {
             <Image src="https://react.semantic-ui.com/images/wireframe/short-paragraph.png" />
             <Image src="https://react.semantic-ui.com/images/wireframe/short-paragraph.png" />
             <Image src="https://react.semantic-ui.com/images/wireframe/short-paragraph.png" />
-            <Image src="https://react.semantic-ui.com/images/wireframe/short-paragraph.png" />
           </Segment>
         ) : null}
       </Container>
@@ -82,4 +69,4 @@ class DoctorsList extends Component {
   }
 }
 
-export default DoctorsList;
+export default DoctorsListHospital;

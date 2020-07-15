@@ -28,12 +28,17 @@ import BookingDoctor from "../../components/dashboardContainers/bookingsList/boo
 import PrescriptionPatient from "../../components/dashboardContainers/prescriptions/PrescriptionLists/PrescriptionPatient";
 import PrescriptionDoctor from "../../components/dashboardContainers/prescriptions/PrescriptionLists/PrescriptionDoctor";
 
+import UploadDocument from "../../components/dashboardContainers/DoctorContainers/UploadDocuments";
+
 import ShowProfileLab from "../../components/dashboardContainers/LabContainers/ShowProfileLab";
 import EditProfileLab from "../../components/dashboardContainers/LabContainers/EditProfileLab";
 import PatientsListLab from "../../components/dashboardContainers/LabContainers/PatientsListLab";
 import UploadedTestsList from "../../components/dashboardContainers/LabContainers/UploadedTestsList";
-
 import LabTestsList from "../../components/dashboardContainers/PatientContainers/LabTestsList";
+
+import ShowProfileHospital from "../../components/dashboardContainers/HospitalContainers/ShowProfileHospital";
+import EditProfileHospital from "../../components/dashboardContainers/HospitalContainers/EditProfileHospital";
+import DoctorsListHospital from "../../components/dashboardContainers/HospitalContainers/DoctorsListHospital";
 
 import Logo from "../../assets/Logo.png";
 
@@ -59,11 +64,17 @@ export class MainDashboard extends Component {
     home: true,
     browse: false,
     editProfile: false,
+    doctorUpload: false,
     presctiptionList: false,
+    // for lab
     showLabProfile: false,
     editLabProfile: false,
     uploadLabTests: true,
     showUploadedResults: false,
+    // for hospital
+    showHospitalProfile: false,
+    editHospitalProfile: false,
+    verifyDoctor: true,
     horizontalNameShow: "Appointments History",
     image: ""
   };
@@ -75,6 +86,7 @@ export class MainDashboard extends Component {
       editProfile: false,
       presctiptionList: false,
       showUploadedResults: false,
+      doctorUpload: false,
       horizontalNameShow: "Appointments History"
     });
   };
@@ -84,6 +96,7 @@ export class MainDashboard extends Component {
       home: false,
       editProfile: false,
       presctiptionList: false,
+      doctorUpload: false,
       horizontalNameShow: "Profile"
     });
   };
@@ -93,6 +106,7 @@ export class MainDashboard extends Component {
       home: false,
       browse: false,
       presctiptionList: false,
+      doctorUpload: false,
       horizontalNameShow: "Edit Profile"
     });
   };
@@ -125,6 +139,7 @@ export class MainDashboard extends Component {
       browse: false,
       editProfile: false,
       showUploadedResults: false,
+      doctorUpload: false,
       horizontalNameShow: "Prescriptions"
     });
   };
@@ -139,6 +154,19 @@ export class MainDashboard extends Component {
       horizontalNameShow: "Prescriptions"
     });
   };
+
+  ////////////////////////////// for doctors onClicks start ////////////////////////////////////
+  handleUploadDocuments = () => {
+    this.setState({
+      doctorUpload: !this.state.doctorUpload,
+      editProfile: false,
+      home: false,
+      browse: false,
+      presctiptionList: false,
+      horizontalNameShow: "Upload documents"
+    });
+  };
+  ////////////////////////////// for doctors onClicks start ////////////////////////////////////
 
   ////////////////////////////// for lab onClicks start ////////////////////////////////////
 
@@ -182,6 +210,46 @@ export class MainDashboard extends Component {
   };
 
   ////////////////////////////// for lab onClicks end ////////////////////////////////////
+
+  ////////////////////////////// for Hospital onClicks start ////////////////////////////////////
+
+  addProfileHospital = () => {
+    this.setState({
+      showHospitalProfile: !this.state.showHospitalProfile,
+      editHospitalProfile: false,
+      verifyDoctor: false,
+      horizontalNameShow: "Profile"
+    });
+  };
+  editProfileHospital = () => {
+    this.setState({
+      editHospitalProfile: !this.state.editHospitalProfile,
+      showHospitalProfile: false,
+      verifyDoctor: false,
+      horizontalNameShow: "Edit Profile"
+    });
+  };
+
+  verifyDoctor = () => {
+    this.setState({
+      verifyDoctor: !this.state.verifyDoctor,
+      editHospitalProfile: false,
+      showHospitalProfile: false,
+      horizontalNameShow: "Verify Dcctors"
+    });
+  };
+
+  // uploadedTests = () => {
+  //   this.setState({
+  //     showUploadedResults: !this.state.showUploadedResults,
+  //     showLabProfile: false,
+  //     editLabProfile: false,
+  //     uploadLabTests: false,
+  //     horizontalNameShow: "Upload test results"
+  //   });
+  // };
+
+  ////////////////////////////// for Hospital onClicks end ////////////////////////////////////
 
   onLogoutClick = e => {
     e.preventDefault();
@@ -535,11 +603,11 @@ export class MainDashboard extends Component {
               <Menu.Item
                 style={{ height: "10%" }}
                 active={activeItem === "labtests"}
-                onClick={this.handleItemClick}
+                onClick={() => this.handleUploadDocuments()}
               >
                 <Icon
                   style={{ width: "100%", paddingTop: "10px" }}
-                  name="lab"
+                  name="file pdf"
                   size="large"
                 />
               </Menu.Item>
@@ -621,9 +689,9 @@ export class MainDashboard extends Component {
               <Menu.Item
                 name="labtests"
                 active={activeItem === "labtests"}
-                onClick={this.handleItemClick}
+                onClick={() => this.handleUploadDocuments()}
               >
-                View Lab Test Results
+                Upload certifications
               </Menu.Item>
 
               <Dropdown item text="More">
@@ -668,6 +736,9 @@ export class MainDashboard extends Component {
               {/* here containers which appears in dashboard i.e edit profile are used to render */}
               {this.state.home && (
                 <BookingDoctor id={this.props.match.params.id} />
+              )}
+              {this.state.doctorUpload && (
+                <UploadDocument id={this.props.match.params.id} />
               )}
               {this.state.browse && <ShowProfile userData={users.user} />}
               {this.state.editProfile && <EditProfile userData={users.user} />}
@@ -894,6 +965,199 @@ export class MainDashboard extends Component {
       <div>Access Denied</div>
     );
   /////////////////////////////////////////////// for Lab dashboard end ////////////////////////////////////////////
+
+  /////////////////////////////////////////////// for Hospital dashboard start ////////////////////////////////////////////
+  renderDashboardHospital = (users, activeItem) =>
+    users.user ? (
+      <Grid className="grid">
+        <Grid.Column width={3}>
+          {/* <SideBar username={this.state.name} /> */}
+          {/* /////////////////////////////////////////////////////////////////////////////////////// */}
+
+          <Responsive
+            maxWidth={1090}
+            style={{
+              width: "105%",
+              height: "100%"
+            }}
+          >
+            <Menu
+              vertical
+              inverted
+              style={{
+                backgroundColor: "#2C3436",
+                width: "105%",
+                height: "100%"
+              }}
+            >
+              <Menu.Item>
+                <Link to="/">
+                  <Image src={Logo} />
+                </Link>
+              </Menu.Item>
+              <Menu.Item>
+                <Image
+                  src="https://react.semantic-ui.com/images/wireframe/square-image.png"
+                  size="small"
+                  circular
+                />
+              </Menu.Item>
+              <Menu.Item
+                style={{ height: "10%" }}
+                onClick={() => this.addProfileHospital()}
+              >
+                <Icon
+                  style={{ width: "100%", paddingTop: "10px" }}
+                  name="user"
+                  size="large"
+                />
+              </Menu.Item>
+              <Menu.Item
+                style={{ height: "10%" }}
+                onClick={() => this.editProfileHospital()}
+              >
+                <Icon
+                  style={{ width: "100%", paddingTop: "10px" }}
+                  name="edit"
+                  size="large"
+                />
+              </Menu.Item>
+
+              <Menu.Item
+                style={{ height: "10%" }}
+                active={activeItem === "prescriptions"}
+                onClick={() => this.verifyDoctor()}
+              >
+                <Icon
+                  style={{ width: "100%", paddingTop: "10px" }}
+                  name="doctor"
+                  size="large"
+                />
+              </Menu.Item>
+
+              <Dropdown item text="More">
+                <Dropdown.Menu>
+                  <Dropdown.Item icon="edit" text="Edit Profile" />
+                  <Dropdown.Item icon="globe" text="Choose Language" />
+                  <Dropdown.Item icon="settings" text="Account Settings" />
+                </Dropdown.Menu>
+              </Dropdown>
+            </Menu>
+          </Responsive>
+
+          <Responsive
+            minWidth={1091}
+            style={{
+              width: "105%",
+              height: "100%"
+            }}
+          >
+            <Menu
+              vertical
+              inverted
+              style={{
+                backgroundColor: "#2C3436",
+                width: "105%",
+                height: "100%"
+              }}
+            >
+              <Menu.Item>
+                <Link to="/">
+                  <h1 style={{ textAlign: "center", color: "white" }}>
+                    HEALTH-<span style={{ color: "red" }}>E</span>
+                  </h1>
+                </Link>
+              </Menu.Item>
+              <Menu.Item>
+                <Dropdown
+                  floating
+                  item
+                  trigger={trigger(this.state, users.user.name)}
+                >
+                  <Dropdown.Menu>
+                    <Dropdown.Item
+                      icon="user"
+                      text="View Profile"
+                      onClick={() => this.addProfileHospital()}
+                    />
+                    <Dropdown.Item
+                      icon="edit"
+                      text="Edit Profile"
+                      onClick={() => this.editProfileHospital()}
+                    />
+                  </Dropdown.Menu>
+                </Dropdown>
+              </Menu.Item>
+
+              <Menu.Item
+                name="prescriptions"
+                active={activeItem === "prescriptions"}
+                onClick={() => this.verifyDoctor()}
+              >
+                <Icon name="doctor" />
+                Approve doctors
+              </Menu.Item>
+
+              <Dropdown item text="More">
+                <Dropdown.Menu>
+                  <Dropdown.Item icon="edit" text="Edit Profile" />
+                  <Dropdown.Item icon="globe" text="Choose Language" />
+                  <Dropdown.Item icon="settings" text="Account Settings" />
+                </Dropdown.Menu>
+              </Dropdown>
+            </Menu>
+          </Responsive>
+          {/* /////////////////////////////////////////////////////////////////////////////////////// */}
+        </Grid.Column>
+        <Grid.Column width={13}>
+          <Grid.Row>
+            <div style={{ marginBottom: "35px" }}>
+              {/* <HorizontalBar /> */}
+              {/* /////////////////////////////////////////////////////////////////////////////////////// */}
+              <Menu size="huge">
+                <Menu.Item
+                  name={this.state.horizontalNameShow}
+                  active={activeItem === "home"}
+                />
+
+                <Menu.Menu position="right">
+                  <Dropdown item icon="bars">
+                    <Dropdown.Menu>
+                      <Dropdown.Item onClick={this.onLogoutClick}>
+                        Logout
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </Menu.Menu>
+              </Menu>
+              {/* /////////////////////////////////////////////////////////////////////////////////////// */}
+            </div>
+          </Grid.Row>
+          <Grid.Row>
+            <Segment
+              style={{ overflow: "auto", maxHeight: 572, minHeight: 572 }}
+            >
+              {/* here containers which appears in dashboard i.e edit profile are used to render */}
+              {this.state.verifyDoctor && (
+                <DoctorsListHospital id={this.props.match.params.id} />
+              )}
+              {/* {this.state.showUploadedResults && (
+                <UploadedTestsList id={this.props.match.params.id} />
+              )} */}
+              {this.state.showHospitalProfile && (
+                <ShowProfileHospital userData={users.user} />
+              )}
+              {this.state.editHospitalProfile && (
+                <EditProfileHospital userData={users.user} />
+              )}
+            </Segment>
+          </Grid.Row>
+        </Grid.Column>
+      </Grid>
+    ) : (
+      <div>Access Denied</div>
+    );
+  /////////////////////////////////////////////// for Hospital dashboard end ////////////////////////////////////////////
 
   render() {
     const { activeItem } = this.state;

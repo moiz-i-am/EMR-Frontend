@@ -3,14 +3,14 @@ import { Switch, Route } from "react-router-dom";
 
 import Home from "./views/Home";
 
-import Signup2 from "./views/Signup2";
+import Signup from "./views/Signup";
 
 import NotFound from "./components/NotFound";
 import Dashboard from "./views/dashboards/MainDashboard";
-import DoctorsList from "./views/DoctorsList";
+import DoctorsList from "./containers/ListContainers/DoctorsList";
 import DoctorDetailedProfile from "./views/DoctorDetailedProfile";
-import SignupNavigator2 from "./views/SignupNavigator2";
-import Login2 from "./views/Login2";
+import SignupNavigator from "./views/SignupNavigator";
+import Login from "./views/Login";
 import Search from "./views/Search";
 
 import AdminLogin from "./views/AdminComponents/AdminLogin";
@@ -21,19 +21,20 @@ import CallIncomingScreen from "./components/videoCall/CallIncomingScreen";
 
 import CallScreen from "./components/videoCall/CallScreen";
 
-import PaymentIndex from "./components/PaymentContainer/CheckoutForm";
+import LabsList from "./containers/ListContainers/LabsList";
+import HospitalsList from "./containers/ListContainers/HospitalsList";
 
 const routes = () => {
   return (
     <div>
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route exact path="/SignupSelector" component={SignupNavigator2} />
-        <Route exact path="/SignupPatient" component={Signup2} />
-        <Route exact path="/SignupDoctor" component={Signup2} />
-        <Route exact path="/SignupHospital" component={Signup2} />
-        <Route exact path="/SignupLab" component={Signup2} />
-        <Route exact path="/Login" component={Login2} />
+        <Route exact path="/SignupSelector" component={SignupNavigator} />
+        <Route exact path="/SignupPatient" component={Signup} />
+        <Route exact path="/SignupDoctor" component={Signup} />
+        <Route exact path="/SignupHospital" component={Signup} />
+        <Route exact path="/SignupLab" component={Signup} />
+        <Route exact path="/Login" component={Login} />
         <Route exact path="/dashboard/:id" component={Dashboard} />
         <Route exact path="/listDoctors" component={DoctorsList} />
         <Route exact path="/search" component={Search} />
@@ -45,8 +46,8 @@ const routes = () => {
         <Route exact path="/call-outgoing" component={CallOutgoingScreen} />
         <Route exact path="/call-incoming" component={CallIncomingScreen} />
 
-        <Route exact path="/call" component={CallScreen} />
-        <Route exact path="/imageviewer" component={PaymentIndex} />
+        <Route exact path="/listHospitals" component={HospitalsList} />
+        <Route exact path="/listLabs" component={LabsList} />
 
         <Route component={NotFound} />
       </Switch>
