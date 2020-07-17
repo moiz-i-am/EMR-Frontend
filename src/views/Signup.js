@@ -21,19 +21,6 @@ import {
   Icon
 } from "semantic-ui-react";
 
-// const initialState = props => ({
-//   username: "",
-//   email: "",
-//   password: "",
-//   OrName: "",
-//   OrLocation: "",
-//   usernameError: "",
-//   emailError: "",
-//   passwordError: "",
-//   role: props.location.roleProps,
-//   errors: {}
-// });
-
 class Signup extends React.Component {
   constructor(props) {
     super(props);
@@ -49,15 +36,6 @@ class Signup extends React.Component {
       role: this.props.location.roleProps,
       errors: {}
     };
-    //this.state = initialState(props);
-  }
-
-  componentDidUpdate(nextProps) {
-    if (nextProps.errors) {
-      this.setState({
-        errors: nextProps.errors
-      });
-    }
   }
 
   componentDidMount() {
@@ -65,6 +43,18 @@ class Signup extends React.Component {
     if (this.props.auth.isAuthenticated) {
       const { user } = this.props.auth;
       this.props.history.push(`/dashboard/${user.id}`);
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.error.message === "Validation Error") {
+      this.setState({
+        error: "please fill out all fields"
+      });
+    } else {
+      this.setState({
+        error: nextProps.error.message
+      });
     }
   }
 
@@ -230,12 +220,13 @@ class Signup extends React.Component {
 
     //////////////////////////// normal rendring ///////////////////
 
-    const { errors } = this.state;
+    const { error } = this.state;
     return (
       <Grid divided="vertically" padded="vertically">
         <Grid.Row columns={2}>
           <Grid.Column style={{ maxWidth: 500 }}>
             <Segment>
+              <p style={{ height: "30px" }}>{error}</p>
               <Form noValidate onSubmit={this.onSubmit}>
                 <Header as="h2" textAlign="center" content="Register" />
                 <Form.Field required>
@@ -245,13 +236,9 @@ class Signup extends React.Component {
                     icon="user"
                     iconPosition="left"
                     name="username"
-                    placeholder="Username"
+                    placeholder="Full Name"
                     onChange={this.onChange}
                     value={this.state.username}
-                    error={errors.username}
-                    className={classnames("login-input", {
-                      invalid: errors.username
-                    })}
                   />
                   <span
                     className="red-text"
@@ -268,13 +255,9 @@ class Signup extends React.Component {
                     name="email"
                     icon="mail"
                     iconPosition="left"
-                    className={classnames("login-input", {
-                      invalid: errors.email
-                    })}
                     placeholder="Email"
                     onChange={this.onChange}
                     value={this.state.email}
-                    error={errors.email}
                   />
                   <span
                     className="red-text"
@@ -291,13 +274,9 @@ class Signup extends React.Component {
                     icon="lock"
                     iconPosition="left"
                     name="password"
-                    className={classnames("login-input", {
-                      invalid: errors.password
-                    })}
                     placeholder="Password"
                     onChange={this.onChange}
                     value={this.state.password}
-                    error={errors.password}
                   />
                   <span
                     className="red-text"
@@ -314,13 +293,9 @@ class Signup extends React.Component {
                     icon="lock"
                     iconPosition="left"
                     name="confirmPassword"
-                    className={classnames("login-input", {
-                      invalid: errors.password
-                    })}
                     placeholder="Confirm Password"
                     onChange={this.onChange}
                     value={this.state.password}
-                    error={errors.password}
                   />
                   <span
                     className="red-text"
@@ -384,12 +359,12 @@ class Signup extends React.Component {
 Signup.propTypes = {
   registerUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
+  error: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  errors: state.errors
+  error: state.error
 });
 
 export default connect(mapStateToProps, {

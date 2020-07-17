@@ -38,9 +38,9 @@ class Login extends React.Component {
 
       // push user to dashboard when they login
     }
-    if (nextProps.errors) {
+    if (nextProps.error) {
       this.setState({
-        errors: nextProps.errors
+        error: nextProps.error.message
       });
     }
   }
@@ -93,7 +93,7 @@ class Login extends React.Component {
   };
 
   render() {
-    const { errors } = this.state;
+    const { error } = this.state;
     return (
       <Grid verticalAlign="middle" textAlign="center" padded="vertically">
         <GridColumn style={{ maxWidth: 400 }}>
@@ -101,6 +101,7 @@ class Login extends React.Component {
             <Header as="h2" textAlign="center" style={{ color: "#9458AE" }}>
               Login
             </Header>
+            <p style={{ height: "30px" }}>{error}</p>
             <Form noValidate onSubmit={this.onSubmit}>
               <Form.Field>
                 <Input
@@ -111,21 +112,15 @@ class Login extends React.Component {
                   iconPosition="left"
                   type="email"
                   name="email"
-                  className={classnames("login-input", {
-                    "email is invalid": errors.email
-                  })}
                   placeholder="Email address"
                   onChange={this.onChange}
                   value={this.state.email}
-                  error={errors.email}
                 />
                 <span
                   className="red-text"
                   style={{ fontSize: 12, color: "red", fontWeight: "bold" }}
                 >
                   {this.state.emailError}
-                  {errors.email}
-                  {errors.emailnotfound}
                 </span>
               </Form.Field>
 
@@ -137,18 +132,11 @@ class Login extends React.Component {
                   iconPosition="left"
                   type="password"
                   name="password"
-                  className={classnames("login-input", {
-                    "password is invalid": errors.password
-                  })}
                   placeholder="Password"
                   onChange={this.onChange}
                   value={this.state.password}
-                  error={errors.password}
                 />
               </Form.Field>
-              {errors.password && (
-                <div className="invalid-feedback">{errors.password}</div>
-              )}
 
               <Button
                 fluid
@@ -171,10 +159,10 @@ class Login extends React.Component {
 Login.propTypes = {
   loginUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
+  error: PropTypes.object.isRequired
 };
 const mapStateToProps = state => ({
   auth: state.auth,
-  errors: state.errors
+  error: state.error
 });
 export default connect(mapStateToProps, { loginUser })(Login);

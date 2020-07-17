@@ -32,13 +32,7 @@ class DoctorsApproval extends Component {
                         docName={doctors.name}
                         docEmail={doctors.email}
                         docSpec={doctors.specializations}
-                        docLocation={
-                          doctors.location_city +
-                          ", " +
-                          doctors.location_state +
-                          ", " +
-                          doctors.location_country
-                        }
+                        docLocation={`${doctors.location_city}, ${doctors.location_state}, ${doctors.location_country}`}
                       />
                     </div>
                   );

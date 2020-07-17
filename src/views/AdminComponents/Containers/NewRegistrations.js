@@ -1,24 +1,34 @@
 import React, { Component } from "react";
 import { Tab } from "semantic-ui-react";
 
-import DoctorApproval from "../Containers/ApprovalLists/DoctorsApproval";
+import DoctorsApproval from "../Containers/ApprovalLists/DoctorsApproval";
+import LabsApproval from "../Containers/ApprovalLists/LabsApproval";
+import HospitalsApproval from "../Containers/ApprovalLists/HospitalsApproval";
 
 const panes = [
   {
     menuItem: { key: "doctor", icon: "doctor", content: "Doctors" },
     render: () => (
       <Tab.Pane>
-        <DoctorApproval />
+        <DoctorsApproval />
       </Tab.Pane>
     )
   },
   {
     menuItem: { key: "hospital", icon: "hospital", content: "Hospitals" },
-    render: () => <Tab.Pane>Tab 2 Content</Tab.Pane>
+    render: () => (
+      <Tab.Pane>
+        <HospitalsApproval />
+      </Tab.Pane>
+    )
   },
   {
     menuItem: { key: "lab", icon: "lab", content: "Labs" },
-    render: () => <Tab.Pane>Tab 3 Content</Tab.Pane>
+    render: () => (
+      <Tab.Pane>
+        <LabsApproval />
+      </Tab.Pane>
+    )
   }
 ];
 

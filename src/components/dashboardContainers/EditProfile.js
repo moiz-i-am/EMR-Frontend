@@ -75,6 +75,8 @@ class EditProfile extends Component {
         endDate: new Date(),
         key: "selection"
       },
+      disableDates: [],
+      disableDatesUpdate: [],
       todayDate: new Date(),
       selectedDateForDelete: "",
       selectedDateForUpdate: "",
@@ -112,6 +114,29 @@ class EditProfile extends Component {
       .then(res => {
         this.setState({
           image: "http://localhost:3001/" + res.data.post.imageURL
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+
+    const userData = {
+      user: userId
+    };
+    axios
+      .post(`/v1/scheduling/listSelected`, userData)
+      .then(res => {
+        const dates = res.data.dates;
+
+        dates.forEach(date => {
+          // excluding 1 from date fetched
+          var d = new Date(date.date);
+          d.setDate(d.getDate() - 1);
+          // setting state for date
+          this.setState({
+            disableDates: [...this.state.disableDates, d],
+            disableDatesUpdate: [...this.state.disableDatesUpdate, d]
+          });
         });
       })
       .catch(err => {
@@ -310,6 +335,8 @@ class EditProfile extends Component {
             <DateRangePicker
               ranges={[this.state.selectionRange]}
               onChange={this.handleSelect}
+              rangeColors={["#990099"]}
+              disabledDates={this.state.disableDates}
             />
           </div>
           <div style={{ flexGrow: "1" }}>
@@ -335,6 +362,9 @@ class EditProfile extends Component {
             <Calendar
               date={new Date()}
               onChange={this.handleSelectSingleUpdate}
+              color="#990099"
+              disabledDates={this.state.disableDatesUpdate}
+              showSelectionPreview={true}
             />
           </div>
           <div style={{ flexGrow: "1" }}>
@@ -379,16 +409,7 @@ class EditProfile extends Component {
           <Card.Content>
             <Grid stackable>
               <Grid.Column width={5}>
-                {/* <div style={{ textAlign: "center" }}>
-                  <Image
-                    src="https://react.semantic-ui.com/images/wireframe/square-image.png"
-                    size="small"
-                    circular
-                  />
-                </div> */}
-                {/* <div style={{ textAlign: "center" }}> */}
                 <Image contain fileURL={this.state.image} />
-                {/* </div> */}
                 <Button
                   onClick={() => this.showPictureUpload()}
                   style={{ contentAllign: "center" }}

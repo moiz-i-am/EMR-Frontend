@@ -110,11 +110,7 @@ class Home extends Component {
         </Container>
         <div class="slider-area " style={{ background: "white", marginTop: 0 }}>
           <div class="slider-active">
-            <div
-              // style={{ backgroundImage: { imageBG } }}
-              class="single-slider slider-height d-flex align-items-center"
-              // data-background={imageBG}
-            >
+            <div class="single-slider slider-height d-flex align-items-center">
               <div class="container">
                 <div class="rows d-flex align-items-center">
                   <div class="col-lg-7 col-md-9 ">
@@ -138,16 +134,6 @@ class Home extends Component {
                           dolore magna aliqua. Quis ipsum suspendisse ultrices
                           gravi.
                         </p>
-
-                        {/* <div
-                        class="hero__btn"
-                        data-animation="fadeInLeft"
-                        data-delay=".8s"
-                      >
-                        <a href="industries.html" class="btn hero-btn">
-                          Contact Us
-                        </a>
-                      </div> */}
                       </Zoom>
                     </div>
                   </div>
@@ -286,23 +272,6 @@ class Home extends Component {
                   </Grid.Column>
                 </Grid.Row>
                 <Divider />
-                {/* <Grid.Row columns="equal">
-                  <Grid.Column width={15}>
-                    <HospCardSegment />
-                  </Grid.Column>
-                  <Grid.Column>
-                    <Button size="large" fluid icon="right arrow" />
-                  </Grid.Column>
-                </Grid.Row>
-                <Divider />
-                <Grid.Row columns="equal">
-                  <Grid.Column width={15}>
-                    <LabCardSegment />
-                  </Grid.Column>
-                  <Grid.Column>
-                    <Button size="large" fluid icon="right arrow" />
-                  </Grid.Column>
-                </Grid.Row> */}
                 <Divider />
               </Grid>
             </Container>

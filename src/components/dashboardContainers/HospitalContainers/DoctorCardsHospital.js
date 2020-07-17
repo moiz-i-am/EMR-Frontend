@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Confirm } from "semantic-ui-react";
+import axios from "axios";
 
 import DoctorDocumentsList from "./DoctorDocumentsList";
 
@@ -11,7 +12,17 @@ class DoctorCardsHospital extends Component {
   show = () => this.setState({ open: true });
 
   handleConfirm = () => {
-    this.setState({ open: false });
+    ////////////////// data not saving request not working on front end //////////////////////////
+    const datauser = {
+      hospitalId: this.props.id,
+      doctorId: this.props.DId
+    };
+    axios.post(`/v1/hospital/update`, datauser).then(res => {
+      console.log(res);
+    });
+    setTimeout(() => {
+      this.setState({ open: false });
+    }, 1000);
   };
 
   handleCancel = () => this.setState({ open: false });
@@ -44,6 +55,7 @@ class DoctorCardsHospital extends Component {
           open={this.state.open}
           content={this.renderConfirmation()}
           header="Upload documents"
+          confirmButton="Approve Doctor"
           onCancel={this.handleCancel}
           onConfirm={this.handleConfirm}
           size="small"

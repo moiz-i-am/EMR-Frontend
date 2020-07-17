@@ -21,7 +21,8 @@ class DoctorBookingCard extends Component {
       partnerSocketId: "",
       partnerId: "",
       partnerName: "",
-      redirect: false
+      redirect: false,
+      dateOfAppointment: this.props.date
     };
     this.socket = {};
   }
@@ -85,6 +86,10 @@ class DoctorBookingCard extends Component {
   };
 
   render() {
+    // converting date to proper booked
+    const d = new Date(this.state.dateOfAppointment);
+    d.setDate(d.getDate() - 1);
+
     if (this.state.redirect) {
       return (
         <Redirect
@@ -116,7 +121,8 @@ class DoctorBookingCard extends Component {
 
                 <p>
                   <span style={{ color: "black" }}>Date of Appointment: </span>
-                  {new Date(this.props.date).toDateString()}
+                  {/* {new Date(this.props.date).toDateString()} */}
+                  {new Date(d).toDateString()}
                 </p>
                 <p>
                   <span style={{ color: "black" }}>Time of Appointment: </span>
