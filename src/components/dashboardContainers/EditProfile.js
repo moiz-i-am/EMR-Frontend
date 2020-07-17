@@ -176,18 +176,22 @@ class EditProfile extends Component {
       endDate: this.state.selectionRange.endDate,
       timeSlots: this.state.val
     };
-    if (this.state.todayDate > this.state.selectionRange.startDate) {
-      alert(`please select the date onward ${formatted_date}`);
-    } else if (this.props.auth.isAuthenticated) {
-      this.props.createDoctorsSchedule(
-        addScheduleData,
-        this.props.history,
-        // change id to (this.props.match.params.id)
-        this.state.id,
-        this.state.token
-      );
+    if (this.state.val == "") {
+      alert("please select time slots");
     } else {
-      console.log("not logged in");
+      if (this.state.todayDate > this.state.selectionRange.startDate) {
+        alert(`please select the date onward ${formatted_date}`);
+      } else if (this.props.auth.isAuthenticated) {
+        this.props.createDoctorsSchedule(
+          addScheduleData,
+          this.props.history,
+          // change id to (this.props.match.params.id)
+          this.state.id,
+          this.state.token
+        );
+      } else {
+        console.log("not logged in");
+      }
     }
   };
 

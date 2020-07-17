@@ -21,6 +21,7 @@ import { logoutUser } from "../../actions/authActions";
 import NewRegistrations from "./Containers/NewRegistrations";
 import ShowProfile from "../../components/dashboardContainers/ShowProfile";
 import EditProfilePatient from "../../components/dashboardContainers/editProfiles/EditProfilePatients";
+import DoctorsList from "./Containers/PaymentsViewer/DoctorsList";
 
 import Logo from "../../assets/Logo.png";
 
@@ -39,15 +40,26 @@ class AdminDashboard extends Component {
     home: true,
     browse: false,
     editProfile: false,
+    payments: false,
     horizontalNameShow: "Approve new users"
   };
 
-  addAppointments = () => {
+  handleApproveUsers = () => {
     this.setState({
       home: !this.state.home,
       browse: false,
       editProfile: false,
-      horizontalNameShow: "Appointments History"
+      payments: false,
+      horizontalNameShow: "Approve new users"
+    });
+  };
+  handleShowPayments = () => {
+    this.setState({
+      payments: !this.state.payments,
+      home: false,
+      browse: false,
+      editProfile: false,
+      horizontalNameShow: "see pending payments"
     });
   };
   addProfileAdmin = () => {
@@ -55,6 +67,7 @@ class AdminDashboard extends Component {
       browse: !this.state.browse,
       home: false,
       editProfile: false,
+      payments: false,
       horizontalNameShow: "Profile"
     });
   };
@@ -63,6 +76,7 @@ class AdminDashboard extends Component {
       editProfile: !this.state.editProfile,
       home: false,
       browse: false,
+      payments: false,
       horizontalNameShow: "Edit Profile"
     });
   };
@@ -109,7 +123,7 @@ class AdminDashboard extends Component {
               style={{
                 backgroundColor: "#2C3436",
                 width: "105%",
-                height: "100%"
+                height: "102.2%"
               }}
             >
               <Menu.Item>
@@ -147,29 +161,29 @@ class AdminDashboard extends Component {
 
               <Menu.Item
                 style={{ height: "10%" }}
-                icon="history"
-                active={activeItem === "appointments"}
-                onClick={() => this.addAppointments()}
+                icon="check circle"
+                active={activeItem === "approve"}
+                onClick={() => this.handleApproveUsers()}
               >
                 <Icon
                   style={{ width: "100%", paddingTop: "10px" }}
-                  name="history"
+                  name="check circle"
                   size="large"
                 />
               </Menu.Item>
 
               <Menu.Item
                 style={{ height: "10%" }}
-                active={activeItem === "prescriptions"}
-                onClick={this.handleItemClick}
+                active={activeItem === "payments"}
+                onClick={() => this.handleShowPayments()}
               >
                 <Icon
                   style={{ width: "100%", paddingTop: "10px" }}
-                  name="sticky note outline"
+                  name="payment"
                   size="large"
                 />
               </Menu.Item>
-              <Menu.Item
+              {/* <Menu.Item
                 style={{ height: "10%" }}
                 active={activeItem === "labtests"}
                 onClick={this.handleItemClick}
@@ -179,7 +193,7 @@ class AdminDashboard extends Component {
                   name="lab"
                   size="large"
                 />
-              </Menu.Item>
+              </Menu.Item> */}
 
               <Dropdown item text="More">
                 <Dropdown.Menu>
@@ -204,7 +218,7 @@ class AdminDashboard extends Component {
               style={{
                 backgroundColor: "#2C3436",
                 width: "105%",
-                height: "100%"
+                height: "102.2%"
               }}
             >
               <Menu.Item>
@@ -236,28 +250,28 @@ class AdminDashboard extends Component {
               </Menu.Item>
 
               <Menu.Item
-                name="appointments"
-                active={activeItem === "appointments"}
-                onClick={() => this.addAppointments()}
+                name="approve"
+                active={activeItem === "approve"}
+                onClick={() => this.handleApproveUsers()}
               >
-                Appointment History
+                Approve new users
               </Menu.Item>
 
               <Menu.Item
-                name="prescriptions"
-                active={activeItem === "prescriptions"}
-                onClick={this.handleItemClick}
+                name="payments"
+                active={activeItem === "payments"}
+                onClick={() => this.handleShowPayments()}
               >
                 <Icon name="grid layout" />
-                View Previous Prescriptions
+                Show payments
               </Menu.Item>
-              <Menu.Item
+              {/* <Menu.Item
                 name="labtests"
                 active={activeItem === "labtests"}
                 onClick={this.handleItemClick}
               >
                 View Lab Test Results
-              </Menu.Item>
+              </Menu.Item> */}
 
               <Dropdown item text="More">
                 <Dropdown.Menu>
@@ -301,6 +315,7 @@ class AdminDashboard extends Component {
             >
               {/* here containers which appears in dashboard i.e edit profile are used to render */}
               {this.state.home && <NewRegistrations />}
+              {this.state.payments && <DoctorsList />}
               {this.state.browse && <ShowProfile userData={users.user} />}
               {this.state.editProfile && (
                 <EditProfilePatient userData={users.user} />

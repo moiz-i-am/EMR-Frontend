@@ -8,7 +8,8 @@ const SearchDoctorStack = ({ persons }) => {
         if (
           person.role !== "patient" &&
           person.role !== "lab" &&
-          person.role !== "hospital"
+          person.role !== "hospital" &&
+          person.role !== "admin"
         ) {
           return (
             <div key={i}>
