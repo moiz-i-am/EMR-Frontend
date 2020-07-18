@@ -1,5 +1,4 @@
 import React from "react";
-import "./signstyle.css";
 import { Link, withRouter, NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import classnames from "classnames";

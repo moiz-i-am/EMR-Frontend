@@ -17,97 +17,14 @@ import Fade from "react-reveal/Fade";
 import Flip from "react-reveal/Flip";
 
 import DocCardSegment from "../components/cardSegments/DocCardSegment";
-// import HospCardSegment from "../components/cardSegments/HospCardSegment";
-// import LabCardSegment from "../components/cardSegments/LabCardSegment";
+
 import image from "../assets/home1.jpg";
 import image2 from "../assets/home2.jpg";
 
-const options = [
-  { key: "doctor", text: "Doctor", value: "doctor" },
-  { key: "hospital", text: "Hospital", value: "hospital" },
-  { key: "lab", text: "Lab", value: "lab" }
-];
-
-const initialState = {
-  category: "",
-  name: ""
-};
-
 class Home extends Component {
-  constructor(props) {
-    super(props);
-    this.state = initialState;
-
-    this.searchHandler = this.searchHandler.bind(this);
-  }
-
-  onChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
-
-  onChangeSelect = (e, { value }) => {
-    this.setState({ category: value });
-  };
-
-  searchHandler = () => {
-    const searchParams = {
-      category: this.state.category,
-      name: this.state.name
-    };
-    //<DoctorsList searchName={searchParams.name} searchCategory={searchParams.category}/>
-  };
-
   render() {
     return (
       <div>
-        {/* 
-        <BootStyles /> */}
-        <Container style={{ width: "90%" }}>
-          <Grid
-            stackable
-            textAlign="center"
-            verticalAlign="middle"
-            padded="vertically"
-          >
-            <Grid.Row>
-              <GridColumn style={{ maxWidth: 500 }}>
-                <Input
-                  fluid
-                  size="small"
-                  name="name"
-                  type="text"
-                  placeholder="Enter Name..."
-                  onChange={this.onChange}
-                  action
-                  value={this.state.name}
-                >
-                  <input />
-                  <Select
-                    name="category"
-                    compact
-                    options={options}
-                    placeholder="Category..."
-                    onChange={this.onChangeSelect}
-                    value={this.state.category}
-                  />
-                  <Button
-                    size="small"
-                    as={Link}
-                    to={{
-                      pathname: "/search",
-                      state: {
-                        name: this.state.name,
-                        category: this.state.category
-                      }
-                    }}
-                  >
-                    Search
-                  </Button>
-                </Input>
-              </GridColumn>
-            </Grid.Row>
-          </Grid>
-        </Container>
         <div class="slider-area " style={{ background: "white", marginTop: 0 }}>
           <div class="slider-active">
             <div class="single-slider slider-height d-flex align-items-center">

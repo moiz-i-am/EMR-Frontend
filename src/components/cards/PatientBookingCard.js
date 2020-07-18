@@ -63,7 +63,11 @@ class PatientBookingCard extends Component {
         beforeTime = moment(timeStart, format),
         afterTime = moment(timeEnd, format);
 
-      if (time.isBetween(beforeTime, afterTime)) {
+      if (
+        time.isBetween(beforeTime, afterTime)
+        // &&
+        // new Date() == new Date("2020-07-18T19:00:00.000Z")
+      ) {
         this.setState({ enableCallButton: true });
         console.log("true");
       } else {

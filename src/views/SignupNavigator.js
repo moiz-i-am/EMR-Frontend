@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { GridColumn, List, Grid, Segment, Header } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-import "./signstyle.css";
 
 class SignupNavigator extends Component {
   render() {

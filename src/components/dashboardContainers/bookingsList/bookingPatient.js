@@ -107,8 +107,6 @@ class bookingPatient extends Component {
   };
 
   render() {
-    console.log("my id bookingPatient: " + this.state.id);
-
     //////////////////////////////// call accept functionality ////////////////
     let incomingCall;
     if (this.state.receivingCall) {
@@ -179,20 +177,22 @@ class bookingPatient extends Component {
               )
             ) : (
               this.state.bookings.map(booking => {
-                return (
-                  <div key={booking.id}>
-                    <PatientBookingCard
-                      date={booking.date}
-                      doctor={booking.doctor.name}
-                      doctorId={booking.doctor._id}
-                      patientId={booking.patient}
-                      timeSlot={booking.timeSlot}
-                      socketId={booking.doctor.socketHandler}
-                      yourSocketId={this.state.yourID}
-                      socketCurrent={this.state.socketCurrent}
-                    />
-                  </div>
-                );
+                if (new Date(booking.date) > new Date()) {
+                  return (
+                    <div key={booking.id}>
+                      <PatientBookingCard
+                        date={booking.date}
+                        doctor={booking.doctor.name}
+                        doctorId={booking.doctor._id}
+                        patientId={booking.patient}
+                        timeSlot={booking.timeSlot}
+                        socketId={booking.doctor.socketHandler}
+                        yourSocketId={this.state.yourID}
+                        socketCurrent={this.state.socketCurrent}
+                      />
+                    </div>
+                  );
+                }
               })
             )}
           </div>

@@ -29,6 +29,7 @@ import PrescriptionPatient from "../../components/dashboardContainers/prescripti
 import PrescriptionDoctor from "../../components/dashboardContainers/prescriptions/PrescriptionLists/PrescriptionDoctor";
 
 import UploadDocument from "../../components/dashboardContainers/DoctorContainers/UploadDocuments";
+import PaymentsList from "../../components/dashboardContainers/DoctorContainers/PaymentsList";
 
 import ShowProfileLab from "../../components/dashboardContainers/LabContainers/ShowProfileLab";
 import EditProfileLab from "../../components/dashboardContainers/LabContainers/EditProfileLab";
@@ -66,6 +67,7 @@ export class MainDashboard extends Component {
     editProfile: false,
     doctorUpload: false,
     presctiptionList: false,
+    paymentsList: false,
     // for lab
     showLabProfile: false,
     editLabProfile: false,
@@ -87,9 +89,11 @@ export class MainDashboard extends Component {
       presctiptionList: false,
       showUploadedResults: false,
       doctorUpload: false,
+      paymentsList: false,
       horizontalNameShow: "Appointments History"
     });
   };
+
   addProfile = () => {
     this.setState({
       browse: !this.state.browse,
@@ -97,6 +101,7 @@ export class MainDashboard extends Component {
       editProfile: false,
       presctiptionList: false,
       doctorUpload: false,
+      paymentsList: false,
       horizontalNameShow: "Profile"
     });
   };
@@ -107,6 +112,7 @@ export class MainDashboard extends Component {
       browse: false,
       presctiptionList: false,
       doctorUpload: false,
+      paymentsList: false,
       horizontalNameShow: "Edit Profile"
     });
   };
@@ -140,6 +146,7 @@ export class MainDashboard extends Component {
       editProfile: false,
       showUploadedResults: false,
       doctorUpload: false,
+      paymentsList: false,
       horizontalNameShow: "Prescriptions"
     });
   };
@@ -163,7 +170,21 @@ export class MainDashboard extends Component {
       home: false,
       browse: false,
       presctiptionList: false,
+      paymentsList: false,
       horizontalNameShow: "Upload documents"
+    });
+  };
+
+  handlePaymentsList = () => {
+    this.setState({
+      paymentsList: !this.state.paymentsList,
+      home: false,
+      browse: false,
+      editProfile: false,
+      presctiptionList: false,
+      showUploadedResults: false,
+      doctorUpload: false,
+      horizontalNameShow: "pending payments"
     });
   };
   ////////////////////////////// for doctors onClicks start ////////////////////////////////////
@@ -612,6 +633,18 @@ export class MainDashboard extends Component {
                 />
               </Menu.Item>
 
+              <Menu.Item
+                style={{ height: "10%" }}
+                active={activeItem === "payments"}
+                onClick={() => this.handlePaymentsList()}
+              >
+                <Icon
+                  style={{ width: "100%", paddingTop: "10px" }}
+                  name="payment"
+                  size="large"
+                />
+              </Menu.Item>
+
               <Dropdown item text="More">
                 <Dropdown.Menu>
                   <Dropdown.Item icon="edit" text="Edit Profile" />
@@ -675,6 +708,10 @@ export class MainDashboard extends Component {
                 active={activeItem === "appointments"}
                 onClick={() => this.addAppointments()}
               >
+                <Icon
+                  name="history
+"
+                />
                 Appointment History
               </Menu.Item>
 
@@ -683,7 +720,10 @@ export class MainDashboard extends Component {
                 active={activeItem === "prescriptions"}
                 onClick={() => this.prescriptionList()}
               >
-                <Icon name="grid layout" />
+                <Icon
+                  name="sticky note outline
+"
+                />
                 View Previous Prescriptions
               </Menu.Item>
               <Menu.Item
@@ -691,7 +731,17 @@ export class MainDashboard extends Component {
                 active={activeItem === "labtests"}
                 onClick={() => this.handleUploadDocuments()}
               >
+                <Icon name="file pdf" />
                 Upload certifications
+              </Menu.Item>
+
+              <Menu.Item
+                name="labtests"
+                active={activeItem === "labtests"}
+                onClick={() => this.handlePaymentsList()}
+              >
+                <Icon name="payment" />
+                Pending payments
               </Menu.Item>
 
               <Dropdown item text="More">
@@ -739,6 +789,9 @@ export class MainDashboard extends Component {
               )}
               {this.state.doctorUpload && (
                 <UploadDocument id={this.props.match.params.id} />
+              )}
+              {this.state.paymentsList && (
+                <PaymentsList id={this.props.match.params.id} />
               )}
               {this.state.browse && <ShowProfile userData={users.user} />}
               {this.state.editProfile && <EditProfile userData={users.user} />}

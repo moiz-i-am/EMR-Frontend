@@ -15,6 +15,12 @@ class HospitalsApproval extends Component {
     });
   }
 
+  // componentDidUpdate() {
+  //   axios.get(`/v1/users`).then(res => {
+  //     this.setState({ hospitals: res.data });
+  //   });
+  // }
+
   render() {
     return (
       <Container style={{ width: "90%" }}>

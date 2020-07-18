@@ -8,9 +8,6 @@ import { popupLoginUser } from "../actions/authActions";
 
 import Logo from "../assets/L.png";
 
-// import "../styles/util.css";
-// import "../styles/main.css";
-
 const initialState = {
   email: "",
   password: "",
