@@ -26,7 +26,7 @@ class LabProfileCard extends Component {
                           style={{
                             textAlign: "left",
                             paddingTop: "27px",
-                            color: "black",
+                            color: "#990099",
                             fontWeight: "bolder",
                             fontSize: "25px"
                           }}

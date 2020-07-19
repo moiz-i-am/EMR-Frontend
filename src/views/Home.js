@@ -171,7 +171,14 @@ class Home extends Component {
             </div>
 
             {/* rendring doctors etc */}
-            <Container style={{ width: "90%" }}>
+
+            <Container
+              style={{ width: "90%", marginTop: "50px", marginBottom: "50px" }}
+            >
+              <h1 style={{ color: "#990099", fontWeight: "bolder" }}>
+                Doctors
+              </h1>
+              <Divider />
               <Grid
                 stackable
                 textAlign="center"
@@ -184,11 +191,15 @@ class Home extends Component {
                   </Grid.Column>
                   <Grid.Column>
                     <Link to="/listDoctors">
-                      <Button size="large" fluid icon="right arrow" />
+                      <Button
+                        size="large"
+                        icon="right arrow"
+                        content="More"
+                        style={{ backgroundColor: "#990099", color: "#FFFFFF" }}
+                      />
                     </Link>
                   </Grid.Column>
                 </Grid.Row>
-                <Divider />
                 <Divider />
               </Grid>
             </Container>

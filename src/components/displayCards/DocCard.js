@@ -1,17 +1,40 @@
 import React, { Component } from "react";
-import { Card, Image, Rating, Button } from "semantic-ui-react";
+import { Card, Rating, Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+
+import Image from "../profilePicture/Image";
 
 class DocCard extends Component {
+  state = {
+    image: ""
+  };
+
+  componentDidMount() {
+    const userId = this.props.docId;
+    axios
+      .get(`/v1/uploading/profilePicture/${userId}`)
+      .then(res => {
+        console.log(res.data.post);
+        this.setState({
+          image: "http://localhost:3001/" + res.data.post.imageURL
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
   render() {
     return (
       <Card>
-        <Image
+        {/* <Image
           src="https://react.semantic-ui.com/images/wireframe/square-image.png"
           wrapped
           ui={false}
           size="small"
-        />
+        /> */}
+        <Image contain fileURL={this.state.image} />
         <Card.Content>
           <Card.Header>{this.props.docName}</Card.Header>
           <Card.Description>{this.props.docLoc}</Card.Description>
@@ -26,7 +49,15 @@ class DocCard extends Component {
           </Card.Description>
           <Card.Description>
             <Link to={`/docProfile/${this.props.docId}`}>
-              <Button>See Details</Button>
+              <Button
+                style={{
+                  backgroundColor: "#990099",
+                  color: "#FFFFFF",
+                  marginTop: "15px"
+                }}
+              >
+                See Details
+              </Button>
             </Link>
           </Card.Description>
         </Card.Content>

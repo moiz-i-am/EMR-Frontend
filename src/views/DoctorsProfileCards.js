@@ -102,7 +102,14 @@ class ProfileCards extends Component {
                                     padding: "5px"
                                   }}
                                 >
-                                  <Label>{specializations}</Label>
+                                  <Label
+                                    style={{
+                                      backgroundColor: "#990099",
+                                      color: "#FFFFFF"
+                                    }}
+                                  >
+                                    {specializations}
+                                  </Label>
                                 </div>
                               );
                             })
@@ -149,6 +156,7 @@ class ProfileCards extends Component {
                         icon="user md"
                         labelPosition="left"
                         content="Visit Profile"
+                        style={{ backgroundColor: "#990099", color: "#FFFFFF" }}
                       />
                     </Link>
                   </div>

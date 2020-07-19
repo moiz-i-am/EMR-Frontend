@@ -20,7 +20,7 @@ import { logoutUser } from "../../actions/authActions";
 
 import NewRegistrations from "./Containers/NewRegistrations";
 import ShowProfile from "../../components/dashboardContainers/PatientContainers/ShowProfilePatient";
-import EditProfilePatient from "../../components/dashboardContainers/editProfiles/EditProfilePatients";
+import EditProfilePatient from "../../components/dashboardContainers/PatientContainers/EditProfilePatients";
 import DoctorsList from "./Containers/PaymentsViewer/DoctorsList";
 
 import Logo from "../../assets/Logo.png";

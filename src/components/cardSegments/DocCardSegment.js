@@ -4,7 +4,7 @@ import { Grid } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import DocCard from "../displayCards/DocCard";
 
-const doctorsToShow = [];
+var size = 4;
 
 class DocCardSegment extends Component {
   state = {
@@ -15,28 +15,22 @@ class DocCardSegment extends Component {
   componentDidMount() {
     Axios.get(`v1/users`).then(res => {
       console.log(this.props);
-      this.setState({ doctors: res.data });
+      const doctors = res.data.filter(function(doc) {
+        return doc.role == "doctor";
+      });
+      this.setState({ doctors: doctors });
     });
-
-    for (var i = 0; i <= 3; i++) {
-      const rand = this.state.doctors[
-        Math.floor(Math.random() * this.state.doctors.length)
-      ];
-
-      doctorsToShow.push(rand);
-    }
-
-    this.setState({ doctorsList: doctorsToShow });
   }
 
   render() {
+    console.log(this.state.doctors);
     return (
       <Grid className="main_DocList-div" stackable>
         <Grid.Row columns={4}>
           {this.state.doctors.length === 0 ? (
             <h1>No Doctors Found</h1>
           ) : (
-            this.state.doctors.map(doctors => {
+            this.state.doctors.slice(0, size).map(doctors => {
               if (doctors.role === "doctor") {
                 return (
                   <Grid.Column width="4" key={doctors.id}>

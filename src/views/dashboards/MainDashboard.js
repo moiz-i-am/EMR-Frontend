@@ -24,7 +24,7 @@ import Image from "../../components/profilePicture/Image";
 
 // patient imports
 import ShowProfilePatient from "../../components/dashboardContainers/PatientContainers/ShowProfilePatient";
-import EditProfilePatient from "../../components/dashboardContainers/editProfiles/EditProfilePatients";
+import EditProfilePatient from "../../components/dashboardContainers/PatientContainers/EditProfilePatients";
 import BookingPatient from "../../components/dashboardContainers/bookingsList/bookingPatient";
 import PrescriptionPatient from "../../components/dashboardContainers/prescriptions/PrescriptionLists/PrescriptionPatient";
 import PatientsListLab from "../../components/dashboardContainers/LabContainers/PatientsListLab";

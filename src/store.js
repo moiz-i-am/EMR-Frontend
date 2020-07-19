@@ -3,8 +3,6 @@ import thunk from "redux-thunk";
 
 import rootReducer from "./reducers";
 
-// const initialState = {};
-
 const middleware = [thunk];
 
 function saveToLocalStorage(state) {
@@ -31,7 +29,6 @@ const presistedState = loadFromLocalStorage();
 
 const store = createStore(
   rootReducer,
-  // initialState,
   presistedState,
   compose(
     applyMiddleware(...middleware),

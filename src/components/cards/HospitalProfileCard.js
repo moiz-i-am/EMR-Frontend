@@ -25,9 +25,9 @@ class HospitalProfileCard extends Component {
                           style={{
                             textAlign: "left",
                             paddingTop: "27px",
-                            color: "black",
                             fontWeight: "bolder",
-                            fontSize: "25px"
+                            fontSize: "25px",
+                            color: "#990099"
                           }}
                         >
                           {this.props.hospitalName}

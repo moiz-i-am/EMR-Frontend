@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-// import ProfileCards from "./DoctorsProfileCards";
 import axios from "axios";
 import {
   Container,
@@ -26,7 +25,10 @@ class DoctorsList extends Component {
     axios.get(`v1/users`).then(res => {
       this.setState({ loading: true });
       setTimeout(() => {
-        this.setState({ loading: false, persons: res.data });
+        const doctors = res.data.filter(function(doc) {
+          return doc.role == "doctor";
+        });
+        this.setState({ loading: false, persons: doctors });
       }, 2000);
     });
   }
@@ -91,10 +93,6 @@ class DoctorsList extends Component {
               handleChange={e => this.handleChange(e.target.value)}
             />
           ) : null}
-          {/* <Filter
-            value={this.state.word}
-            handleChange={e => this.handleChange(e.target.value)}
-          /> */}
           {this.state.persons.length === 0 ? (
             this.state.loading ? null : (
               <h1>No Doctors Found</h1>
@@ -131,39 +129,3 @@ class DoctorsList extends Component {
 }
 
 export default DoctorsList;
-
-// {this.state.persons.length === 0 ? (
-//   this.state.loading ? null : (
-//     <h1>No Doctors Found</h1>
-//   )
-// ) : (
-//   this.state.persons.map(persons => {
-//     if (persons.role === "doctor") {
-//       return (
-//         <div
-//           style={{ width: "60%", marginTop: "15px" }}
-//           key={persons.id}
-//         >
-//           {/* <Link to={`/docProfile/${persons.id}`}> */}
-
-//           <ProfileCards
-//             docId={persons.id}
-//             docName={persons.name}
-//             docEmail={persons.email}
-//             docSpec={persons.specializations}
-//             docLocation={
-//               persons.location_city +
-//               ", " +
-//               persons.location_state +
-//               ", " +
-//               persons.location_country
-//             }
-//             rating={persons.rating}
-//             price={persons.price}
-//           />
-//           {/* </Link> */}
-//         </div>
-//       );
-//     }
-//   })
-// )}
