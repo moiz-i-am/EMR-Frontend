@@ -19,7 +19,7 @@ import { getUserWithProfile } from "../../actions/userDetailsAction";
 import { logoutUser } from "../../actions/authActions";
 
 import NewRegistrations from "./Containers/NewRegistrations";
-import ShowProfile from "../../components/dashboardContainers/ShowProfile";
+import ShowProfile from "../../components/dashboardContainers/PatientContainers/ShowProfilePatient";
 import EditProfilePatient from "../../components/dashboardContainers/editProfiles/EditProfilePatients";
 import DoctorsList from "./Containers/PaymentsViewer/DoctorsList";
 

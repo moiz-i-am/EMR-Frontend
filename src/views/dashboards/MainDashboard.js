@@ -14,37 +14,41 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import axios from "axios";
 
+// redux actions imports
 import { getUserWithProfile } from "./../../actions/userDetailsAction";
 import { logoutUser } from "../../actions/authActions";
 
-import DashboardContainer from "../../components/dashboardContainers/DashboardContainer";
-import ShowProfile from "../../components/dashboardContainers/ShowProfile";
-import EditProfile from "../../components/dashboardContainers/EditProfile";
+// other imports
+import Logo from "../../assets/Logo.png";
+import Image from "../../components/profilePicture/Image";
+
+// patient imports
+import ShowProfilePatient from "../../components/dashboardContainers/PatientContainers/ShowProfilePatient";
 import EditProfilePatient from "../../components/dashboardContainers/editProfiles/EditProfilePatients";
-
 import BookingPatient from "../../components/dashboardContainers/bookingsList/bookingPatient";
-import BookingDoctor from "../../components/dashboardContainers/bookingsList/bookingDoctor";
-
 import PrescriptionPatient from "../../components/dashboardContainers/prescriptions/PrescriptionLists/PrescriptionPatient";
-import PrescriptionDoctor from "../../components/dashboardContainers/prescriptions/PrescriptionLists/PrescriptionDoctor";
+import PatientsListLab from "../../components/dashboardContainers/LabContainers/PatientsListLab";
 
+// doctor imports
+import ShowProfile from "../../components/dashboardContainers/DoctorContainers/ShowProfile";
+import EditProfile from "../../components/dashboardContainers/DoctorContainers/EditProfile";
+import BookingDoctor from "../../components/dashboardContainers/bookingsList/bookingDoctor";
+import PrescriptionDoctor from "../../components/dashboardContainers/prescriptions/PrescriptionLists/PrescriptionDoctor";
 import UploadDocument from "../../components/dashboardContainers/DoctorContainers/UploadDocuments";
 import PaymentsList from "../../components/dashboardContainers/DoctorContainers/PaymentsList";
 
+// lab imports
 import ShowProfileLab from "../../components/dashboardContainers/LabContainers/ShowProfileLab";
 import EditProfileLab from "../../components/dashboardContainers/LabContainers/EditProfileLab";
-import PatientsListLab from "../../components/dashboardContainers/LabContainers/PatientsListLab";
 import UploadedTestsList from "../../components/dashboardContainers/LabContainers/UploadedTestsList";
 import LabTestsList from "../../components/dashboardContainers/PatientContainers/LabTestsList";
 
+// hospital imports
 import ShowProfileHospital from "../../components/dashboardContainers/HospitalContainers/ShowProfileHospital";
 import EditProfileHospital from "../../components/dashboardContainers/HospitalContainers/EditProfileHospital";
 import DoctorsListHospital from "../../components/dashboardContainers/HospitalContainers/DoctorsListHospital";
 
-import Logo from "../../assets/Logo.png";
-
-import Image from "../../components/profilePicture/Image";
-
+// trigger function for sidebar image and dropDown
 const trigger = (state, name, image) => (
   <span style={{ fontSize: 11 }}>
     <Header as="h7" color="teal" textAlign="center">
@@ -58,10 +62,13 @@ const trigger = (state, name, image) => (
   </span>
 );
 
+// class start
 export class MainDashboard extends Component {
   state = {
     name: "",
     role: "",
+    image: "",
+    // for doctors and patients
     home: true,
     browse: false,
     editProfile: false,
@@ -77,10 +84,10 @@ export class MainDashboard extends Component {
     showHospitalProfile: false,
     editHospitalProfile: false,
     verifyDoctor: true,
-    horizontalNameShow: "Appointments History",
-    image: ""
+    horizontalNameShow: "Appointments History"
   };
 
+  ////////////////////////////// for patients and doctors mix onClicks start ////////////////////////////////////
   addAppointments = () => {
     this.setState({
       home: !this.state.home,
@@ -91,50 +98,6 @@ export class MainDashboard extends Component {
       doctorUpload: false,
       paymentsList: false,
       horizontalNameShow: "Appointments History"
-    });
-  };
-
-  addProfile = () => {
-    this.setState({
-      browse: !this.state.browse,
-      home: false,
-      editProfile: false,
-      presctiptionList: false,
-      doctorUpload: false,
-      paymentsList: false,
-      horizontalNameShow: "Profile"
-    });
-  };
-  editProfile = () => {
-    this.setState({
-      editProfile: !this.state.editProfile,
-      home: false,
-      browse: false,
-      presctiptionList: false,
-      doctorUpload: false,
-      paymentsList: false,
-      horizontalNameShow: "Edit Profile"
-    });
-  };
-
-  addProfilePatient = () => {
-    this.setState({
-      browse: !this.state.browse,
-      home: false,
-      editProfile: false,
-      presctiptionList: false,
-      showUploadedResults: false,
-      horizontalNameShow: "Profile"
-    });
-  };
-  editProfilePatient = () => {
-    this.setState({
-      editProfile: !this.state.editProfile,
-      home: false,
-      browse: false,
-      presctiptionList: false,
-      showUploadedResults: false,
-      horizontalNameShow: "Edit Profile"
     });
   };
 
@@ -150,7 +113,9 @@ export class MainDashboard extends Component {
       horizontalNameShow: "Prescriptions"
     });
   };
+  ////////////////////////////// for patients and doctors mix onClicks end ////////////////////////////////////
 
+  ////////////////////////////// for patients onClicks start ////////////////////////////////////
   labTestResults = () => {
     this.setState({
       showUploadedResults: !this.state.showUploadedResults,
@@ -162,7 +127,54 @@ export class MainDashboard extends Component {
     });
   };
 
+  addProfilePatient = () => {
+    this.setState({
+      browse: !this.state.browse,
+      home: false,
+      editProfile: false,
+      presctiptionList: false,
+      showUploadedResults: false,
+      horizontalNameShow: "Profile"
+    });
+  };
+
+  editProfilePatient = () => {
+    this.setState({
+      editProfile: !this.state.editProfile,
+      home: false,
+      browse: false,
+      presctiptionList: false,
+      showUploadedResults: false,
+      horizontalNameShow: "Edit Profile"
+    });
+  };
+  ////////////////////////////// for patients onClicks end ////////////////////////////////////
+
   ////////////////////////////// for doctors onClicks start ////////////////////////////////////
+  addProfile = () => {
+    this.setState({
+      browse: !this.state.browse,
+      home: false,
+      editProfile: false,
+      presctiptionList: false,
+      doctorUpload: false,
+      paymentsList: false,
+      horizontalNameShow: "Profile"
+    });
+  };
+
+  editProfile = () => {
+    this.setState({
+      editProfile: !this.state.editProfile,
+      home: false,
+      browse: false,
+      presctiptionList: false,
+      doctorUpload: false,
+      paymentsList: false,
+      horizontalNameShow: "Edit Profile"
+    });
+  };
+
   handleUploadDocuments = () => {
     this.setState({
       doctorUpload: !this.state.doctorUpload,
@@ -272,14 +284,17 @@ export class MainDashboard extends Component {
 
   ////////////////////////////// for Hospital onClicks end ////////////////////////////////////
 
+  /////////////////////////// handle click logout for all users //////////////////////////
   onLogoutClick = e => {
     e.preventDefault();
     this.props.logoutUser(this.props.history);
   };
 
+  /////////////////////// for setting selected tab name on dashboard nav bar /////////////////////////
   handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
   componentDidMount() {
+    // for getting data from local storage
     this.documentData = JSON.parse(localStorage.getItem("jwtToken"));
     if (localStorage.getItem("jwtToken")) {
       this.setState({
@@ -290,10 +305,12 @@ export class MainDashboard extends Component {
         role: ""
       });
     }
+
+    // redux request for getting single user from server
     this.props.dispatch(getUserWithProfile(this.props.match.params.id));
 
+    // axios request for fetching image of user logged in
     const userId = this.props.match.params.id;
-
     axios
       .get(`/v1/uploading/profilePicture/${userId}`)
       .then(res => {
@@ -312,9 +329,6 @@ export class MainDashboard extends Component {
     users.user ? (
       <Grid className="grid">
         <Grid.Column width={3}>
-          {/* <SideBar username={this.state.name} /> */}
-          {/* /////////////////////////////////////////////////////////////////////////////////////// */}
-
           <Responsive
             maxWidth={1090}
             style={{
@@ -485,14 +499,10 @@ export class MainDashboard extends Component {
               </Dropdown>
             </Menu>
           </Responsive>
-
-          {/* /////////////////////////////////////////////////////////////////////////////////////// */}
         </Grid.Column>
         <Grid.Column width={13}>
           <Grid.Row>
             <div style={{ marginBottom: "35px" }}>
-              {/* <HorizontalBar /> */}
-              {/* /////////////////////////////////////////////////////////////////////////////////////// */}
               <Menu size="huge">
                 <Menu.Item
                   name={this.state.horizontalNameShow}
@@ -509,7 +519,6 @@ export class MainDashboard extends Component {
                   </Dropdown>
                 </Menu.Menu>
               </Menu>
-              {/* /////////////////////////////////////////////////////////////////////////////////////// */}
             </div>
           </Grid.Row>
           <Grid.Row>
@@ -521,7 +530,7 @@ export class MainDashboard extends Component {
                 <BookingPatient id={this.props.match.params.id} />
               )}
               {this.state.browse && (
-                <ShowProfile
+                <ShowProfilePatient
                   userData={users.user}
                   id={this.props.match.params.id}
                 />
@@ -549,9 +558,6 @@ export class MainDashboard extends Component {
     users.user ? (
       <Grid className="grid">
         <Grid.Column width={3}>
-          {/* <SideBar username={this.state.name} /> */}
-          {/* /////////////////////////////////////////////////////////////////////////////////////// */}
-
           <Responsive
             maxWidth={1090}
             style={{
@@ -596,7 +602,6 @@ export class MainDashboard extends Component {
                   size="large"
                 />
               </Menu.Item>
-
               <Menu.Item
                 style={{ height: "10%" }}
                 icon="history"
@@ -609,7 +614,6 @@ export class MainDashboard extends Component {
                   size="large"
                 />
               </Menu.Item>
-
               <Menu.Item
                 style={{ height: "10%" }}
                 active={activeItem === "prescriptions"}
@@ -632,7 +636,6 @@ export class MainDashboard extends Component {
                   size="large"
                 />
               </Menu.Item>
-
               <Menu.Item
                 style={{ height: "10%" }}
                 active={activeItem === "payments"}
@@ -702,28 +705,20 @@ export class MainDashboard extends Component {
                   </Dropdown.Menu>
                 </Dropdown>
               </Menu.Item>
-
               <Menu.Item
                 name="appointments"
                 active={activeItem === "appointments"}
                 onClick={() => this.addAppointments()}
               >
-                <Icon
-                  name="history
-"
-                />
+                <Icon name="history" />
                 Appointment History
               </Menu.Item>
-
               <Menu.Item
                 name="prescriptions"
                 active={activeItem === "prescriptions"}
                 onClick={() => this.prescriptionList()}
               >
-                <Icon
-                  name="sticky note outline
-"
-                />
+                <Icon name="sticky note outline" />
                 View Previous Prescriptions
               </Menu.Item>
               <Menu.Item
@@ -734,7 +729,6 @@ export class MainDashboard extends Component {
                 <Icon name="file pdf" />
                 Upload certifications
               </Menu.Item>
-
               <Menu.Item
                 name="labtests"
                 active={activeItem === "labtests"}
@@ -753,13 +747,10 @@ export class MainDashboard extends Component {
               </Dropdown>
             </Menu>
           </Responsive>
-          {/* /////////////////////////////////////////////////////////////////////////////////////// */}
         </Grid.Column>
         <Grid.Column width={13}>
           <Grid.Row>
             <div style={{ marginBottom: "35px" }}>
-              {/* <HorizontalBar /> */}
-              {/* /////////////////////////////////////////////////////////////////////////////////////// */}
               <Menu size="huge">
                 <Menu.Item
                   name={this.state.horizontalNameShow}
@@ -776,7 +767,6 @@ export class MainDashboard extends Component {
                   </Dropdown>
                 </Menu.Menu>
               </Menu>
-              {/* /////////////////////////////////////////////////////////////////////////////////////// */}
             </div>
           </Grid.Row>
           <Grid.Row>
@@ -812,9 +802,6 @@ export class MainDashboard extends Component {
     users.user ? (
       <Grid className="grid">
         <Grid.Column width={3}>
-          {/* <SideBar username={this.state.name} /> */}
-          {/* /////////////////////////////////////////////////////////////////////////////////////// */}
-
           <Responsive
             maxWidth={1090}
             style={{
@@ -863,7 +850,6 @@ export class MainDashboard extends Component {
                   size="large"
                 />
               </Menu.Item>
-
               <Menu.Item
                 style={{ height: "10%" }}
                 active={activeItem === "prescriptions"}
@@ -875,7 +861,6 @@ export class MainDashboard extends Component {
                   size="large"
                 />
               </Menu.Item>
-
               <Menu.Item
                 style={{ height: "10%" }}
                 active={activeItem === "labtests"}
@@ -887,7 +872,6 @@ export class MainDashboard extends Component {
                   size="large"
                 />
               </Menu.Item>
-
               <Dropdown item text="More">
                 <Dropdown.Menu>
                   <Dropdown.Item icon="edit" text="Edit Profile" />
@@ -941,7 +925,6 @@ export class MainDashboard extends Component {
                   </Dropdown.Menu>
                 </Dropdown>
               </Menu.Item>
-
               <Menu.Item
                 name="prescriptions"
                 active={activeItem === "prescriptions"}
@@ -967,13 +950,10 @@ export class MainDashboard extends Component {
               </Dropdown>
             </Menu>
           </Responsive>
-          {/* /////////////////////////////////////////////////////////////////////////////////////// */}
         </Grid.Column>
         <Grid.Column width={13}>
           <Grid.Row>
             <div style={{ marginBottom: "35px" }}>
-              {/* <HorizontalBar /> */}
-              {/* /////////////////////////////////////////////////////////////////////////////////////// */}
               <Menu size="huge">
                 <Menu.Item
                   name={this.state.horizontalNameShow}
@@ -990,7 +970,6 @@ export class MainDashboard extends Component {
                   </Dropdown>
                 </Menu.Menu>
               </Menu>
-              {/* /////////////////////////////////////////////////////////////////////////////////////// */}
             </div>
           </Grid.Row>
           <Grid.Row>
@@ -1024,9 +1003,6 @@ export class MainDashboard extends Component {
     users.user ? (
       <Grid className="grid">
         <Grid.Column width={3}>
-          {/* <SideBar username={this.state.name} /> */}
-          {/* /////////////////////////////////////////////////////////////////////////////////////// */}
-
           <Responsive
             maxWidth={1090}
             style={{
@@ -1075,7 +1051,6 @@ export class MainDashboard extends Component {
                   size="large"
                 />
               </Menu.Item>
-
               <Menu.Item
                 style={{ height: "10%" }}
                 active={activeItem === "prescriptions"}
@@ -1141,7 +1116,6 @@ export class MainDashboard extends Component {
                   </Dropdown.Menu>
                 </Dropdown>
               </Menu.Item>
-
               <Menu.Item
                 name="prescriptions"
                 active={activeItem === "prescriptions"}
@@ -1160,13 +1134,10 @@ export class MainDashboard extends Component {
               </Dropdown>
             </Menu>
           </Responsive>
-          {/* /////////////////////////////////////////////////////////////////////////////////////// */}
         </Grid.Column>
         <Grid.Column width={13}>
           <Grid.Row>
             <div style={{ marginBottom: "35px" }}>
-              {/* <HorizontalBar /> */}
-              {/* /////////////////////////////////////////////////////////////////////////////////////// */}
               <Menu size="huge">
                 <Menu.Item
                   name={this.state.horizontalNameShow}
@@ -1183,7 +1154,6 @@ export class MainDashboard extends Component {
                   </Dropdown>
                 </Menu.Menu>
               </Menu>
-              {/* /////////////////////////////////////////////////////////////////////////////////////// */}
             </div>
           </Grid.Row>
           <Grid.Row>
@@ -1194,9 +1164,6 @@ export class MainDashboard extends Component {
               {this.state.verifyDoctor && (
                 <DoctorsListHospital id={this.props.match.params.id} />
               )}
-              {/* {this.state.showUploadedResults && (
-                <UploadedTestsList id={this.props.match.params.id} />
-              )} */}
               {this.state.showHospitalProfile && (
                 <ShowProfileHospital userData={users.user} />
               )}

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Card, Grid, Label } from "semantic-ui-react";
 import axios from "axios";
 
-import Image from "../profilePicture/Image";
+import Image from "../../profilePicture/Image";
 
 export class ShowProfile extends Component {
   constructor(props) {

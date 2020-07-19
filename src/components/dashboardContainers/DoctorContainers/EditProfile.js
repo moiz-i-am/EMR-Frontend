@@ -21,20 +21,20 @@ import "react-date-range/dist/theme/default.css"; // theme css file
 import { DateRangePicker, Calendar } from "react-date-range";
 
 import Select from "react-select";
-import { timeOptions } from "../../data/data";
+import { timeOptions } from "../../../data/data";
 
-import UploadProfilePicture from "../profilePicture/UploadProfilePicture";
-import Image from "../profilePicture/Image";
+import UploadProfilePicture from "../../profilePicture/UploadProfilePicture";
+import Image from "../../profilePicture/Image";
 
 import {
   updateUserData,
   deleteUser,
   createDoctorsSchedule
-} from "./../../actions/userDetailsAction";
+} from "./../../../actions/userDetailsAction";
 import {
   updateDoctorsSchedule,
   deleteDoctorsSchedule
-} from "../../actions/schedulingActions";
+} from "../../../actions/schedulingActions";
 import { withRouter } from "react-router-dom";
 
 let current_datetime = new Date();
