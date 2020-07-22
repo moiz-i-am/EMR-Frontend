@@ -98,13 +98,13 @@ export const createDoctorsSchedule = (
         Authorization: `Bearer ${token}`
       }
     })
-    .then(res => {})
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response
-      })
-    );
+    .then(res => {});
+  // .catch(err =>
+  //   dispatch({
+  //     type: GET_ERRORS,
+  //     payload: err.response
+  //   })
+  // );
 };
 
 export const clearUserWithProfile = () => {

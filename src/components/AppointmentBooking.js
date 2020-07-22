@@ -22,7 +22,8 @@ export class AppointmentBooking extends Component {
     date: "",
     role: "",
     open: false,
-    success: false
+    success: false,
+    paymentResponse: ""
   };
 
   componentDidMount() {
@@ -73,32 +74,57 @@ export class AppointmentBooking extends Component {
         patient: this.state.patientId,
         timeSlot: this.state.choosenSlot
       };
-      if (this.state.choosenSlot !== "") {
-        if (
-          this.state.role === "doctor" ||
-          this.state.role === "lab" ||
-          this.state.role === "hospital" ||
-          this.state.role === "admin"
-        ) {
-          return alert(
-            `sorry you are ${this.state.role} you cannot make booking form this account !!!`
-          );
+      if (this.state.paymentResponse == "Payment Submitted") {
+        if (this.state.choosenSlot !== "") {
+          if (
+            this.state.role === "doctor" ||
+            this.state.role === "lab" ||
+            this.state.role === "hospital" ||
+            this.state.role === "admin"
+          ) {
+            return alert(
+              `sorry you are ${this.state.role} you cannot make booking form this account !!!`
+            );
+          } else {
+            this.props.createAppointmentBooking(bookingData, this.state.token);
+            this.setState({ open: false, choosenSlot: "", success: true });
+            setTimeout(() => {
+              this.setState({ success: false });
+            }, 3000);
+          }
         } else {
-          this.props.createAppointmentBooking(bookingData, this.state.token);
-          this.setState({ open: false, success: true });
-          setTimeout(() => {
-            this.setState({ success: false });
-          }, 3000);
+          return alert(`please select a time slot`);
         }
       } else {
-        return alert(`please select a time slot`);
+        return alert(`please pay to continue booking`);
       }
     } else {
       console.log("ERROR: not authanticated");
     }
   };
 
-  handleCancel = () => this.setState({ open: false });
+  handleCancel = () => this.setState({ open: false, choosenSlot: "" });
+
+  handlePaymentResponse = response => {
+    this.setState({ paymentResponse: response });
+  };
+
+  renderPaymentCard = () => {
+    if (this.state.choosenSlot !== "") {
+      return (
+        <PaymentIndex
+          amount={this.props.price}
+          doctorId={this.state.docId}
+          doctorName={this.state.docName}
+          patientId={this.state.patientId}
+          patientName={this.state.name}
+          date={this.state.date}
+          time={this.state.choosenSlot}
+          paymentResponse={this.handlePaymentResponse}
+        />
+      );
+    }
+  };
 
   renderConfirmation() {
     if (this.props.auth.isAuthenticated) {
@@ -126,17 +152,7 @@ export class AppointmentBooking extends Component {
               {this.props.price}
             </h4>
           </div>
-          <div>
-            <PaymentIndex
-              amount={this.props.price}
-              doctorId={this.state.docId}
-              doctorName={this.state.docName}
-              patientId={this.state.patientId}
-              patientName={this.state.name}
-              date={this.state.date}
-              time={this.state.choosenSlot}
-            />
-          </div>
+          <div>{this.renderPaymentCard()}</div>
         </div>
       );
     } else {

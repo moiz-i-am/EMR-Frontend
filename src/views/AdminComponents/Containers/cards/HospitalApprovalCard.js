@@ -2,16 +2,16 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Button } from "semantic-ui-react";
 import { withRouter } from "react-router-dom";
+import axios from "axios";
 
 import { updateUserData, deleteUser } from "../../../../actions/adminActions";
-
-// import { deleteAppointmentBooking } from "../../actions/bookingActions";
 
 class DoctorApprovalCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      token: ""
+      token: "",
+      hId: ""
     };
   }
 
@@ -28,15 +28,27 @@ class DoctorApprovalCard extends Component {
     }
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    setTimeout(() => {
+      if (prevState.hId !== this.state.hId) {
+        axios.get(`/v1/users`).then(res => {
+          this.props.updateList(res.data);
+        });
+      }
+    }, 1000);
+  }
+
   handleClickVerify = doctorId => {
     const data = {
       verified: true
     };
     this.props.updateUserData(data, doctorId, this.state.token);
+    this.setState({ hId: doctorId });
   };
 
   handleClickDelete = doctorId => {
     this.props.deleteUser(doctorId, this.state.token);
+    this.setState({ hId: doctorId });
   };
 
   render() {

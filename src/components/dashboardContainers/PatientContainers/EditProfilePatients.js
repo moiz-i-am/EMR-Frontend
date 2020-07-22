@@ -12,6 +12,11 @@ import {
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import axios from "axios";
+import Select from "react-select";
+
+import { cityOptions } from "../../../data/city";
+import { stateOptions } from "../../../data/state";
+import { countryOptions } from "../../../data/countries";
 
 import Image from "../../profilePicture/Image";
 
@@ -118,15 +123,25 @@ class EditProfilePatient extends Component {
     return <UploadProfilePicture userId={this.props.match.params.id} />;
   }
 
+  onSelectCity = value => {
+    this.setState({ location_city: value });
+  };
+  onSelectState = value => {
+    this.setState({ location_state: value });
+  };
+  onSelectCountry = value => {
+    this.setState({ location_country: value });
+  };
+
   onSubmit = e => {
     e.preventDefault();
 
     const upUserData = {
       name: this.state.name,
       phone: this.state.phone,
-      location_city: this.state.location_city,
-      location_state: this.state.location_state,
-      location_country: this.state.location_country
+      location_city: this.state.location_city.label,
+      location_state: this.state.location_state.label,
+      location_country: this.state.location_country.label
     };
     if (this.props.auth.isAuthenticated) {
       this.props.updateUserData(
@@ -150,6 +165,7 @@ class EditProfilePatient extends Component {
   }
 
   render() {
+    console.log(this.state.location_country.value);
     return (
       <div className="main-view-profile-info">
         <Card fluid>
@@ -182,6 +198,7 @@ class EditProfilePatient extends Component {
                 >
                   <Input
                     name="uname"
+                    type="text"
                     value={this.state.userData.name}
                     onChange={this.onChange}
                   />
@@ -210,6 +227,7 @@ class EditProfilePatient extends Component {
               <span>Phone No.</span>
               <Input
                 name="phone"
+                type="number"
                 value={this.state.phone}
                 onChange={this.onChange}
               />
@@ -224,26 +242,50 @@ class EditProfilePatient extends Component {
               <Grid stackable>
                 <Grid.Column width={5}>
                   city:{" "}
-                  <Input
+                  {/* <Input
                     name="location_city"
+                    type="text"
                     value={this.state.location_city}
                     onChange={this.onChange}
+                  /> */}
+                  <Select
+                    name="Cities"
+                    placeholder={this.state.location_city}
+                    options={cityOptions}
+                    classNamePrefix="select"
+                    onChange={this.onSelectCity}
                   />
                 </Grid.Column>
                 <Grid.Column width={5}>
                   state:{" "}
-                  <Input
+                  {/* <Input
                     name="location_state"
+                    type="text"
                     value={this.state.location_state}
                     onChange={this.onChange}
+                  /> */}
+                  <Select
+                    name="state"
+                    placeholder={this.state.location_state}
+                    options={stateOptions}
+                    classNamePrefix="select"
+                    onChange={this.onSelectState}
                   />
                 </Grid.Column>
                 <Grid.Column width={5}>
                   country:{" "}
-                  <Input
+                  {/* <Input
                     name="location_country"
+                    type="text"
                     value={this.state.location_country}
                     onChange={this.onChange}
+                  /> */}
+                  <Select
+                    name="Countries"
+                    placeholder={this.state.location_country}
+                    options={countryOptions}
+                    classNamePrefix="select"
+                    onChange={this.onSelectCountry}
                   />
                 </Grid.Column>
               </Grid>

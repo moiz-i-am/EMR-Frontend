@@ -22,6 +22,9 @@ import { DateRangePicker, Calendar } from "react-date-range";
 
 import Select from "react-select";
 import { timeOptions } from "../../../data/data";
+import { cityOptions } from "../../../data/city";
+import { stateOptions } from "../../../data/state";
+import { countryOptions } from "../../../data/countries";
 
 import UploadProfilePicture from "../../profilePicture/UploadProfilePicture";
 import Image from "../../profilePicture/Image";
@@ -226,9 +229,9 @@ class EditProfile extends Component {
     const upUserData = {
       name: this.state.name,
       phone: this.state.phone,
-      location_city: this.state.location_city,
-      location_state: this.state.location_state,
-      location_country: this.state.location_country,
+      location_city: this.state.location_city.label,
+      location_state: this.state.location_state.label,
+      location_country: this.state.location_country.label,
       price: this.state.price,
       specializations: this.state.selectedSpecializations
     };
@@ -305,6 +308,17 @@ class EditProfile extends Component {
 
   onSelectedUpdate = value => {
     this.setState({ valUpdate: value });
+  };
+
+  // for location
+  onSelectCity = value => {
+    this.setState({ location_city: value });
+  };
+  onSelectState = value => {
+    this.setState({ location_state: value });
+  };
+  onSelectCountry = value => {
+    this.setState({ location_country: value });
   };
 
   handleSelect = ranges => {
@@ -471,6 +485,7 @@ class EditProfile extends Component {
                   <Input
                     // style={{ width: "50%" }}
                     name="phone"
+                    type="number"
                     value={this.state.phone}
                     onChange={this.onChange}
                   />
@@ -480,6 +495,7 @@ class EditProfile extends Component {
                   <Input
                     // style={{ width: "50%" }}
                     name="price"
+                    type="number"
                     value={this.state.price}
                     onChange={this.onChange}
                   />
@@ -494,7 +510,7 @@ class EditProfile extends Component {
               }}
             >
               <Grid stackable>
-                <Grid.Column width={5}>
+                {/* <Grid.Column width={5}>
                   city:{" "}
                   <Input
                     name="location_city"
@@ -516,6 +532,36 @@ class EditProfile extends Component {
                     name="location_country"
                     value={this.state.location_country}
                     onChange={this.onChange}
+                  />
+                </Grid.Column> */}
+                <Grid.Column width={5}>
+                  city:{" "}
+                  <Select
+                    name="Cities"
+                    placeholder={this.state.location_city}
+                    options={cityOptions}
+                    classNamePrefix="select"
+                    onChange={this.onSelectCity}
+                  />
+                </Grid.Column>
+                <Grid.Column width={5}>
+                  state:{" "}
+                  <Select
+                    name="States"
+                    placeholder={this.state.location_state}
+                    options={stateOptions}
+                    classNamePrefix="select"
+                    onChange={this.onSelectState}
+                  />
+                </Grid.Column>
+                <Grid.Column width={5}>
+                  country:{" "}
+                  <Select
+                    name="Countries"
+                    placeholder={this.state.location_country}
+                    options={countryOptions}
+                    classNamePrefix="select"
+                    onChange={this.onSelectCountry}
                   />
                 </Grid.Column>
               </Grid>

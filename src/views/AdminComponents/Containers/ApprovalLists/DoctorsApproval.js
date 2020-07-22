@@ -15,6 +15,11 @@ class DoctorsApproval extends Component {
     });
   }
 
+  updateListHandler = data => {
+    console.log("recieved");
+    this.setState({ doctors: data });
+  };
+
   render() {
     return (
       <Container style={{ width: "90%" }}>
@@ -33,6 +38,7 @@ class DoctorsApproval extends Component {
                         docEmail={doctors.email}
                         docSpec={doctors.specializations}
                         docLocation={`${doctors.location_city}, ${doctors.location_state}, ${doctors.location_country}`}
+                        updateList={this.updateListHandler}
                       />
                     </div>
                   );

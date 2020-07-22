@@ -18,13 +18,10 @@ class LabApproval extends Component {
     });
   }
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (prevState.labs !== this.state.labs) {
-  //     axios.get(`/v1/users`).then(res => {
-  //       this.setState({ labs: res.data });
-  //     });
-  //   }
-  // }
+  updateListHandler = data => {
+    console.log("recieved");
+    this.setState({ labs: data });
+  };
 
   render() {
     return (
@@ -44,6 +41,7 @@ class LabApproval extends Component {
                         labEmail={labs.email}
                         labSpec={labs.specializations}
                         labLocation={`${labs.location_city}, ${labs.location_state}, ${labs.location_country}`}
+                        updateList={this.updateListHandler}
                       />
                     </div>
                   );

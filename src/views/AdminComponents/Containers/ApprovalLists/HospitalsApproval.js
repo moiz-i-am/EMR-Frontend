@@ -15,11 +15,10 @@ class HospitalsApproval extends Component {
     });
   }
 
-  // componentDidUpdate() {
-  //   axios.get(`/v1/users`).then(res => {
-  //     this.setState({ hospitals: res.data });
-  //   });
-  // }
+  updateListHandler = data => {
+    console.log("recieved");
+    this.setState({ hospitals: data });
+  };
 
   render() {
     return (
@@ -39,6 +38,7 @@ class HospitalsApproval extends Component {
                         hosEmail={hospitals.email}
                         hosSpec={hospitals.specializations}
                         hosLocation={`${hospitals.location_city}, ${hospitals.location_state}, ${hospitals.location_country}`}
+                        updateList={this.updateListHandler}
                       />
                     </div>
                   );

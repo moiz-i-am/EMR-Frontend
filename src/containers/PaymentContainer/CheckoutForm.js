@@ -4,6 +4,7 @@ import axios from "axios";
 
 function CheckoutForm({
   success,
+  paymentResponse,
   amount,
   doctorId,
   doctorName,
@@ -35,6 +36,7 @@ function CheckoutForm({
           patientName
         });
         console.log(data);
+        paymentResponse();
         success();
       } catch (error) {
         console.log(error);
@@ -75,8 +77,9 @@ const PaymentIndex = props => {
   const [status, setStatus] = React.useState("ready");
 
   if (status === "success") {
-    return <div>Congrats, your payment is successful!</div>;
+    return <div>Congrats, your payment is successful!!!</div>;
   }
+
   return (
     <CheckoutForm
       success={() => {
@@ -87,6 +90,11 @@ const PaymentIndex = props => {
       doctorName={props.doctorName}
       patientId={props.patientId}
       patientName={props.patientName}
+      paymentResponse={() => {
+        setTimeout(() => {
+          props.paymentResponse("Payment Submitted");
+        }, 1000);
+      }}
     />
   );
 };
