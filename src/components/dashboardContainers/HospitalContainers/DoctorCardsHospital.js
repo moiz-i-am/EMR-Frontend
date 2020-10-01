@@ -15,7 +15,9 @@ class DoctorCardsHospital extends Component {
     ////////////////// data not saving request not working on front end //////////////////////////
     const datauser = {
       hospitalId: this.props.id,
-      doctorId: this.props.DId
+      doctorId: this.props.DId,
+      doctorName: this.props.DName,
+      doctorEmail: this.props.DEmail
     };
     axios.post(`/v1/hospital/update`, datauser).then(res => {
       console.log(res);

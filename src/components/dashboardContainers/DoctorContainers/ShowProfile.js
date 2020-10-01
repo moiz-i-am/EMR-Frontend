@@ -36,7 +36,9 @@ export class ShowProfile extends Component {
           <Card.Content>
             <Grid>
               <Grid.Column width={5}>
-                <Image contain fileURL={this.state.image} />
+                <div style={{ textAlign: "center" }}>
+                  <Image contain fileURL={this.state.image} />
+                </div>
               </Grid.Column>
 
               <Grid.Column width={6}>
@@ -102,24 +104,15 @@ export class ShowProfile extends Component {
             </div>
           </Card.Content>
           <Card.Content>
-            <p>
-              asjhdkjashdkjashdkjahsdkjhaskjdhkashdashdiuhdkjsdhkjashdkjashdkasd
-              asdasdasdasdasdasdasdasjghhhhhhhhhhh
-              <br />
-              hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-              hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhasdashhhhhhhhhhhhhjkhdakjhdakjhdkjashda
-              asdasdasdasdasdasdasdasjghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhdadasd
-              asdasdasdasdasdasdasdasjghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhdsad
-              asdasdasdasdasdasdasdasjghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhdsad
-            </p>
+            <p>Description text .................</p>
           </Card.Content>
           <Card.Content>
-            <div>
+            {/* <div>
               <p>Serving Hospitals:</p>
               <Label size="huge">{this.state.hos1}</Label>
               <Label size="huge">{this.state.hos2}</Label>
               <Label size="huge">{this.state.hos3}</Label>
-            </div>
+            </div> */}
             <div>
               <p>Specialization:</p>
               {this.state.userData.specializations.map(function(
@@ -127,7 +120,7 @@ export class ShowProfile extends Component {
               ) {
                 return (
                   <div style={{ display: "inline-block", padding: "5px" }}>
-                    <Label size="huge">{specializations}</Label>
+                    <Label size="medium">{specializations}</Label>
                   </div>
                 );
               })}

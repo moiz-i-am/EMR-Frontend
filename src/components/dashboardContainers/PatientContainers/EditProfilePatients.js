@@ -172,21 +172,28 @@ class EditProfilePatient extends Component {
           <Card.Content>
             <Grid stackable>
               <Grid.Column width={5}>
-                <Image contain fileURL={this.state.image} />
-                <Button
-                  onClick={() => this.showPictureUpload()}
-                  style={{ contentAllign: "center" }}
-                >
-                  Update Picture
-                </Button>
-                <Confirm
-                  open={this.state.openPictureUpload}
-                  content={this.renderConfirmationPictureUpload()}
-                  header="Upload Picture"
-                  onCancel={this.handleCancelPictureUpload}
-                  onConfirm={this.handleConfirmPictureUpload}
-                  size="small"
-                />
+                <div style={{ textAlign: "center" }}>
+                  <Image contain fileURL={this.state.image} />
+                  <Button
+                    onClick={() => this.showPictureUpload()}
+                    style={{
+                      contentAllign: "center",
+                      marginTop: 10,
+                      backgroundColor: "#990099",
+                      color: "#fff"
+                    }}
+                  >
+                    Update Picture
+                  </Button>
+                  <Confirm
+                    open={this.state.openPictureUpload}
+                    content={this.renderConfirmationPictureUpload()}
+                    header="Upload Picture"
+                    onCancel={this.handleCancelPictureUpload}
+                    onConfirm={this.handleConfirmPictureUpload}
+                    size="small"
+                  />
+                </div>
               </Grid.Column>
 
               <Grid.Column width={6}>

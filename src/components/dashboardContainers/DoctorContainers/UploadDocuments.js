@@ -35,7 +35,7 @@ class UploadDocuments extends Component {
         <input
           id="myInput"
           type="file"
-          // accept=".jpg, .png, .jpeg|image/*"
+          accept="application/pdf"
           onChange={this.onChangeHandler}
         />
 

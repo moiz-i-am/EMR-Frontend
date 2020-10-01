@@ -20,6 +20,7 @@ class DoctorsListHospital extends Component {
   }
 
   render() {
+    console.log(this.props.id);
     return (
       <Container>
         <div className="main_DocList-div">

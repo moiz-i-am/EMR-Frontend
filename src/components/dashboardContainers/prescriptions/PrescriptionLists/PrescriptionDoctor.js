@@ -44,7 +44,7 @@ class PrescriptionDoctor extends Component {
             <div className="rows d-flex justify-content-center">
               <div className="col-lg-8">
                 <div className="section-tittle text-center">
-                  <h2> Your Prescriptions </h2>
+                  <h2> Prescriptions </h2>
                 </div>
               </div>
             </div>

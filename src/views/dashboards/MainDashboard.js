@@ -1162,7 +1162,7 @@ export class MainDashboard extends Component {
             >
               {/* here containers which appears in dashboard i.e edit profile are used to render */}
               {this.state.verifyDoctor && (
-                <DoctorsListHospital id={this.props.match.params.id} />
+                <DoctorsListHospital id={users.user} />
               )}
               {this.state.showHospitalProfile && (
                 <ShowProfileHospital userData={users.user} />
