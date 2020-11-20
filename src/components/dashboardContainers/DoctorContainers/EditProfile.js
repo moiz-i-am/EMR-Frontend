@@ -381,7 +381,7 @@ class EditProfile extends Component {
               date={new Date()}
               onChange={this.handleSelectSingleUpdate}
               color="#990099"
-              disabledDates={this.state.disableDatesUpdate}
+              // disabledDates={this.state.disableDatesUpdate}
               showSelectionPreview={true}
             />
           </div>
