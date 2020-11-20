@@ -12,10 +12,10 @@ class footer extends Component {
                 <Grid.Column width={3}>
                   <Header inverted as="h4" content="About" />
                   <List link inverted>
-                    <List.Item as="a">Sitemap</List.Item>
-                    <List.Item as="a">Contact Us</List.Item>
-                    <List.Item as="a">Religious Ceremonies</List.Item>
-                    <List.Item as="a">Gazebo Plans</List.Item>
+                    <List.Item as="a">Doctors</List.Item>
+                    <List.Item as="a">Labs</List.Item>
+                    <List.Item as="a">Video call checkups</List.Item>
+                    <List.Item as="a">Online storage of medical data</List.Item>
                   </List>
                 </Grid.Column>
                 <Grid.Column width={3}>
@@ -33,9 +33,17 @@ class footer extends Component {
                   </Header>
                   <p>
                     Powred by
-                    <span style={{ color: "red" }}> Majboor Log </span> and
-                    <span style={{ color: "red" }}> 69 </span>
-                    others. <br />
+                    <span
+                      style={{
+                        color: "red",
+                        fontWeight: "bolder",
+                        fontSize: "20px"
+                      }}
+                    >
+                      {" "}
+                      Soft{" "}
+                    </span>{" "}
+                    <span style={{ color: "#fff" }}> Lab </span> <br />
                     All Rights Reserved © 2016-{new Date().getFullYear()}
                   </p>
                 </Grid.Column>
