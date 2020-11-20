@@ -268,7 +268,7 @@ export class MainDashboard extends Component {
       verifyDoctor: !this.state.verifyDoctor,
       editHospitalProfile: false,
       showHospitalProfile: false,
-      horizontalNameShow: "Verify Dcctors"
+      horizontalNameShow: "Verify Doctors"
     });
   };
 
@@ -1122,7 +1122,7 @@ export class MainDashboard extends Component {
                 onClick={() => this.verifyDoctor()}
               >
                 <Icon name="doctor" />
-                Approve doctors
+                Verify doctors
               </Menu.Item>
 
               <Dropdown item text="More">
