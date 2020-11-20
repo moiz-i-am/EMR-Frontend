@@ -108,7 +108,7 @@ class HospitalsList extends Component {
           /> */}
           {this.state.hospitals.length === 0 ? (
             this.state.loading ? null : (
-              <h1>No Labs Found</h1>
+              <h1>No Hospital Found</h1>
             )
           ) : (
             <SearchHospitalStack

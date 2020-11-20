@@ -20,11 +20,13 @@ const SearchDoctorStack = ({ persons }) => {
                   docEmail={person.email}
                   docSpec={person.specializations}
                   docLocation={
-                    person.location_city +
-                    ", " +
-                    person.location_state +
-                    ", " +
-                    person.location_country
+                    person.location_city
+                      ? person.location_city +
+                        ", " +
+                        person.location_state +
+                        ", " +
+                        person.location_country
+                      : null
                   }
                   rating={person.rating}
                   price={person.price}

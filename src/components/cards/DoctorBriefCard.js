@@ -121,10 +121,12 @@ class ProfileCards extends Component {
                           icon="money"
                           content={<p>{this.props.price}</p>}
                         />
-                        <List.Item
-                          icon="marker"
-                          content={<p>{this.props.docLocation}</p>}
-                        />
+                        {this.props.docLocation ? (
+                          <List.Item
+                            icon="marker"
+                            content={<p>{this.props.docLocation}</p>}
+                          />
+                        ) : null}
                         <List.Item
                           icon="mail"
                           content={

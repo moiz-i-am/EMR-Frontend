@@ -53,10 +53,13 @@ class HospitalProfileCard extends Component {
                   <Grid.Column width={6}>
                     <div style={{ paddingLeft: "15px" }}>
                       <List style={{ color: "black" }}>
-                        <List.Item
-                          icon="marker"
-                          content={<p>{this.props.hospitalLocation}</p>}
-                        />
+                        {this.props.hospitalLocation ? (
+                          <List.Item
+                            icon="marker"
+                            content={<p>{this.props.hospitalLocation}</p>}
+                          />
+                        ) : null}
+
                         <List.Item
                           icon="mail"
                           content={

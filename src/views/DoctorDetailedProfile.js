@@ -31,11 +31,13 @@ export class DoctorDetailedProfile extends Component {
               docEmail={users.user.email}
               docSpec={users.user.specializations}
               docLocation={
-                users.user.location_city +
-                ", " +
-                users.user.location_state +
-                ", " +
-                users.user.location_country
+                users.user.location_city
+                  ? users.user.location_city +
+                    ", " +
+                    users.user.location_state +
+                    ", " +
+                    users.user.location_country
+                  : null
               }
               rating={users.user.rating}
               price={users.user.price}

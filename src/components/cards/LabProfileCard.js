@@ -54,10 +54,13 @@ class LabProfileCard extends Component {
                   <Grid.Column width={6}>
                     <div style={{ paddingLeft: "15px" }}>
                       <List style={{ color: "black" }}>
-                        <List.Item
-                          icon="marker"
-                          content={<p>{this.props.labLocation}</p>}
-                        />
+                        {this.props.labLocation ? (
+                          <List.Item
+                            icon="marker"
+                            content={<p>{this.props.labLocation}</p>}
+                          />
+                        ) : null}
+
                         <List.Item
                           icon="mail"
                           content={

@@ -19,11 +19,13 @@ const SearchLabStack = ({ LabPersons }) => {
                   labName={person.name}
                   labEmail={person.email}
                   labLocation={
-                    person.location_city +
-                    ", " +
-                    person.location_state +
-                    ", " +
-                    person.location_country
+                    person.location_city
+                      ? person.location_city +
+                        ", " +
+                        person.location_state +
+                        ", " +
+                        person.location_country
+                      : null
                   }
                 />
               </div>
