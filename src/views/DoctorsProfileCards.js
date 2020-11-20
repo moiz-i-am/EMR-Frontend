@@ -84,9 +84,7 @@ class ProfileCards extends Component {
                     <Grid.Column width={10}>
                       <div style={{ paddingLeft: "15px" }}>
                         <Card.Meta>
-                          Discription......asdhkjashdkjahsdkjh
-                          <br />
-                          ahsgdjahgsdjhgsad
+                          Discription......
                           <br />
                         </Card.Meta>
                         <Divider />
