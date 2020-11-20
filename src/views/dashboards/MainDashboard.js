@@ -410,13 +410,13 @@ export class MainDashboard extends Component {
                 />
               </Menu.Item>
 
-              <Dropdown item text="More">
+              {/* <Dropdown item text="More">
                 <Dropdown.Menu>
                   <Dropdown.Item icon="edit" text="Edit Profile" />
                   <Dropdown.Item icon="globe" text="Choose Language" />
                   <Dropdown.Item icon="settings" text="Account Settings" />
                 </Dropdown.Menu>
-              </Dropdown>
+              </Dropdown> */}
             </Menu>
           </Responsive>
 
@@ -490,13 +490,13 @@ export class MainDashboard extends Component {
                 View Lab Test Results
               </Menu.Item>
 
-              <Dropdown item text="More">
+              {/* <Dropdown item text="More">
                 <Dropdown.Menu>
                   <Dropdown.Item icon="edit" text="Edit Profile" />
                   <Dropdown.Item icon="globe" text="Choose Language" />
                   <Dropdown.Item icon="settings" text="Account Settings" />
                 </Dropdown.Menu>
-              </Dropdown>
+              </Dropdown> */}
             </Menu>
           </Responsive>
         </Grid.Column>
@@ -648,13 +648,13 @@ export class MainDashboard extends Component {
                 />
               </Menu.Item>
 
-              <Dropdown item text="More">
+              {/* <Dropdown item text="More">
                 <Dropdown.Menu>
                   <Dropdown.Item icon="edit" text="Edit Profile" />
                   <Dropdown.Item icon="globe" text="Choose Language" />
                   <Dropdown.Item icon="settings" text="Account Settings" />
                 </Dropdown.Menu>
-              </Dropdown>
+              </Dropdown> */}
             </Menu>
           </Responsive>
 
@@ -738,13 +738,13 @@ export class MainDashboard extends Component {
                 Pending payments
               </Menu.Item>
 
-              <Dropdown item text="More">
+              {/* <Dropdown item text="More">
                 <Dropdown.Menu>
                   <Dropdown.Item icon="edit" text="Edit Profile" />
                   <Dropdown.Item icon="globe" text="Choose Language" />
                   <Dropdown.Item icon="settings" text="Account Settings" />
                 </Dropdown.Menu>
-              </Dropdown>
+              </Dropdown> */}
             </Menu>
           </Responsive>
         </Grid.Column>
@@ -872,13 +872,13 @@ export class MainDashboard extends Component {
                   size="large"
                 />
               </Menu.Item>
-              <Dropdown item text="More">
+              {/* <Dropdown item text="More">
                 <Dropdown.Menu>
                   <Dropdown.Item icon="edit" text="Edit Profile" />
                   <Dropdown.Item icon="globe" text="Choose Language" />
                   <Dropdown.Item icon="settings" text="Account Settings" />
                 </Dropdown.Menu>
-              </Dropdown>
+              </Dropdown> */}
             </Menu>
           </Responsive>
 
@@ -941,13 +941,13 @@ export class MainDashboard extends Component {
                 View Lab Test Results
               </Menu.Item>
 
-              <Dropdown item text="More">
+              {/* <Dropdown item text="More">
                 <Dropdown.Menu>
                   <Dropdown.Item icon="edit" text="Edit Profile" />
                   <Dropdown.Item icon="globe" text="Choose Language" />
                   <Dropdown.Item icon="settings" text="Account Settings" />
                 </Dropdown.Menu>
-              </Dropdown>
+              </Dropdown> */}
             </Menu>
           </Responsive>
         </Grid.Column>
@@ -1063,13 +1063,13 @@ export class MainDashboard extends Component {
                 />
               </Menu.Item>
 
-              <Dropdown item text="More">
+              {/* <Dropdown item text="More">
                 <Dropdown.Menu>
                   <Dropdown.Item icon="edit" text="Edit Profile" />
                   <Dropdown.Item icon="globe" text="Choose Language" />
                   <Dropdown.Item icon="settings" text="Account Settings" />
                 </Dropdown.Menu>
-              </Dropdown>
+              </Dropdown> */}
             </Menu>
           </Responsive>
 
@@ -1125,13 +1125,13 @@ export class MainDashboard extends Component {
                 Verify doctors
               </Menu.Item>
 
-              <Dropdown item text="More">
+              {/* <Dropdown item text="More">
                 <Dropdown.Menu>
                   <Dropdown.Item icon="edit" text="Edit Profile" />
                   <Dropdown.Item icon="globe" text="Choose Language" />
                   <Dropdown.Item icon="settings" text="Account Settings" />
                 </Dropdown.Menu>
-              </Dropdown>
+              </Dropdown> */}
             </Menu>
           </Responsive>
         </Grid.Column>
