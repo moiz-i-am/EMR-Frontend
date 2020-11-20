@@ -27,11 +27,13 @@ class Signup extends React.Component {
       username: "",
       email: "",
       password: "",
+      confirmPassword: "",
       OrName: "",
       OrLocation: "",
       usernameError: "",
       emailError: "",
       passwordError: "",
+      confirmPasswordError: "",
       role: this.props.location.roleProps,
       errors: {}
     };
@@ -61,6 +63,7 @@ class Signup extends React.Component {
     let usernameError = "";
     let emailError = "";
     let passwordError = "";
+    let confirmPasswordError = "";
 
     if (!this.state.username.match(/^[a-zA-Z ]*$/)) {
       usernameError = "* Please enter alphabet characters only.";
@@ -80,8 +83,16 @@ class Signup extends React.Component {
     ) {
       passwordError = "* Please enter secure and strong password.";
     }
-    if (usernameError || emailError || passwordError) {
-      this.setState({ usernameError, emailError, passwordError });
+    if (!this.state.confirmPassword.match(this.state.password)) {
+      confirmPasswordError = "* Please Make sure passwords are same";
+    }
+    if (usernameError || emailError || passwordError || confirmPasswordError) {
+      this.setState({
+        usernameError,
+        emailError,
+        passwordError,
+        confirmPasswordError
+      });
       return false;
     }
     return true;
@@ -221,7 +232,7 @@ class Signup extends React.Component {
 
     const { error } = this.state;
     return (
-      <Grid divided="vertically" padded="vertically">
+      <Grid className="container" divided="vertically" padded="vertically">
         <Grid.Row columns={2}>
           <Grid.Column style={{ maxWidth: 500 }}>
             <Segment>
@@ -294,13 +305,13 @@ class Signup extends React.Component {
                     name="confirmPassword"
                     placeholder="Confirm Password"
                     onChange={this.onChange}
-                    value={this.state.password}
+                    value={this.state.confirmPassword}
                   />
                   <span
                     className="red-text"
                     style={{ fontSize: 12, color: "red", fontWeight: "bold" }}
                   >
-                    {this.state.passwordError}
+                    {this.state.confirmPasswordError}
                   </span>
                 </Form.Field>
                 {hospital}
