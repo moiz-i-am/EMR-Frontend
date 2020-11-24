@@ -37,11 +37,16 @@ class DocCard extends Component {
         <Image contain fileURL={this.state.image} />
         <Card.Content>
           <Card.Header>{this.props.docName}</Card.Header>
-          <Card.Description>{this.props.docLoc}</Card.Description>
+          {this.props.docLocation ? (
+            <Card.Description>{this.props.docLoc}</Card.Description>
+          ) : null}
+
+          {/* <Card.Description>{this.props.docLoc}</Card.Description> */}
+
           <Card.Description>
             <Rating
               maxRating={5}
-              defaultRating={3}
+              defaultRating={this.props.rating}
               disabled
               icon="star"
               size="huge"

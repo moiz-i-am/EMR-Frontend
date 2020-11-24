@@ -46,6 +46,7 @@ class DocCardSegment extends Component {
                         ", " +
                         doctors.location_country
                       }
+                      rating={doctors.rating}
                     />
                     {/* </Link> */}
                   </Grid.Column>
