@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, withRouter } from "react-router-dom";
 
 import Home from "./views/Home";
 
@@ -23,10 +23,15 @@ import CallScreen from "./components/videoCall/CallScreen";
 
 import LabsList from "./containers/ListContainers/LabsList";
 import HospitalsList from "./containers/ListContainers/HospitalsList";
+import Navbar from "./components/navbar/Navbar";
+import Footer from "./components/footer";
 
-const routes = () => {
+const routes = withRouter(({ location }) => {
   return (
     <div>
+      {/* {location.pathname !== `/dashboard/${id}` && location.pathname && (
+        <Navbar />
+      )} */}
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/SignupSelector" component={SignupNavigator} />
@@ -51,8 +56,11 @@ const routes = () => {
 
         <Route component={NotFound} />
       </Switch>
+      {/* {location.pathname !== `/dashboard/${id}` && location.pathname && (
+        <Footer />
+      )} */}
     </div>
   );
-};
+});
 
 export default routes;
