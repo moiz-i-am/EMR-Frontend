@@ -62,7 +62,20 @@ export class AppointmentBooking extends Component {
     }
   }
 
-  show = () => this.setState({ open: true });
+  show = () => {
+    if (
+      this.state.role === "doctor" ||
+      this.state.role === "lab" ||
+      this.state.role === "hospital" ||
+      this.state.role === "admin"
+    ) {
+      return alert(
+        `sorry you are ${this.state.role} you cannot make booking form this account !!!`
+      );
+    }
+
+    this.setState({ open: true });
+  };
 
   handleClose = () => this.setState({ success: false });
 
