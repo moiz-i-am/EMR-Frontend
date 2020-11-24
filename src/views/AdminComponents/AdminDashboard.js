@@ -311,7 +311,7 @@ class AdminDashboard extends Component {
           </Grid.Row>
           <Grid.Row>
             <Segment
-              style={{ overflow: "auto", maxHeight: 572, minHeight: 572 }}
+              style={{ overflow: "auto", maxHeight: 700, minHeight: 700 }}
             >
               {/* here containers which appears in dashboard i.e edit profile are used to render */}
               {this.state.home && <NewRegistrations />}
