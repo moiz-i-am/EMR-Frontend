@@ -54,7 +54,7 @@ class Signup extends React.Component {
       });
     } else {
       this.setState({
-        error: nextProps.error.message
+        error: "User already exists!!!"
       });
     }
   }
