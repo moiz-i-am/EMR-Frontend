@@ -34,6 +34,7 @@ class Signup extends React.Component {
       emailError: "",
       passwordError: "",
       confirmPasswordError: "",
+      hidden: true,
       role: this.props.location.roleProps,
       errors: {}
     };
@@ -67,15 +68,23 @@ class Signup extends React.Component {
 
     if (!this.state.username.match(/^[a-zA-Z ]*$/)) {
       usernameError = "* Please enter alphabet characters only.";
+    } else if(this.state.username.length < 3) {
+      usernameError = "* Please enter name with atleast 3 characters."
     }
 
     var pattern = new RegExp(
       /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
     );
+
     if (!pattern.test(this.state.email)) {
       // if (!this.state.email.includes("@")) {
       emailError = "* Please enter valid email address";
+    } else if(this.state.email.includes("@gmail" || "@yahoo" || "@outlook")) {
+      emailError = "";
+    } else {
+      emailError = "* Please enter valid email address";
     }
+
     if (
       !this.state.password.match(
         /^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/
@@ -142,6 +151,10 @@ class Signup extends React.Component {
       //this.setState(initialState());
     }
   };
+
+  toggleShow = () => {
+    this.setState({hidden : !this.state.hidden});
+  }
 
   render() {
     /////////////////////////// conditional rendring ///////////////////
@@ -279,7 +292,7 @@ class Signup extends React.Component {
 
                 <Form.Field required>
                   <Input
-                    type="password"
+                    type={this.state.hidden ? 'password' : 'text'}
                     size="small"
                     icon="lock"
                     iconPosition="left"
@@ -298,7 +311,7 @@ class Signup extends React.Component {
 
                 <Form.Field required>
                   <Input
-                    type="password"
+                    type={this.state.hidden ? 'password' : 'text'}
                     size="small"
                     icon="lock"
                     iconPosition="left"
@@ -316,6 +329,10 @@ class Signup extends React.Component {
                 </Form.Field>
                 {hospital}
                 {lab}
+                <Button fluid type="button" icon={this.state.hidden ? 'eye' : 'eye slash'} onClick={this.toggleShow} content="Click to see password"/>
+                <span
+                    style={{ fontSize: 12, color: "white", fontWeight: "bold" }}
+                >""</span>
                 <Button fluid type="submit">
                   Register
                 </Button>
@@ -349,7 +366,7 @@ class Signup extends React.Component {
               <Message.Header>Setting up Password</Message.Header>
               <Message.List>
                 <Message.Item>
-                  Password must consist of minimum 6 characters.
+                  Password must consist of minimum 8 characters.
                 </Message.Item>
                 <Message.Item>
                   Password must include atleast one number.
