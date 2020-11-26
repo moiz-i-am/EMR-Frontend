@@ -13,6 +13,7 @@ class PatientBookingCard extends Component {
       token: "",
       id: "",
       role: "",
+      name: "",
       yourID: this.props.yourSocketId,
       socketCurrent: this.props.socketCurrent,
       users: {},
@@ -38,13 +39,15 @@ class PatientBookingCard extends Component {
       this.setState({
         token: this.documentData.token.accessToken,
         id: this.documentData.user.id,
-        role: this.documentData.user.role
+        role: this.documentData.user.role,
+        name: this.documentData.user.name
       });
     } else {
       this.setState({
         token: "",
         id: "",
-        role: ""
+        role: "",
+        name: ""
       });
     }
 
@@ -121,7 +124,8 @@ class PatientBookingCard extends Component {
             partnerNameProps: this.state.partnerName,
             socketCurrentProps: this.state.socketCurrent,
             userId: this.state.id,
-            role: this.state.role
+            role: this.state.role,
+            name: this.state.name
           }}
         />
       );
