@@ -1,33 +1,62 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect, withRouter } from "react-router-dom";
-import { Button, Header, Icon, Modal, Rating } from "semantic-ui-react";
+import {
+  Button,
+  Header,
+  Icon,
+  Modal,
+  Rating,
+  Form,
+  TextArea
+} from "semantic-ui-react";
 
 import { updateRatingData } from "../../actions/userDetailsAction";
+import { saveDoctorsFeedback } from "../../actions/feedbackActions";
 
 class RateDoctor extends Component {
   constructor(props) {
     super(props);
-    this.state = { modalOpen: true, redirect: false };
+    this.state = { modalOpen: true, redirect: false, comment: "" };
   }
 
   handleOpen = () => this.setState({ modalOpen: true });
 
-  handleClose = () => {
+  handleClose = async () => {
     this.setState({ modalOpen: false });
     const updateRating = {
       rating: this.state.rating
     };
 
-    this.props.updateRatingData(updateRating, this.props.partnerId);
+    const feedbackData = {
+      doctorId: "5fbf4a44fe97be6450c67166",
+      patientName: "A",
+      comment: this.state.comment
+    };
 
-    this.setState({ redirect: true });
+    try {
+      const saveFeedback = await saveDoctorsFeedback(feedbackData);
+
+      console.log(saveFeedback);
+
+      this.props.updateRatingData(updateRating, this.props.partnerId);
+
+      this.setState({ redirect: true });
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   handleRate = (e, { rating }) => this.setState({ rating });
 
+  onChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
   render() {
     console.log(this.state.rating);
+    console.log(this.state.comment);
+
     if (this.state.redirect) {
       return <Redirect push to={`/dashboard/${this.props.myId}`} />;
     }
@@ -47,6 +76,16 @@ class RateDoctor extends Component {
               icon="star"
             />
           </div>
+        </Modal.Content>
+        <Modal.Content>
+          <Form>
+            <TextArea
+              placeholder="Your review about doctor..."
+              name="comment"
+              onChange={this.onChange}
+              value={this.state.comment}
+            />
+          </Form>
         </Modal.Content>
         <Modal.Actions>
           <Button color="green" onClick={this.handleClose} inverted>
