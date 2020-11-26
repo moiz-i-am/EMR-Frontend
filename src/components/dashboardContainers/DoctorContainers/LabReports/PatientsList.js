@@ -6,7 +6,7 @@ import { Container, Segment, Dimmer, Loader, Image } from "semantic-ui-react";
 
 class PatientsListDoctors extends Component {
   state = {
-    payments: [],
+    patients: [],
     loading: false
   };
 
@@ -14,8 +14,8 @@ class PatientsListDoctors extends Component {
     axios.get(`/v1/payment/paymentsList/${this.props.id}`).then(res => {
       this.setState({ loading: true });
       setTimeout(() => {
-        this.setState({ loading: false, payments: res.data.payments });
-        // console.log(res.data.payments);
+        this.setState({ loading: false, patients: res.data.payments });
+        // console.log(res.data.patients);
       }, 2000);
     });
   }
@@ -24,19 +24,19 @@ class PatientsListDoctors extends Component {
     return (
       <Container>
         <div className="main_DocList-div">
-          {this.state.payments.length === 0 ? (
+          {this.state.patients.length === 0 ? (
             this.state.loading ? null : (
-              <h1>No payments remaining</h1>
+              <h1>No Patients for viewing reports</h1>
             )
           ) : (
-            this.state.payments.map(payment => {
+            this.state.patients.map(payment => {
               return (
                 <div
                   style={{ width: "60%", marginTop: "15px" }}
                   key={payment.id}
                 >
                   {/* <PaymentCard
-                    paymentStripeId={payment.paymentId}
+                    patientstripeId={payment.paymentId}
                     amount={payment.amount}
                   /> */}
                   helo
