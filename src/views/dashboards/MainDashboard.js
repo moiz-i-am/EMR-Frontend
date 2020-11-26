@@ -36,6 +36,7 @@ import BookingDoctor from "../../components/dashboardContainers/bookingsList/boo
 import PrescriptionDoctor from "../../components/dashboardContainers/prescriptions/PrescriptionLists/PrescriptionDoctor";
 import UploadDocument from "../../components/dashboardContainers/DoctorContainers/UploadDocuments";
 import PaymentsList from "../../components/dashboardContainers/DoctorContainers/PaymentsList";
+import PatientsListDoctors from "../../components/dashboardContainers/DoctorContainers/LabReports/PatientsList";
 
 // lab imports
 import ShowProfileLab from "../../components/dashboardContainers/LabContainers/ShowProfileLab";
@@ -75,6 +76,7 @@ export class MainDashboard extends Component {
     doctorUpload: false,
     presctiptionList: false,
     paymentsList: false,
+    labReports: false,
     // for lab
     showLabProfile: false,
     editLabProfile: false,
@@ -159,6 +161,7 @@ export class MainDashboard extends Component {
       presctiptionList: false,
       doctorUpload: false,
       paymentsList: false,
+      labReports: false,
       horizontalNameShow: "Profile"
     });
   };
@@ -171,6 +174,7 @@ export class MainDashboard extends Component {
       presctiptionList: false,
       doctorUpload: false,
       paymentsList: false,
+      labReports: false,
       horizontalNameShow: "Edit Profile"
     });
   };
@@ -183,7 +187,22 @@ export class MainDashboard extends Component {
       browse: false,
       presctiptionList: false,
       paymentsList: false,
+      labReports: false,
       horizontalNameShow: "Upload documents"
+    });
+  };
+
+  handlePatientsListForLabReports = () => {
+    this.setState({
+      labReports: !this.state.labReports,
+      home: false,
+      browse: false,
+      editProfile: false,
+      presctiptionList: false,
+      showUploadedResults: false,
+      doctorUpload: false,
+      paymentsList: false,
+      horizontalNameShow: "Lab Reports"
     });
   };
 
@@ -196,6 +215,7 @@ export class MainDashboard extends Component {
       presctiptionList: false,
       showUploadedResults: false,
       doctorUpload: false,
+      labReports: false,
       horizontalNameShow: "pending payments"
     });
   };
@@ -627,6 +647,11 @@ export class MainDashboard extends Component {
               </Menu.Item>
               <Menu.Item
                 style={{ height: "10%" }}
+                active={activeItem === "labReports"}
+                onClick={() => this.handlePatientsListForLabReports()}
+              ></Menu.Item>
+              <Menu.Item
+                style={{ height: "10%" }}
                 active={activeItem === "labtests"}
                 onClick={() => this.handleUploadDocuments()}
               >
@@ -722,6 +747,14 @@ export class MainDashboard extends Component {
                 View Previous Prescriptions
               </Menu.Item>
               <Menu.Item
+                name="labReports"
+                active={activeItem === "labReports"}
+                onClick={() => this.handlePatientsListForLabReports()}
+              >
+                <Icon name="sticky note outline" />
+                Lab Reports
+              </Menu.Item>
+              <Menu.Item
                 name="labtests"
                 active={activeItem === "labtests"}
                 onClick={() => this.handleUploadDocuments()}
@@ -782,6 +815,9 @@ export class MainDashboard extends Component {
               )}
               {this.state.paymentsList && (
                 <PaymentsList id={this.props.match.params.id} />
+              )}
+              {this.state.labReports && (
+                <PatientsListDoctors id={this.props.match.params.id} />
               )}
               {this.state.browse && <ShowProfile userData={users.user} />}
               {this.state.editProfile && <EditProfile userData={users.user} />}
