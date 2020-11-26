@@ -1,38 +1,12 @@
 import React, { Component } from "react";
 import { Tab } from "semantic-ui-react";
-import InfoTab from "./../components/profilecomponents/tabcomponents/InfoTab";
 import FeedbackList from "./../components/feedback/FeedbackList";
 
-const feedbacksFromTab = [
-  {
-    id: "1",
-    pic: "https://randomuser.me/api/portraits/men/84.jpg",
-    name: "placeholder name....",
-    role: "patient",
-    time: "placeholder time",
-    reason: "placeholder reason...",
-    comment: "placeholder comment..."
-  },
-  {
-    id: "2",
-    pic: "https://randomuser.me/api/portraits/men/85.jpg",
-    name: "placeholder name....",
-    role: "patient",
-    time: "placeholder time...",
-    reason: "placeholder reason...",
-    comment: "placeholder comment..."
-  }
-];
+import { getDoctorFeedbacks } from "./../actions/feedbackActions";
+
+let feedbacksFromTab = [];
 
 const panes = [
-  {
-    menuItem: "Info",
-    render: () => (
-      <Tab.Pane>
-        <InfoTab />
-      </Tab.Pane>
-    )
-  },
   {
     menuItem: "Feedback",
     render: () => (
@@ -40,12 +14,27 @@ const panes = [
         <FeedbackList feedbacks={feedbacksFromTab} />
       </Tab.Pane>
     )
-  },
-  { menuItem: "FAQ", render: () => <Tab.Pane>Tab 3 Content</Tab.Pane> }
+  }
 ];
 
 class TabbedSection extends Component {
+  getFeedbacks = async doctorId => {
+    try {
+      const feedbacks = await getDoctorFeedbacks(doctorId);
+
+      console.log(feedbacks);
+
+      feedbacksFromTab = feedbacks;
+    } catch (error) {}
+  };
+
+  componentDidMount() {
+    this.getFeedbacks(this.props.docId);
+  }
+
   render() {
+    console.log(feedbacksFromTab);
+
     return <Tab renderActiveOnly={true} panes={panes} />;
   }
 }

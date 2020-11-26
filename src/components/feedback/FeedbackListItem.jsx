@@ -12,11 +12,9 @@ class FeedbackListItem extends Component {
           </Feed.Label>
           <Feed.Content>
             <Feed.Summary>
-              <Feed.User>{feedback.name}</Feed.User>
-              <Feed.Date>{feedback.time}</Feed.Date>
+              <Feed.User>{feedback.patientName}</Feed.User>
             </Feed.Summary>
             <Feed.Meta>
-              <Feed.Content>{feedback.reason}</Feed.Content>
               <Feed.Content>{feedback.comment}</Feed.Content>
             </Feed.Meta>
           </Feed.Content>

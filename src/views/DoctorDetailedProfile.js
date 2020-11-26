@@ -51,9 +51,9 @@ export class DoctorDetailedProfile extends Component {
             />
           </Grid.Column>
         </Grid>
-        {/* <div style={{ width: "62%", marginTop: "30px" }}>
-          <TabbedSection />
-        </div> */}
+        <div style={{ width: "62%", marginTop: "30px" }}>
+          <TabbedSection docId={this.props.match.params.id} />
+        </div>
       </div>
     ) : null;
 
