@@ -11,6 +11,7 @@ class CallOutgoingScreen extends Component {
     super(props);
     this.state = {
       myId: this.props.location.userId,
+      name: this.props.location.name,
       partnerUId: "",
       yourID: this.props.location.socketIdProps,
       receivingCall: false,
@@ -204,6 +205,7 @@ class CallOutgoingScreen extends Component {
           <RateDoctor
             myId={this.state.myId}
             partnerId={this.props.location.partnerIdProps}
+            patientName={this.state.name}
           />
         ) : null}
       </div>

@@ -17,7 +17,12 @@ import { saveDoctorsFeedback } from "../../actions/feedbackActions";
 class RateDoctor extends Component {
   constructor(props) {
     super(props);
-    this.state = { modalOpen: true, redirect: false, comment: "" };
+    this.state = {
+      modalOpen: true,
+      redirect: false,
+      comment: "",
+      patientName: this.props.patientName
+    };
   }
 
   handleOpen = () => this.setState({ modalOpen: true });
@@ -29,8 +34,8 @@ class RateDoctor extends Component {
     };
 
     const feedbackData = {
-      doctorId: "5fbf4a44fe97be6450c67166",
-      patientName: "A",
+      doctorId: this.props.partnerId,
+      patientName: this.state.patientName,
       comment: this.state.comment
     };
 

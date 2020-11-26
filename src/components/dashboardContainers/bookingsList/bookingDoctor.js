@@ -24,6 +24,7 @@ class bookingDoctor extends Component {
       id: this.props.id,
       token: "",
       role: "",
+      name: "",
       bookings: [],
       loading: false,
       yourID: "",
@@ -53,12 +54,14 @@ class bookingDoctor extends Component {
     if (localStorage.getItem("jwtToken")) {
       this.setState({
         token: this.documentData.token.accessToken,
-        role: this.documentData.user.role
+        role: this.documentData.user.role,
+        name: this.documentData.user.name
       });
     } else {
       this.setState({
         token: "",
-        role: ""
+        role: "",
+        name: ""
       });
     }
 
@@ -131,7 +134,8 @@ class bookingDoctor extends Component {
                 partnerSocketIdProps: this.state.caller,
                 partnerIdProps: this.state.partnerId,
                 partnerNameProps: this.state.partnerName,
-                role: this.state.role
+                role: this.state.role,
+                name: this.state.name
               }}
             >
               <Button
