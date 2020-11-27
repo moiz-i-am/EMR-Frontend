@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Confirm } from "semantic-ui-react";
+import PatientReportList from "./PatientReportList";
 
 const PatientCard = props => {
   const [open, setOpen] = useState(false);
@@ -13,11 +14,7 @@ const PatientCard = props => {
   const handleCancel = () => setOpen(false);
 
   const renderConfirmation = () => {
-    return (
-      <div>
-        <div>hello</div>
-      </div>
-    );
+    return <PatientReportList id={props.id} />;
   };
 
   return (
