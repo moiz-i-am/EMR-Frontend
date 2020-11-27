@@ -2,25 +2,32 @@ import React, { Component } from "react";
 import axios from "axios";
 import { Container, Segment, Dimmer, Loader, Image } from "semantic-ui-react";
 
-// import PaymentCard from "./PaymentCard";
+import PatientCard from "./PatientCard";
 
 class PatientsListDoctors extends Component {
   state = {
     patients: [],
+    id: this.props.id,
     loading: false
   };
 
   componentDidMount() {
-    axios.get(`/v1/payment/paymentsList/${this.props.id}`).then(res => {
+    const dataForRequest = {
+      doctorId: this.state.id
+    };
+
+    axios.post(`/v1/lab/patient-list-doctors`, dataForRequest).then(res => {
       this.setState({ loading: true });
       setTimeout(() => {
-        this.setState({ loading: false, patients: res.data.payments });
+        this.setState({ loading: false, patients: res.data.data });
         // console.log(res.data.patients);
       }, 2000);
     });
   }
 
   render() {
+    console.log(this.state.patients);
+
     return (
       <Container>
         <div className="main_DocList-div">
@@ -29,17 +36,18 @@ class PatientsListDoctors extends Component {
               <h1>No Patients for viewing reports</h1>
             )
           ) : (
-            this.state.patients.map(payment => {
+            this.state.patients.map(patient => {
               return (
                 <div
                   style={{ width: "60%", marginTop: "15px" }}
-                  key={payment.id}
+                  key={patient.id}
                 >
-                  {/* <PaymentCard
-                    patientstripeId={payment.paymentId}
-                    amount={payment.amount}
-                  /> */}
-                  helo
+                  <PatientCard
+                    id={patient.patient._id}
+                    name={patient.patient.name}
+                    email={patient.patient.email}
+                    phone={patient.patient?.phone}
+                  />
                 </div>
               );
             })
