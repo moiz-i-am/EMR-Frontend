@@ -79,10 +79,12 @@ class Signup extends React.Component {
     if (!pattern.test(this.state.email)) {
       // if (!this.state.email.includes("@")) {
       emailError = "* Please enter valid email address";
-    } else if(this.state.email.includes("@gmail" || "@yahoo" || "@outlook")) {
-      emailError = "";
-    } else {
-      emailError = "* Please enter valid email address";
+    } else if (!this.state.email.includes("@gmail")) {
+      if(!this.state.email.includes("@yahoo")) {
+        if(!this.state.email.includes("@outlook")) {
+          emailError = "* Please enter valid email address"
+        }
+      }
     }
 
     if (
@@ -103,8 +105,15 @@ class Signup extends React.Component {
         confirmPasswordError
       });
       return false;
+    } else {
+      this.setState({
+        usernameError: "",
+        emailError: "",
+        passwordError: "",
+        confirmPasswordError: ""
+      });
+      return true;
     }
-    return true;
   };
 
   onChange = e => {
