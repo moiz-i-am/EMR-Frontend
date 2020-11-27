@@ -1,9 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
+import { Confirm } from "semantic-ui-react";
 
 const PatientCard = props => {
+  const [open, setOpen] = useState(false);
+
+  const show = () => setOpen(true);
+
+  const handleConfirm = () => {
+    setOpen(false);
+  };
+
+  const handleCancel = () => setOpen(false);
+
+  const renderConfirmation = () => {
+    return (
+      <div>
+        <div>hello</div>
+      </div>
+    );
+  };
+
   return (
     <div>
-      <div className="column">
+      <div className="column" onClick={show}>
         <div className="col-lg-6 col-md-6">
           <div
             className="single-generating d-flex mb-30"
@@ -21,6 +40,14 @@ const PatientCard = props => {
           </div>
         </div>
       </div>
+      <Confirm
+        open={open}
+        content={renderConfirmation()}
+        header="Lab reports"
+        onCancel={handleCancel}
+        onConfirm={handleConfirm}
+        size="small"
+      />
     </div>
   );
 };

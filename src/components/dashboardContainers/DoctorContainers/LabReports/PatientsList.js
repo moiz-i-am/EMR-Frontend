@@ -20,7 +20,6 @@ class PatientsListDoctors extends Component {
       this.setState({ loading: true });
       setTimeout(() => {
         this.setState({ loading: false, patients: res.data.data });
-        // console.log(res.data.patients);
       }, 2000);
     });
   }
