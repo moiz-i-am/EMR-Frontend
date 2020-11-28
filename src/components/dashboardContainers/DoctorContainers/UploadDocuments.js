@@ -1,14 +1,20 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Button } from "semantic-ui-react";
+import { Button, Message } from "semantic-ui-react";
 
 class UploadDocuments extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedFile: null
+      selectedFile: null,
+      denyUpload: false,
+      success: false
     };
   }
+
+  getFileExtension = async filename => {
+    return await filename.split(".").pop();
+  };
 
   onChangeHandler = event => {
     this.setState({
@@ -18,9 +24,9 @@ class UploadDocuments extends Component {
     console.log(event.target.files[0]);
   };
 
-  getFileExtension = async filename => {
-    return await filename.split(".").pop();
-  };
+  handleClose = () => this.setState({ denyUpload: false });
+
+  handleCloseSuccess = () => this.setState({ success: false });
 
   onClickHandler = async () => {
     const fileExtension = await this.getFileExtension(
@@ -30,6 +36,10 @@ class UploadDocuments extends Component {
     console.log(fileExtension);
 
     if (fileExtension !== "pdf") {
+      this.setState({ denyUpload: true });
+      setTimeout(() => {
+        this.setState({ denyUpload: false });
+      }, 3000);
       return;
     }
 
@@ -38,33 +48,68 @@ class UploadDocuments extends Component {
     formData.append("userId", this.props.id);
 
     axios.post("/v1/uploading/doctorUpload", formData).then(res => {
-      console.log(res.data);
+      this.setState({ success: true });
     });
+
+    setTimeout(() => {
+      this.setState({ success: false });
+    }, 3000);
   };
 
   render() {
-    console.log("selected file name: ", this.state.selectedFile?.name);
-    // const filename = this.state.selectedFile?.name;
-    // const name = "hello.pdf";
-    // const ext = name.split(".").pop();
-
-    // console.log("extension", ext);
-
     return (
-      <div style={{ textAlign: "center", padding: "25px" }}>
-        <input
-          id="myInput"
-          type="file"
-          accept="application/pdf"
-          onChange={this.onChangeHandler}
-        />
+      <div>
+        <div style={{ textAlign: "center", padding: "25px" }}>
+          <input
+            id="myInput"
+            type="file"
+            accept="application/pdf"
+            onChange={this.onChangeHandler}
+          />
 
-        <Button
-          color="teal"
-          icon="cloud upload"
-          content="Upload file"
-          onClick={() => this.onClickHandler()}
-        />
+          <Button
+            color="teal"
+            icon="cloud upload"
+            content="Upload file"
+            onClick={() => this.onClickHandler()}
+          />
+        </div>
+        <div style={{ position: "absolute" }}>
+          {this.state.denyUpload ? (
+            <div
+              style={{
+                left: "75%",
+                position: "fixed",
+                top: "90%",
+                zIndex: 1000
+              }}
+            >
+              <Message
+                color="red"
+                onDismiss={this.handleClose}
+                header="Only Pdf files are allowed"
+              />
+            </div>
+          ) : null}
+        </div>
+        <div style={{ position: "absolute" }}>
+          {this.state.success ? (
+            <div
+              style={{
+                left: "75%",
+                position: "fixed",
+                top: "90%",
+                zIndex: 1000
+              }}
+            >
+              <Message
+                color="green"
+                onDismiss={this.handleCloseSuccess}
+                header="Document uploaded successfully"
+              />
+            </div>
+          ) : null}
+        </div>
       </div>
     );
   }
