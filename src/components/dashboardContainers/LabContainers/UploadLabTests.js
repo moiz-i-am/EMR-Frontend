@@ -26,8 +26,6 @@ class UploadLabTests extends Component {
 
   handleClose = () => this.setState({ denyUpload: false });
 
-  handleCloseSuccess = () => this.setState({ success: false });
-
   onClickHandler = async () => {
     const fileExtension = await this.getFileExtension(
       this.state.selectedFile?.name
@@ -49,12 +47,10 @@ class UploadLabTests extends Component {
     formData.append("userId", this.props.userId);
 
     axios.post("/v1/uploading/labUpload", formData).then(res => {
-      this.setState({ success: true });
+      this.props.successMessage();
+      this.props.successTimeout();
+      this.props.closeModal();
     });
-
-    setTimeout(() => {
-      this.setState({ success: false });
-    }, 3000);
   };
 
   render() {
@@ -89,24 +85,6 @@ class UploadLabTests extends Component {
                 color="red"
                 onDismiss={this.handleClose}
                 header="Only Pdf files are allowed"
-              />
-            </div>
-          ) : null}
-        </div>
-        <div style={{ position: "absolute" }}>
-          {this.state.success ? (
-            <div
-              style={{
-                left: 0,
-                position: "fixed",
-                bottom: 0,
-                zIndex: 1000
-              }}
-            >
-              <Message
-                color="green"
-                onDismiss={this.handleCloseSuccess}
-                header="Document uploaded successfully"
               />
             </div>
           ) : null}
