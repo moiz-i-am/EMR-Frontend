@@ -186,7 +186,12 @@ class Signup extends React.Component {
               onChange={this.onChange}
               value={this.state.OrName}
             />
-            <span className="red-text"></span>
+            <span
+                    className="red-text"
+                    style={{ fontSize: 12, color: "red", fontWeight: "bold" }}
+                  >
+                    {this.state.usernameError}
+                  </span>
           </Form.Field>
 
           <Form.Field required>
@@ -226,7 +231,12 @@ class Signup extends React.Component {
               onChange={this.onChange}
               value={this.state.OrName}
             />
-            <span className="red-text"></span>
+            <span
+                    className="red-text"
+                    style={{ fontSize: 12, color: "red", fontWeight: "bold" }}
+                  >
+                    {this.state.usernameError}
+                  </span>
           </Form.Field>
 
           <Form.Field required>
@@ -338,7 +348,7 @@ class Signup extends React.Component {
                 </Form.Field>
                 {hospital}
                 {lab}
-                <Button fluid type="button" icon={this.state.hidden ? 'eye' : 'eye slash'} onClick={this.toggleShow} content="Click to see password"/>
+                <Button fluid type="button" icon={this.state.hidden ? 'eye slash' : 'eye'} onClick={this.toggleShow} content="Click to see password"/>
                 <span
                     style={{ fontSize: 12, color: "white", fontWeight: "bold" }}
                 >""</span>
