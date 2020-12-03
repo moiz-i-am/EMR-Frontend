@@ -29,29 +29,18 @@ import { countryOptions } from "../../../data/countries";
 import UploadProfilePicture from "../../profilePicture/UploadProfilePicture";
 import Image from "../../profilePicture/Image";
 
-import {
-  updateUserData,
-  deleteUser,
-  createDoctorsSchedule
-} from "./../../../actions/userDetailsAction";
-import {
-  updateDoctorsSchedule,
-  deleteDoctorsSchedule
-} from "../../../actions/schedulingActions";
+import {updateUserData,  deleteUser,  createDoctorsSchedule} from "./../../../actions/userDetailsAction";
+import {updateDoctorsSchedule, deleteDoctorsSchedule} from "../../../actions/schedulingActions";
 import { withRouter } from "react-router-dom";
 
 let current_datetime = new Date();
-let formatted_date =
-  current_datetime.getDate() +
-  "-" +
-  (current_datetime.getMonth() + 1) +
-  "-" +
-  current_datetime.getFullYear();
+let formatted_date = current_datetime.getDate() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getFullYear();
 
 class EditProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      priceError: "",
       token: "",
       id: "",
       name: "",
@@ -223,6 +212,24 @@ class EditProfile extends Component {
   handleCancelDeleteSchedule = () => this.setState({ open3: false });
   handleCancelUpdateSchedule = () => this.setState({ open4: false });
 
+  validate = () => {
+    let priceError = "";
+
+    var pattern = new RegExp(/[+-]/);
+
+    if(pattern.test(this.state.price))
+      priceError = "* Invalid amount";
+    
+    if(priceError){
+      this.setState({ priceError: priceError });
+      return false;
+    } else {
+      this.setState({ priceError: "" });
+
+      return true;
+    }
+  }
+
   onSubmit = e => {
     e.preventDefault();
 
@@ -235,18 +242,23 @@ class EditProfile extends Component {
       price: this.state.price,
       specializations: this.state.selectedSpecializations
     };
-    if (this.state.todayDate > this.state.selectionRange.startDate) {
-      alert(`please select the date onward ${formatted_date}`);
-    } else if (this.props.auth.isAuthenticated) {
-      this.props.updateUserData(
-        upUserData,
-        this.props.history,
-        // change id to (this.props.match.params.id)
-        this.state.id,
-        this.state.token
-      );
-    } else {
-      console.log("not logged in");
+
+    const isValid = this.validate();
+
+    if(isValid) {
+      if (this.state.todayDate > this.state.selectionRange.startDate) {
+        alert(`please select the date onward ${formatted_date}`);
+      } else if (this.props.auth.isAuthenticated) {
+        this.props.updateUserData(
+          upUserData,
+          this.props.history,
+          // change id to (this.props.match.params.id)
+          this.state.id,
+          this.state.token
+        );
+      } else {
+        console.log("not logged in");
+      }
     }
   };
 
@@ -483,7 +495,7 @@ class EditProfile extends Component {
               style={{
                 fontSize: "20px",
                 fontWeight: "normal",
-                marginTop: "15px"
+                marginTop: "15px",
               }}
             >
               <Grid stackable>
@@ -498,7 +510,7 @@ class EditProfile extends Component {
                   />
                 </Grid.Column>
                 <Grid.Column width={5}>
-                  <span>price:</span>
+                  <span>Price:</span>
                   <Input
                     // style={{ width: "50%" }}
                     name="price"
@@ -506,6 +518,18 @@ class EditProfile extends Component {
                     value={this.state.price}
                     onChange={this.onChange}
                   />
+                  <span
+                    className="red-text"
+                    style={{ fontSize: 12, color: "white" }}
+                  >
+                    '''''''''''''''''
+                  </span>
+                  <span
+                    className="red-text"
+                    style={{ fontSize: 12, color: "red", fontWeight: "bold" }}
+                  >
+                    {this.state.priceError}
+                  </span>
                 </Grid.Column>
               </Grid>
             </div>
@@ -542,7 +566,7 @@ class EditProfile extends Component {
                   />
                 </Grid.Column> */}
                 <Grid.Column width={5}>
-                  city:{" "}
+                  City:{" "}
                   <Select
                     name="Cities"
                     placeholder={this.state.location_city}
@@ -552,7 +576,7 @@ class EditProfile extends Component {
                   />
                 </Grid.Column>
                 <Grid.Column width={5}>
-                  state:{" "}
+                  State:{" "}
                   <Select
                     name="States"
                     placeholder={this.state.location_state}
@@ -562,7 +586,7 @@ class EditProfile extends Component {
                   />
                 </Grid.Column>
                 <Grid.Column width={5}>
-                  country:{" "}
+                  Country:{" "}
                   <Select
                     name="Countries"
                     placeholder={this.state.location_country}
