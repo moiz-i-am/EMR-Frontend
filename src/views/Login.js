@@ -20,6 +20,7 @@ const initialState = {
   password: "",
   emailError: "",
   passwordError: "",
+  hidden: true,
   errors: {}
 };
 
@@ -92,6 +93,10 @@ class Login extends React.Component {
     }
   };
 
+  toggleShow = () => {
+    this.setState({hidden : !this.state.hidden});
+  }
+
   render() {
     const { error } = this.state;
     return (
@@ -130,7 +135,7 @@ class Login extends React.Component {
                   size="small"
                   icon="lock"
                   iconPosition="left"
-                  type="password"
+                  type={this.state.hidden ? 'password' : 'text'}
                   name="password"
                   placeholder="Password"
                   onChange={this.onChange}
@@ -138,13 +143,14 @@ class Login extends React.Component {
                 />
               </Form.Field>
 
+              <Button fluid type="button" icon={this.state.hidden ? 'eye slash' : 'eye'} onClick={this.toggleShow} content="Click to see password"/>
+              <span style={{ fontSize: 12, color: "white", fontWeight: "bold" }}>""</span>
               <Button
                 fluid
                 type="submit"
                 style={{ backgroundColor: "#9458AE", color: "#ffffff" }}
-              >
-                Login
-              </Button>
+                content="Login"
+              />
             </Form>
             <Message>
               Not Registered Yet? Please<Link to="/Signup"> Register!</Link>

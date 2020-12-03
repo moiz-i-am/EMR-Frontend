@@ -65,6 +65,8 @@ class Signup extends React.Component {
     let emailError = "";
     let passwordError = "";
     let confirmPasswordError = "";
+    let email = this.state.email;
+    let emailsubString = email.indexOf("@", 0);
 
     if (!this.state.username.match(/^[a-zA-Z ]*$/)) {
       usernameError = "* Please enter alphabet characters only.";
@@ -76,10 +78,11 @@ class Signup extends React.Component {
       /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
     );
 
-    if (!pattern.test(this.state.email)) {
-      // if (!this.state.email.includes("@")) {
+    if(emailsubString < 3)
+    emailError = "* Email Address must have atleast 3 characters";
+    else if (!pattern.test(this.state.email))
       emailError = "* Please enter valid email address";
-    } else if (!this.state.email.includes("@gmail")) {
+    else if (!this.state.email.includes("@gmail")) {
       if(!this.state.email.includes("@yahoo")) {
         if(!this.state.email.includes("@outlook")) {
           emailError = "* Please enter valid email address"

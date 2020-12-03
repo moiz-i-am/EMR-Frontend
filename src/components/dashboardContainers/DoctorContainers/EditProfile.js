@@ -217,7 +217,10 @@ class EditProfile extends Component {
 
     var pattern = new RegExp(/[+-]/);
 
-    if(pattern.test(this.state.price))
+    if(this.state.price === "")
+      priceError = "* Price field is empty"
+
+    else if(pattern.test(this.state.price))
       priceError = "* Invalid amount";
     
     if(priceError){
@@ -518,12 +521,12 @@ class EditProfile extends Component {
                     value={this.state.price}
                     onChange={this.onChange}
                   />
-                  <span
+                  {/* <span
                     className="red-text"
                     style={{ fontSize: 12, color: "white" }}
                   >
                     '''''''''''''''''
-                  </span>
+                  </span> */}
                   <span
                     className="red-text"
                     style={{ fontSize: 12, color: "red", fontWeight: "bold" }}
