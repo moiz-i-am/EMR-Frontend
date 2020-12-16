@@ -1,14 +1,8 @@
 .notes {
   background-attachment: local;
-  background-image: linear-gradient(to right, #faed86 10px, transparent 10px),
-    linear-gradient(to left, #faed86 10px, transparent 10px),
-    repeating-linear-gradient(
-      #faed86,
-      #faed86 30px,
-      #ccc 30px,
-      #ccc 31px,
-      #faed86 31px
-    );
+  background-image: linear-gradient(to right, #fff 10px, transparent 10px),
+    linear-gradient(to left, #fff 10px, transparent 10px),
+    repeating-linear-gradient(#fff, #fff 30px, #ccc 30px, #ccc 31px, #fff 31px);
   line-height: 31px;
   padding: 8px 10px;
   width: 100%;

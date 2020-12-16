@@ -59,6 +59,7 @@ class PrescriptionDoctor extends Component {
                     <DoctorCard
                       date={prescription.date}
                       patientName={prescription.patientName}
+                      doctorName={prescription.doctorName}
                       prescriptionText={prescription.prescriptionText}
                     />
                   </div>
