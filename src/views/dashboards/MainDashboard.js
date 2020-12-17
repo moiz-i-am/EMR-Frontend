@@ -52,7 +52,7 @@ import DoctorsListHospital from "../../components/dashboardContainers/HospitalCo
 // trigger function for sidebar image and dropDown
 const trigger = (state, name, image) => (
   <span style={{ fontSize: 11 }}>
-    <Header as="h7" color="teal" textAlign="center">
+    <Header as="h7" color="purple" textAlign="center">
       <Grid>
         <Grid.Column width={6}>
           <Image contain fileURL={image} />
@@ -589,7 +589,7 @@ export class MainDashboard extends Component {
               vertical
               inverted
               style={{
-                backgroundColor: "#2C3436",
+                backgroundColor: "#10001a",
                 width: "105%",
                 height: "100%"
               }}
@@ -694,7 +694,7 @@ export class MainDashboard extends Component {
               vertical
               inverted
               style={{
-                backgroundColor: "#2C3436",
+                backgroundColor: "#10001a",
                 width: "105%",
                 height: "100%"
               }}

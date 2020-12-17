@@ -29,12 +29,24 @@ import { countryOptions } from "../../../data/countries";
 import UploadProfilePicture from "../../profilePicture/UploadProfilePicture";
 import Image from "../../profilePicture/Image";
 
-import {updateUserData,  deleteUser,  createDoctorsSchedule} from "./../../../actions/userDetailsAction";
-import {updateDoctorsSchedule, deleteDoctorsSchedule} from "../../../actions/schedulingActions";
+import {
+  updateUserData,
+  deleteUser,
+  createDoctorsSchedule
+} from "./../../../actions/userDetailsAction";
+import {
+  updateDoctorsSchedule,
+  deleteDoctorsSchedule
+} from "../../../actions/schedulingActions";
 import { withRouter } from "react-router-dom";
 
 let current_datetime = new Date();
-let formatted_date = current_datetime.getDate() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getFullYear();
+let formatted_date =
+  current_datetime.getDate() +
+  "-" +
+  (current_datetime.getMonth() + 1) +
+  "-" +
+  current_datetime.getFullYear();
 
 class EditProfile extends Component {
   constructor(props) {
@@ -217,13 +229,10 @@ class EditProfile extends Component {
 
     var pattern = new RegExp(/[+-]/);
 
-    if(this.state.price === "")
-      priceError = "* Price field is empty"
+    if (this.state.price === "") priceError = "* Price field is empty";
+    else if (pattern.test(this.state.price)) priceError = "* Invalid amount";
 
-    else if(pattern.test(this.state.price))
-      priceError = "* Invalid amount";
-    
-    if(priceError){
+    if (priceError) {
       this.setState({ priceError: priceError });
       return false;
     } else {
@@ -231,7 +240,7 @@ class EditProfile extends Component {
 
       return true;
     }
-  }
+  };
 
   onSubmit = e => {
     e.preventDefault();
@@ -248,7 +257,7 @@ class EditProfile extends Component {
 
     const isValid = this.validate();
 
-    if(isValid) {
+    if (isValid) {
       if (this.state.todayDate > this.state.selectionRange.startDate) {
         alert(`please select the date onward ${formatted_date}`);
       } else if (this.props.auth.isAuthenticated) {
@@ -485,7 +494,7 @@ class EditProfile extends Component {
                     fontSize: "20px",
                     fontWeight: "normal",
                     marginTop: "15px",
-                    color: "#37B6AD"
+                    color: "#990099"
                   }}
                 >
                   {this.state.userData.email}
@@ -498,7 +507,7 @@ class EditProfile extends Component {
               style={{
                 fontSize: "20px",
                 fontWeight: "normal",
-                marginTop: "15px",
+                marginTop: "15px"
               }}
             >
               <Grid stackable>
@@ -569,30 +578,39 @@ class EditProfile extends Component {
                   />
                 </Grid.Column> */}
                 <Grid.Column width={5}>
-                  City:{" "}
                   <Select
                     name="Cities"
-                    placeholder={this.state.location_city}
+                    placeholder={
+                      this.state.location_city
+                        ? this.state.location_city
+                        : "City"
+                    }
                     options={cityOptions}
                     classNamePrefix="select"
                     onChange={this.onSelectCity}
                   />
                 </Grid.Column>
                 <Grid.Column width={5}>
-                  State:{" "}
                   <Select
                     name="States"
-                    placeholder={this.state.location_state}
+                    placeholder={
+                      this.state.location_state
+                        ? this.state.location_state
+                        : "State"
+                    }
                     options={stateOptions}
                     classNamePrefix="select"
                     onChange={this.onSelectState}
                   />
                 </Grid.Column>
                 <Grid.Column width={5}>
-                  Country:{" "}
                   <Select
                     name="Countries"
-                    placeholder={this.state.location_country}
+                    placeholder={
+                      this.state.location_country
+                        ? this.state.location_country
+                        : "Country"
+                    }
                     options={countryOptions}
                     classNamePrefix="select"
                     onChange={this.onSelectCountry}
@@ -636,7 +654,6 @@ class EditProfile extends Component {
               </Button>
             </div> */}
             <div>
-              <p>Specialization:</p>
               {/* /////////////////////////////////////////////////////////////// */}
               {this.state.selectedPrevSpecializations.map(
                 (prevSpecialization, index) => {
@@ -709,7 +726,7 @@ class EditProfile extends Component {
               onConfirm={this.handleConfirmSchedule}
               size="large"
             />
-            <Button onClick={this.show4} color="blue">
+            <Button onClick={this.show4} color="purple">
               Update schedule
             </Button>
             <Confirm
@@ -733,9 +750,6 @@ class EditProfile extends Component {
             />
 
             <Divider horizontal />
-            <Button onClick={this.show} color="red">
-              Delete Account
-            </Button>
             <Confirm
               content="Are you sure you want to delete your profile?"
               open={this.state.open}
@@ -743,8 +757,11 @@ class EditProfile extends Component {
               onCancel={this.handleCancel}
               onConfirm={this.handleConfirm}
             />
-            <Button type="submit" color="blue" onClick={this.onSubmit}>
+            <Button type="submit" color="purple" onClick={this.onSubmit}>
               Update
+            </Button>
+            <Button onClick={this.show} color="red">
+              Delete Account
             </Button>
           </Card.Content>
         </Card>

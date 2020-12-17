@@ -204,7 +204,7 @@ export class AppointmentBooking extends Component {
                     >
                       <Button
                         inverted
-                        color="blue"
+                        color="purple"
                         onClick={() => this.addTimeSlot(booking.label)}
                       >
                         <Icon name="clock" /> {booking.label}
@@ -244,10 +244,12 @@ export class AppointmentBooking extends Component {
         </Card.Content>
         <Card.Content>
           <div style={{ width: "100%" }}>
+            {/* "react-horizontal-datepicker": "^0.1.11", */}
             <DatePicker
               getSelectedDay={selectedDay}
               shouldScroll={true}
               endDate={100}
+              color={"#990099"}
             />
           </div>
         </Card.Content>
@@ -259,7 +261,7 @@ export class AppointmentBooking extends Component {
             style={{
               width: "100%",
               color: "#ffffff",
-              backgroundColor: "#4D7BF3"
+              backgroundColor: "#990099"
             }}
           >
             Book Now
